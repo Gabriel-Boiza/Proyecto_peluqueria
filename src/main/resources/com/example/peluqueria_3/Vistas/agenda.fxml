@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: grey;">
+         <children>
+            <Button layoutX="506.0" layoutY="20.0" mnemonicParsing="false" text="Cerrar sesión" />
+         </children></Pane>
+   </children>
+</Pane>
