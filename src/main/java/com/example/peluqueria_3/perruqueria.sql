@@ -1,23 +1,25 @@
-DROP DATABASE peluqueria;
+DROP DATABASE bugffmlodzmfiksquriy;
 
-CREATE DATABASE peluqueria;
+CREATE DATABASE bugffmlodzmfiksquriy;
 
-USE peluqueria;
+USE bugffmlodzmfiksquriy;
 
 create table trabajadores(
-    id_trabajador INT primary key AUTO_INCREMENT,
-    usuarios varchar(255) not null,
+    id_trabajador int primary key AUTO_INCREMENT,
+    usuario varchar(255) not null,
     nombre varchar(255) not null,
     apellido varchar(255),
-    correo varchar(255),
-    tel int(9),
+    correo varchar(255) not null,
+    password varchar(255) not null,
+    tel varchar(50),
     direccion varchar(255),
+
     rol ENUM('administrador', 'empleado', 'invitado') NOT NULL,
     estado ENUM('Activo', 'Inactivo') NOT NULL
 );
 
 create table clientes(
-    id_cliente INT primary key, -- La clave primaria es el numero de telefono
+    id_cliente int primary key, -- La clave primaria es el numero de telefono
     nombre varchar(255) not null,
     apellido varchar(255),
     correo varchar(255),
@@ -30,8 +32,8 @@ create table productos (
     nombre VARCHAR(255) NOT NULL,
     marca varchar(255) not null,
     descripcion text,
-    precio INT(8) NOT NULL,
-    stock int(8) not null,
+    precio int NOT NULL,
+    stock int not null,
     codigo_barras varchar(255)
 );
 
@@ -41,12 +43,12 @@ create table servicios (
     descripcion text not null,
     fecha date not null,
     hora time not null,
-    precio int(8)
+    precio int
 );
 
 create table ventas (
     id_venta int primary key AUTO_INCREMENT,
-    fk_id_trabajador int(8) not null,
+    fk_id_trabajador int not null,
     fecha date not null,
 
     FOREIGN KEY (fk_id_trabajador) REFERENCES trabajadores(id_trabajador)
@@ -54,10 +56,10 @@ create table ventas (
 
 create table productos_ventas (
     id_producto_venta int primary key AUTO_INCREMENT,
-    fk_id_venta int(8) not null,
-    fk_id_producto int(8) not null,
-    cantidad int(8) not null,
-    precio_unidad int(8) not null,
+    fk_id_venta int not null,
+    fk_id_producto int not null,
+    cantidad int not null,
+    precio_unidad int not null,
     
     FOREIGN KEY (fk_id_venta) REFERENCES ventas(id_venta),
     FOREIGN KEY (fk_id_producto) REFERENCES productos(id_producto)
@@ -72,3 +74,6 @@ create table agenda(
     FOREIGN KEY (fk_id_servicio) REFERENCES servicios(id_servicio),
     FOREIGN KEY (fk_id_trabajador) REFERENCES trabajadores(id_trabajador)
 );
+
+INSERT INTO trabajadores (usuario, nombre, apellido, correo, password, tel, direccion, rol, estado)
+VALUES ('admin', 'NombreAdmin', 'ApellidoAdmin', 'admin@example.com', '123', '123456789', 'calle', 'administrador', 'Activo');
