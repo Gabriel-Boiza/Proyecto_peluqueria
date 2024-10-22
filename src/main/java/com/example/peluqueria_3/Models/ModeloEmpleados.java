@@ -1,7 +1,7 @@
 package com.example.peluqueria_3.Models;
 
 import com.example.peluqueria_3.Controllers.EmpleadosController;
-import  com.example.peluqueria_3.Controllers.mainController;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

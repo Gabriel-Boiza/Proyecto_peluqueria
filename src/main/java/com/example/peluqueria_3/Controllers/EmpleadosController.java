@@ -3,16 +3,11 @@ package com.example.peluqueria_3.Controllers;
 import com.example.peluqueria_3.Models.Empleados;
 import com.example.peluqueria_3.Models.ModeloEmpleados;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class EmpleadosController {
 
@@ -26,21 +21,28 @@ public class EmpleadosController {
     @FXML
     public void ValidarUser(){
         try{
-            ModeloEmpleados empleado = new ModeloEmpleados();
-            Empleados empleadoRegistrado = empleado.validarEmpleado(input_usuario.getText(), input_contrasenya.getText());
+            ModeloEmpleados modeloEmpleado = new ModeloEmpleados();
+            Empleados empleadoRegistrado = modeloEmpleado.validarEmpleado(input_usuario.getText(), input_contrasenya.getText());
 
             if (empleadoRegistrado != null) {
+                DatosGlobales.setEmpleadoActual(empleadoRegistrado);
+                // Cargar la vista "agenda"
+                LoadStage main = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml");
+                textoLabel();
 
-                LoadStage main = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml"); // Cargar la vista "agenda"
-
-                Stage myStage = (Stage) BotonLogin.getScene().getWindow();  // Recoge la ventana en la que se encuentra el botón
+                // Cerrar la ventana de login
+                Stage myStage = (Stage) BotonLogin.getScene().getWindow();
                 myStage.close();
 
-                System.out.println(empleadoRegistrado.getId_empleado());
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+
+    public void textoLabel(){
+        System.out.println(DatosGlobales.getEmpleadoActual().getNombre());
+    }
+
 }
+
