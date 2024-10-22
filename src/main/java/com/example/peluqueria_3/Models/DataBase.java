@@ -3,10 +3,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DataBase {
-    private final String URL = "jdbc:mysql://u4xmlspbjyd111rs:iaeRku37k6Ftnaoc7Es8@bugffmlodzmfiksquriy-mysql.services.clever-cloud.com:3306/bugffmlodzmfiksquriy";
-    private final String USER = "u4xmlspbjyd111rs";
-    private final String PASSWORD = "iaeRku37k6Ftnaoc7Es8";
+public class DataBase extends config{
+    private final String URL = url;
+    private final String USER = user;
+    private final String PASSWORD = password;
 
     public Connection getConnection() {  //devuelve la conexion a la bbdd
         Connection connection = null;

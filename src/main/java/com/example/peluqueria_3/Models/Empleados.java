@@ -1,33 +1,33 @@
 package com.example.peluqueria_3.Models;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-
 public class Empleados extends DataBase {
     private String id_empleado;
+    private String usuario;
     private String nombre;
+    private String apellido;
     private String email;
-    private String telefono;
     private String contrasenya;
+    private String telefono;
+    private String direccion;
+    private String rol;
+
     private Float comision_ventas;
     private Float comision_servicios;
     private Float limite_comision;
-    private boolean es_administrador;
 
-
-
-    public Empleados(String id_empleado, String nombre, String email, String telefono, String contrasenya, Float comision_ventas, Float comision_servicios, Float limite_comision, boolean es_administrador) {
+    public Empleados(String id_empleado, String usuario, String nombre, String apellido, String email, String contrasenya, String telefono, String direccion, String rol, String estado, Float comision_ventas, Float comision_servicios, Float limite_comision) {
         this.id_empleado = id_empleado;
+        this.usuario = usuario;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.email = email;
-        this.telefono = telefono;
         this.contrasenya = contrasenya;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.rol = rol;
         this.comision_ventas = comision_ventas;
         this.comision_servicios = comision_servicios;
         this.limite_comision = limite_comision;
-        this.es_administrador = es_administrador;
     }
 
     public String getId_empleado() {
@@ -38,12 +38,28 @@ public class Empleados extends DataBase {
         this.id_empleado = id_empleado;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getEmail() {
@@ -54,6 +70,14 @@ public class Empleados extends DataBase {
         this.email = email;
     }
 
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -62,12 +86,20 @@ public class Empleados extends DataBase {
         this.telefono = telefono;
     }
 
-    public String getContrasenya() {
-        return contrasenya;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setContrasenya(String contrasenya) {
-        this.contrasenya = contrasenya;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public Float getComision_ventas() {
@@ -93,14 +125,4 @@ public class Empleados extends DataBase {
     public void setLimite_comision(Float limite_comision) {
         this.limite_comision = limite_comision;
     }
-
-    public boolean isEs_administrador() {
-        return es_administrador;
-    }
-
-    public void setEs_administrador(boolean es_administrador) {
-        this.es_administrador = es_administrador;
-    }
-
-
 }
