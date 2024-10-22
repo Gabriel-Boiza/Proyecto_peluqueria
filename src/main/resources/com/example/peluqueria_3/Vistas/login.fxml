@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.layout.HBox?>
 
-<Pane maxHeight="400" maxWidth="600" minHeight="400" minWidth="600" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController">
-    <children>
-        <Pane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: black;" />
-        <Pane layoutX="300.0" prefHeight="400.0" prefWidth="300.0">
-            <children>
-                <Label alignment="TOP_CENTER" layoutX="44.0" layoutY="100.0" prefHeight="58.0" prefWidth="213.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-font-size: 30px;" text="Login" textAlignment="CENTER">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding></Label>
-                <TextField layoutX="73.0" layoutY="200.0" prefHeight="28.0" prefWidth="155.0" promptText="Usuario" fx:id="input_usuario"/>
-                <PasswordField layoutX="72.0" layoutY="262.0" prefHeight="28.0" prefWidth="155.0" promptText="Contraseña" fx:id="input_contrasenya"/>
-                <Button  layoutX="124.0" layoutY="326.0" mnemonicParsing="false" text="Entrar" fx:id="BotonLogin" onAction="#ValidarUser"/>
-            </children>
-        </Pane>
-    </children>
-</Pane>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController" style="-fx-background-color:#E9E5E0;" prefHeight="600.0" prefWidth="800.0">
+    <!-- Parte superior con el logo y líneas -->
+    <top>
+        <VBox alignment="CENTER" spacing="1" BorderPane.alignment="CENTER">
+            <Label alignment="CENTER" text="DREAM'S" style="-fx-font-family: 'Arial'; -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #3A3B38;
+                    -fx-effect: dropshadow(gaussian,#C4C1BC , 4, 0.0, -4, 4);"/>
+            <HBox alignment="CENTER" spacing="5">
+                <Line startX="0" startY="0" endX="100" endY="0" stroke="black" strokeWidth="1"/>
+                <Label text="Perruqueria" style="-fx-font-size: 14px;"/>
+                <Line startX="0" startY="0" endX="100" endY="0" stroke="black" strokeWidth="1"/>
+            </HBox>
+            <VBox spacing="30" alignment="CENTER">
+                <Line startX="0" startY="0" endX="1800" endY="0" stroke="white" strokeWidth="8"/>
+                <Line startX="0" startY="0" endX="400" endY="0" stroke="white" strokeWidth="4"/>
+            </VBox>
+        </VBox>
+    </top>
+
+    <!-- Parte central con el formulario de login -->
+    <center>
+        <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER" maxHeight="400" maxWidth="600" minHeight="400" minWidth="600" style="-fx-background-color:#E9E5E0;">
+            <TextField prefHeight="28.0" prefWidth="255.0" promptText="Usuario" fx:id="input_usuario"/>
+            <PasswordField prefHeight="28.0" prefWidth="255.0" promptText="Contraseña" fx:id="input_contrasenya"/>
+            <Button prefHeight="28.0" prefWidth="155.0" mnemonicParsing="false" text="Entrar" fx:id="BotonLogin" onAction="#ValidarUser"/>
+        </VBox>
+    </center>
+</BorderPane>
