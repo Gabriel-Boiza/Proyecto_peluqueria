@@ -4,9 +4,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataBase {
-    private final String URL = "jdbc:mysql://localhost:3306/peluqueria";
-    private final String USER = "root";
-    private final String PASSWORD = "";
+    private final String URL = "jdbc:mysql://u4xmlspbjyd111rs:iaeRku37k6Ftnaoc7Es8@bugffmlodzmfiksquriy-mysql.services.clever-cloud.com:3306/bugffmlodzmfiksquriy";
+    private final String USER = "u4xmlspbjyd111rs";
+    private final String PASSWORD = "iaeRku37k6Ftnaoc7Es8";
 
     public Connection getConnection() {  //devuelve la conexion a la bbdd
         Connection connection = null;
