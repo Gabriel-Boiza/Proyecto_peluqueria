@@ -14,7 +14,7 @@ public class EmpleadosController {
     @FXML private Button BotonLogin;
     @FXML private PasswordField input_contrasenya;
     @FXML private TextField input_usuario;
-    @FXML private Label nombre_usuario; // Label donde mostrar el nombre de usuario
+    @FXML private Label nombre_usuario;
 
     private ModeloEmpleados modelo = new ModeloEmpleados();
 
@@ -27,9 +27,7 @@ public class EmpleadosController {
             if (empleadoRegistrado != null) {
                 DatosGlobales.setEmpleadoActual(empleadoRegistrado);
                 // Cargar la vista "agenda"
-                LoadStage main = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml");
-                textoLabel();
-
+                LoadStage main = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
                 // Cerrar la ventana de login
                 Stage myStage = (Stage) BotonLogin.getScene().getWindow();
                 myStage.close();
@@ -40,9 +38,6 @@ public class EmpleadosController {
         }
     }
 
-    public void textoLabel(){
-        System.out.println(DatosGlobales.getEmpleadoActual().getNombre());
-    }
 
 }
 

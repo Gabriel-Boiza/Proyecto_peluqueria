@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 public class LoadStage {
 
-    LoadStage(String fxmlFilePath){
+    LoadStage(String fxmlFilePath,String nombre_ventana){
         try {
             // Cargar el archivo FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFilePath));
@@ -15,7 +15,8 @@ public class LoadStage {
 
             // Crear un nuevo Stage
             Stage stage = new Stage();
-            stage.setTitle("Nueva Ventana");
+
+            stage.setTitle(nombre_ventana);
 
             // Configurar la escena
             Scene scene = new Scene(root);
