@@ -1,5 +1,6 @@
 package com.example.peluqueria_3;
 
+import com.example.peluqueria_3.Controllers.DatosGlobales;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,8 @@ public class HelloApplication extends Application {
         stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
+
+        DatosGlobales.setMystage(stage);
     }
 
     public static void main(String[] args) {

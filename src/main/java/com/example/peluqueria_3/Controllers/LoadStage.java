@@ -7,14 +7,14 @@ import javafx.stage.Stage;
 
 public class LoadStage {
 
-    LoadStage(String fxmlFilePath,String nombre_ventana){
+    LoadStage(String ventana, String nombre_ventana){
         try {
             // Cargar el archivo FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFilePath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(ventana));
             Parent root = loader.load();
 
             // Crear un nuevo Stage
-            Stage stage = new Stage();
+            Stage stage = DatosGlobales.getMystage();
 
             stage.setTitle(nombre_ventana);
 
@@ -22,8 +22,6 @@ public class LoadStage {
             Scene scene = new Scene(root);
             stage.setScene(scene);
 
-            // Mostrar la nueva ventana
-            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
