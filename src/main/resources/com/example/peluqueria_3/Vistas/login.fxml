@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.layout.HBox?>
+<?import java.io.IOException?>
+
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController"

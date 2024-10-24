@@ -3,11 +3,58 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController">
-   <children>
-      <Pane prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: grey;">
-         <children>
-            <Label fx:id="nombre_usuario" layoutX="515.0" layoutY="24.0" style="-fx-background-color: white;" text="Texto inicial" />
-         </children></Pane>
-   </children>
-</Pane>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Circle?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController"
+      stylesheets="@styles/pelu.css">
+
+   <top>
+      <VBox alignment="CENTER" spacing="2" BorderPane.alignment="CENTER">
+         <Label alignment="CENTER" text="DREAM'S" style="-fx-font-family: 'Arial'; -fx-font-size: 58px; -fx-font-weight: bold; -fx-text-fill: #3A3B38;
+                    -fx-effect: dropshadow(gaussian,#C4C1BC , 4, 0.0, -4, 4);"/>
+         <HBox alignment="CENTER" spacing="-4">
+            <Line startX="0" startY="0" endX="70" endY="0" stroke="black" strokeWidth="2"/>
+            <Label text="Perruqueria" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Line startX="0" startY="0" endX="70" endY="0" stroke="black" strokeWidth="2"/>
+         </HBox>
+         <VBox spacing="30" alignment="CENTER">
+            <Line startX="0" startY="0" endX="1800" endY="0" stroke="white" strokeWidth="8"/>
+            <Line startX="0" startY="0" endX="600" endY="0" stroke="white" strokeWidth="4"/>
+         </VBox>
+      </VBox>
+   </top>
+   <center>
+      <GridPane alignment="TOP_CENTER" hgap="100" vgap="5" style="-fx-background-color:#E9E5E0;" BorderPane.alignment="CENTER">
+         <!-- Columna de horas -->
+         <Label text="9:30-10:00" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+         <Label text="10:30-11:00" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+         <!-- Repite para cada bloque de tiempo -->
+
+         <!-- Columna de empleados -->
+         <VBox alignment="TOP_CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1">
+            <Circle radius="70" fill="#3A3B38"/>
+            <Label text="EVA" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+         </VBox>
+         <VBox alignment="TOP_CENTER" GridPane.rowIndex="0" GridPane.columnIndex="2">
+            <Circle radius="70" fill="#3A3B38"/>
+            <Label text="ANA" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+         </VBox>
+         <VBox alignment="TOP_CENTER" GridPane.rowIndex="0" GridPane.columnIndex="3">
+            <Circle radius="70" fill="#3A3B38"/>
+            <Label text="ARAM" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+         </VBox>
+         <VBox alignment="TOP_CENTER" GridPane.rowIndex="0" GridPane.columnIndex="4">
+            <Circle radius="70" fill="#3A3B38"/>
+            <Label text="INVITADO" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+         </VBox>
+         <!-- Repite para más empleados -->
+
+         <!-- Agenda de citas -->
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+         <!-- Añadir más botones para las citas en la cuadrícula -->
+      </GridPane>
+   </center>
+</BorderPane>
