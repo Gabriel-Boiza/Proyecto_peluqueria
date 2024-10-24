@@ -30,7 +30,6 @@
             <VBox spacing="30" alignment="CENTER">
                 <Line startX="0" startY="0" endX="2000" endY="0" styleClass="line-bold"/>
                 <Line startX="0" startY="0" endX="600" endY="0" styleClass="line-thin"/>
-
             </VBox>
         </VBox>
     </top>

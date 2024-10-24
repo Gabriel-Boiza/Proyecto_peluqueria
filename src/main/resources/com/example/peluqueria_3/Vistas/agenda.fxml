@@ -18,33 +18,41 @@
             <Label text="Perruqueria" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
             <Line startX="0" startY="0" endX="70" endY="0" stroke="black" strokeWidth="2"/>
          </HBox>
-         <VBox spacing="30" alignment="CENTER">
+         <VBox spacing="50" alignment="CENTER">
             <Line startX="0" startY="0" endX="1800" endY="0" stroke="white" strokeWidth="8"/>
             <Line startX="0" startY="0" endX="600" endY="0" stroke="white" strokeWidth="4"/>
          </VBox>
       </VBox>
    </top>
    <center>
-      <GridPane alignment="TOP_CENTER" hgap="100" vgap="5" style="-fx-background-color:#E9E5E0;" BorderPane.alignment="CENTER">
+      <GridPane alignment="TOP_CENTER" hgap="100" vgap="8" style="-fx-background-color:#E9E5E0;" BorderPane.alignment="CENTER">
          <!-- Columna de horas -->
-         <Label text="9:30-10:00" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-         <Label text="10:30-11:00" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-         <!-- Repite para cada bloque de tiempo -->
+         <Label text="9:30-10:00" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+         <Label text="10:30-11:00" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+         <Label text="11:30-12:00" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+         <Label text="12:30-13:00" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+         <Label text="13:30-14:00" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+         <Label text="14:30-15:00" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+         <Label text="15:30-16:00" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+         <Label text="16:30-17:00" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+         <Label text="17:30-18:00" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+         <Label text="18:30-19:00" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
+         <Label text="19:30-20:00" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
 
          <!-- Columna de empleados -->
-         <VBox alignment="TOP_CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1">
+         <VBox alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="1">
             <Circle radius="70" fill="#3A3B38"/>
             <Label text="EVA" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
          </VBox>
-         <VBox alignment="TOP_CENTER" GridPane.rowIndex="0" GridPane.columnIndex="2">
+         <VBox alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="2">
             <Circle radius="70" fill="#3A3B38"/>
             <Label text="ANA" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
          </VBox>
-         <VBox alignment="TOP_CENTER" GridPane.rowIndex="0" GridPane.columnIndex="3">
+         <VBox alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="3">
             <Circle radius="70" fill="#3A3B38"/>
             <Label text="ARAM" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
          </VBox>
-         <VBox alignment="TOP_CENTER" GridPane.rowIndex="0" GridPane.columnIndex="4">
+         <VBox alignment="CENTER" GridPane.rowIndex="0" GridPane.columnIndex="4">
             <Circle radius="70" fill="#3A3B38"/>
             <Label text="INVITADO" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
          </VBox>
@@ -53,7 +61,44 @@
          <!-- Agenda de citas -->
          <Button text="Cita" prefWidth="100" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
          <Button text="Cita" prefWidth="100" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
          <Button text="Cita" prefWidth="100" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="3" GridPane.columnIndex="4"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="4" GridPane.columnIndex="4"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="5" GridPane.columnIndex="4"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="6" GridPane.columnIndex="4"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="7" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="7" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="7" GridPane.columnIndex="4"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="8" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="8" GridPane.columnIndex="4"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="9" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="9" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="9" GridPane.columnIndex="4"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+         <Button text="Cita" prefWidth="100" GridPane.rowIndex="2" GridPane.columnIndex="4"/>
          <!-- Añadir más botones para las citas en la cuadrícula -->
       </GridPane>
    </center>
