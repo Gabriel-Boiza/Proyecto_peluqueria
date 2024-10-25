@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.layout.HBox?>
+<?import java.io.IOException?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController"
+            stylesheets="@styles/pelu.css"
+            prefHeight="600.0" prefWidth="800.0">
+
+
+    <!-- Parte superior con el logo y líneas -->
+    <top>
+        <VBox alignment="CENTER" spacing="0" BorderPane.alignment="CENTER">
+            <Label alignment="CENTER" text="DREAM'S" styleClass="label-title"/>
+            <HBox alignment="CENTER" spacing="5">
+                <Line startX="0" startY="0" endX="65" endY="0" stroke="black" strokeWidth="2"/>
+                <Label text="Perruqueria" styleClass="label-subtitle"/>
+                <Line startX="0" startY="0" endX="65" endY="0" stroke="black" strokeWidth="2"/>
+            </HBox>
+            <VBox spacing="30" alignment="CENTER">
+                <Line startX="0" startY="0" endX="2000" endY="0" styleClass="line-bold"/>
+                <Line startX="0" startY="0" endX="600" endY="0" styleClass="line-thin"/>
+            </VBox>
+        </VBox>
+    </top>
+
+    <!-- Parte central con el formulario de login -->
+    <center>
+        <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER" maxWidth="200" minHeight="400" minWidth="300" style="-fx-background-color:#E9E5E0;">
+            <HBox alignment="CENTER_LEFT" spacing="10" maxWidth="250">
+                <Label text="&#x1F464;" style="-fx-font-size: 20px;"/>
+                <TextField prefHeight="28.0" prefWidth="200.0" promptText="Usuario" fx:id="input_usuario"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10" maxWidth="250">
+                <Label text="&#x1F512;" style="-fx-font-size: 20px;"/> <!-- Ícono de candado -->
+                <PasswordField prefHeight="28.0" prefWidth="200.0" promptText="Contraseña" fx:id="input_contrasenya"/>
+            </HBox>
+            <Button text="Iniciar sesión" styleClass="button-login" fx:id="BotonLogin" onAction="#ValidarUser"/>
+
+
+        </VBox>
+    </center>
+
+</BorderPane>
