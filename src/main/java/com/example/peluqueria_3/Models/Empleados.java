@@ -1,33 +1,34 @@
 package com.example.peluqueria_3.Models;
 
 public class Empleados extends DataBase {
-    private String id_empleado;
+    private String id_empleado; //DNI
     private String usuario;
     private String nombre;
     private String apellido;
-    private String email;
+    private String correo;
     private String contrasenya;
     private String telefono;
     private String direccion;
-    private String rol;
-
     private Float comision_ventas;
     private Float comision_servicios;
     private Float limite_comision;
+    private String rol;
+    private String estado;
 
-    public Empleados(String id_empleado, String usuario, String nombre, String apellido, String email, String contrasenya, String telefono, String direccion, String rol, String estado, Float comision_ventas, Float comision_servicios, Float limite_comision) {
+    public Empleados(String id_empleado, String usuario, String nombre, String apellido, String email, String contrasenya, String telefono, String direccion, Float comision_ventas, Float comision_servicios, Float limite_comision, String rol, String estado) {
         this.id_empleado = id_empleado;
         this.usuario = usuario;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.email = email;
+        this.correo = email;
         this.contrasenya = contrasenya;
         this.telefono = telefono;
         this.direccion = direccion;
-        this.rol = rol;
         this.comision_ventas = comision_ventas;
         this.comision_servicios = comision_servicios;
         this.limite_comision = limite_comision;
+        this.rol = rol;
+        this.estado = estado;
     }
 
     public String getId_empleado() {
@@ -62,12 +63,12 @@ public class Empleados extends DataBase {
         this.apellido = apellido;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getContrasenya() {
@@ -94,14 +95,6 @@ public class Empleados extends DataBase {
         this.direccion = direccion;
     }
 
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
     public Float getComision_ventas() {
         return comision_ventas;
     }
@@ -124,5 +117,40 @@ public class Empleados extends DataBase {
 
     public void setLimite_comision(Float limite_comision) {
         this.limite_comision = limite_comision;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Empleados{" +
+                "id_empleado='" + id_empleado + '\'' +
+                ", usuario='" + usuario + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", correo='" + correo + '\'' +
+                ", contrasenya='" + contrasenya + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", comision_ventas=" + comision_ventas +
+                ", comision_servicios=" + comision_servicios +
+                ", limite_comision=" + limite_comision +
+                ", rol='" + rol + '\'' +
+                ", estado='" + estado + '\'' +
+                '}';
     }
 }
