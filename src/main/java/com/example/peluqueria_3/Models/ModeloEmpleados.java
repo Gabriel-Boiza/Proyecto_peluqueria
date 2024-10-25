@@ -5,7 +5,6 @@ import com.example.peluqueria_3.Controllers.EmpleadosController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 public class ModeloEmpleados extends DataBase{
 
@@ -39,11 +38,96 @@ public class ModeloEmpleados extends DataBase{
                 Float comision_servicios = rs.getFloat("comision_servicios");
                 Float lim_comision_servicios = rs.getFloat("limite_comision_servicios");
 
-                empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion,rol, estado, comision_ventas, comision_servicios, lim_comision_servicios);
+                empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion, comision_ventas, comision_servicios, lim_comision_servicios, rol, estado);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return empleado;
+    }
+
+    public void crearEmpleado(String DNI,  String usuario, String nombre, String apellido, String correo, String password, String tel, String direccion, float comision_ventas, float comision_servicios, float limite_comision_servicios, String rol, String estado){
+        DataBase db = new DataBase();
+        String query = "INSERT INTO trabajadores (DNI, usuario, nombre, apellido, correo, password, tel, direccion, comision_ventas, comision_servicios, limite_comision_servicios, rol, estado) VALUES (?, ?, ?, ?, ? ,?, ?, ? ,? ,? ,? ,? ,?)";
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, DNI);
+            stmt.setString(2, usuario);
+            stmt.setString(3, nombre);
+            stmt.setString(4, apellido);
+            stmt.setString(5, correo);
+            stmt.setString(6, password);
+            stmt.setString(7, tel);
+            stmt.setString(8, direccion);
+            stmt.setFloat(9, comision_ventas);
+            stmt.setFloat(10, comision_servicios);
+            stmt.setFloat(11, limite_comision_servicios);
+            stmt.setString(12, rol);
+            stmt.setString(13, estado);
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void eliminarEmpleado(String DNI){
+        DataBase db = new DataBase();
+        String query = "DELETE FROM trabajadores WHERE DNI = ?";
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, DNI);
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void cambiarEstadoEmpleado(String estado, String DNI){
+        DataBase db = new DataBase();
+        String query = "UPDATE trabajadores SET estado = ? WHERE DNI = ?";
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, estado);
+            stmt.setString(2, DNI);
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void cambiarRolEmpleado(String rol, String DNI){
+        DataBase db = new DataBase();
+        String query = "UPDATE trabajadores SET rol = ? WHERE DNI = ?";
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, rol);
+            stmt.setString(2, DNI);
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void editarEmpleado(String DNI, String usuario, String nombre, String apellido, String correo, String password, String tel, String direccion, float comision_ventas, float comision_servicios, float limite_comision_servicios, String rol, String estado){
+        DataBase db = new DataBase();
+        String query = "UPDATE trabajadores SET usuario = ? , nombre = ?, apellido = ?, correo = ?, password = ?, tel = ?, direccion = ? WHERE DNI = ?";
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, estado);
+            stmt.setString(2, DNI);
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
