@@ -46,4 +46,41 @@ public class ModeloEmpleados extends DataBase{
         }
         return empleado;
     }
+
+    public ArrayList<Empleados> mostrarEmpleados(){
+
+        ArrayList<Empleados> empleados = new ArrayList<Empleados>();
+        DataBase db = new DataBase();
+        String query = "SELECT * FROM trabajadores";
+
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            ResultSet rs = stmt.executeQuery();   //devuelve las filas de la query
+
+            while (rs.next()){  //mientras existan registros
+                String id = rs.getString("DNI");
+                String usuario = rs.getString("usuario");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String correo = rs.getString("correo");
+                String password = rs.getString("password");
+                String telefono = rs.getString("tel");
+                String direccion = rs.getString("direccion");
+                String rol = rs.getString("rol");
+                String estado = rs.getString("estado");
+
+                Float comision_ventas = rs.getFloat("comision_ventas");
+                Float comision_servicios = rs.getFloat("comision_servicios");
+                Float lim_comision_servicios = rs.getFloat("limite_comision_servicios");
+
+                Empleados empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion,rol, estado, comision_ventas, comision_servicios, lim_comision_servicios);
+                empleados.add(empleado);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return empleados;
+    }
 }
