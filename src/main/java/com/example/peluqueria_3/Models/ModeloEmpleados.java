@@ -5,6 +5,7 @@ import com.example.peluqueria_3.Controllers.EmpleadosController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class ModeloEmpleados extends DataBase{
 
@@ -31,14 +32,16 @@ public class ModeloEmpleados extends DataBase{
                 String password = rs.getString("password");
                 String telefono = rs.getString("tel");
                 String direccion = rs.getString("direccion");
-                String rol = rs.getString("rol");
-                String estado = rs.getString("estado");
+
 
                 Float comision_ventas = rs.getFloat("comision_ventas");
                 Float comision_servicios = rs.getFloat("comision_servicios");
                 Float lim_comision_servicios = rs.getFloat("limite_comision_servicios");
 
-                empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion, comision_ventas, comision_servicios, lim_comision_servicios, rol, estado);
+                String rol = rs.getString("rol");
+                String estado = rs.getString("estado");
+
+                empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion,  comision_ventas, comision_servicios, lim_comision_servicios, rol, estado);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -46,7 +49,7 @@ public class ModeloEmpleados extends DataBase{
         return empleado;
     }
 
-    public void crearEmpleado(String DNI,  String usuario, String nombre, String apellido, String correo, String password, String tel, String direccion, float comision_ventas, float comision_servicios, float limite_comision_servicios, String rol, String estado){
+    public void crearEmpleado(String DNI,  String usuario, String nombre, String apellido, String correo, String password, String tel, String direccion,  float comision_ventas, float comision_servicios, float limite_comision_servicios, String rol, String estado){
         DataBase db = new DataBase();
         String query = "INSERT INTO trabajadores (DNI, usuario, nombre, apellido, correo, password, tel, direccion, comision_ventas, comision_servicios, limite_comision_servicios, rol, estado) VALUES (?, ?, ?, ?, ? ,?, ?, ? ,? ,? ,? ,? ,?)";
         try{
@@ -72,7 +75,47 @@ public class ModeloEmpleados extends DataBase{
         }
     }
 
-    public void eliminarEmpleado(String DNI){
+    public ArrayList<Empleados> mostrarEmpleados(){
+
+        ArrayList<Empleados> empleados = new ArrayList<Empleados>();
+        DataBase db = new DataBase();
+        String query = "SELECT * FROM trabajadores";
+
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            ResultSet rs = stmt.executeQuery();   //devuelve las filas de la query
+
+            while (rs.next()){  //mientras existan registros
+                String id = rs.getString("DNI");
+                String usuario = rs.getString("usuario");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String correo = rs.getString("correo");
+                String password = rs.getString("password");
+                String telefono = rs.getString("tel");
+                String direccion = rs.getString("direccion");
+
+
+                Float comision_ventas = rs.getFloat("comision_ventas");
+                Float comision_servicios = rs.getFloat("comision_servicios");
+                Float lim_comision_servicios = rs.getFloat("limite_comision_servicios");
+
+                String rol = rs.getString("rol");
+                String estado = rs.getString("estado");
+
+                Empleados empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion, comision_ventas, comision_servicios, lim_comision_servicios, rol, estado);
+                empleados.add(empleado);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return empleados;
+    }
+
+    public int eliminarEmpleado(String DNI){
+        int filas = -1;
         DataBase db = new DataBase();
         String query = "DELETE FROM trabajadores WHERE DNI = ?";
         try{
@@ -80,10 +123,12 @@ public class ModeloEmpleados extends DataBase{
             PreparedStatement stmt = conexion.prepareStatement(query);
 
             stmt.setString(1, DNI);
+            filas = stmt.executeUpdate();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return filas;
     }
 
     public void cambiarEstadoEmpleado(String estado, String DNI){
@@ -110,6 +155,9 @@ public class ModeloEmpleados extends DataBase{
 
             stmt.setString(1, rol);
             stmt.setString(2, DNI);
+
+            stmt.executeUpdate();
+
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
