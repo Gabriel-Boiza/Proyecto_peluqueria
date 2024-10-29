@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -21,10 +23,10 @@
                       <TableColumn fx:id="apellido" prefWidth="75.0" text="Apellido" />
                       <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
                       <TableColumn fx:id="telefono" prefWidth="75.0" text="Telefono" />
-                  <TableColumn fx:id="direccion" prefWidth="75.0" text="Direccion" />
-                  <TableColumn fx:id="cventas" prefWidth="75.0" text="C.ventas" />
-                  <TableColumn fx:id="cservicios" prefWidth="75.0" text="C.servicios" />
-                  <TableColumn fx:id="l_cservicios" prefWidth="75.0" text="LC.servicios" />
+                      <TableColumn fx:id="direccion" prefWidth="75.0" text="Direccion" />
+                      <TableColumn fx:id="cventas" prefWidth="75.0" text="C.ventas" />
+                      <TableColumn fx:id="cservicios" prefWidth="75.0" text="C.servicios" />
+                      <TableColumn fx:id="l_cservicios" prefWidth="75.0" text="LC.servicios" />
                   </columns>
               </TableView>
          </children>
@@ -32,6 +34,7 @@
       <VBox layoutX="256.0" layoutY="343.0" prefHeight="134.0" prefWidth="54.0" spacing="20.0">
          <children>
             <Label text="ID" />
+            <Label text="Usuario" />
             <Label text="Nombre" />
             <Label text="Apellidos" />
             <Label text="Email" />
@@ -40,6 +43,7 @@
       <VBox layoutX="310.0" layoutY="343.0" prefHeight="102.0" prefWidth="129.0" spacing="10.0">
          <children>
              <TextField fx:id="campo_id" />
+            <TextField fx:id="campo_usuario" />
              <TextField fx:id="campo_nombre" />
              <TextField fx:id="campo_apellido" />
              <TextField fx:id="campo_correo" />
@@ -51,6 +55,7 @@
             <Label text="Dirección" />
             <Label text="C.servicios" />
             <Label text="C.ventas" />
+            <Label text="lcservicios" />
          </children>
       </VBox>
       <VBox layoutX="523.0" layoutY="343.0" prefHeight="102.0" prefWidth="129.0" spacing="10.0">
@@ -59,9 +64,10 @@
             <TextField fx:id="campo_direccion" />
             <TextField fx:id="campo_cservicios" />
             <TextField fx:id="campo_cventas" prefHeight="26.0" prefWidth="58.0" />
+            <TextField fx:id="campo_l_cservicios" />
          </children>
       </VBox>
-      <VBox layoutX="684.0" layoutY="343.0" prefHeight="134.0" prefWidth="100.0" spacing="15.0">
+      <VBox layoutX="904.0" layoutY="342.0" prefHeight="134.0" prefWidth="100.0" spacing="15.0">
          <children>
             <Button fx:id="boton_crear" minWidth="100.0" mnemonicParsing="false" text="Crear" />
             <Button fx:id="boton_limpiar" minWidth="100.0" mnemonicParsing="false" text="Limpiar" />
@@ -69,10 +75,20 @@
             <Button fx:id="boton_eliminar" minWidth="100.0" mnemonicParsing="false" text="Eliminar" />
          </children>
       </VBox>
-      <TextField fx:id="campo_usuario" layoutX="300.0" layoutY="491.0" />
-      <Label layoutX="242.0" layoutY="491.0" text="Usuario" />
-      <Label layoutX="465.0" layoutY="495.0" text="lcservicios" />
-      <TextField fx:id="campo_l_cservicios" layoutX="523.0" layoutY="491.0" />
+      <VBox layoutX="684.0" layoutY="343.0" prefHeight="179.0" prefWidth="75.0" spacing="20.0">
+         <children>
+            <Label  text="Contraseña" />
+            <Label  text="Rol" />
+            <Label  text="Estado" />
+         </children>
+      </VBox>
+      <VBox layoutX="775.0" layoutY="341.0" prefHeight="160.0" prefWidth="100.0" spacing="13.0">
+         <children>
+            <PasswordField fx:id="campo_contrasenya"/>
+            <ChoiceBox prefWidth="150.0" fx:id="campo_rol"/>
+            <ChoiceBox prefWidth="150.0" fx:id="campo_estado"/>
+         </children>
+      </VBox>
 
     </children>
 </Pane>
