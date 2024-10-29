@@ -18,7 +18,6 @@ public class AgendaController {
     @FXML
     public void initialize(){
 
-
         if (DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
             botonEmpleados.setVisible(true);
         }

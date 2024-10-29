@@ -77,16 +77,16 @@
       </VBox>
       <VBox layoutX="684.0" layoutY="343.0" prefHeight="179.0" prefWidth="75.0" spacing="20.0">
          <children>
-            <Label  text="Contraseña" />
-            <Label  text="Rol" />
-            <Label  text="Estado" />
+            <Label text="Contraseña" />
+            <Label text="Rol" />
+            <Label text="Estado" />
          </children>
       </VBox>
       <VBox layoutX="775.0" layoutY="341.0" prefHeight="160.0" prefWidth="100.0" spacing="13.0">
          <children>
             <PasswordField fx:id="campo_contrasenya"/>
-            <ChoiceBox prefWidth="150.0" fx:id="campo_rol"/>
-            <ChoiceBox prefWidth="150.0" fx:id="campo_estado"/>
+            <ChoiceBox fx:id="campo_rol" prefWidth="150.0" />
+            <ChoiceBox fx:id="campo_estado" prefWidth="150.0" />
          </children>
       </VBox>
 

@@ -38,8 +38,8 @@ public class EmpleadosController {
     private ObservableList<Empleados> empleadosObervable;
 
     @FXML private TextField campo_id;
-    @FXML private TextField campo_nombre;
     @FXML private TextField campo_usuario;
+    @FXML private TextField campo_nombre;
     @FXML private TextField campo_apellido;
     @FXML private TextField campo_correo;
     @FXML private TextField campo_telefono;
@@ -47,6 +47,10 @@ public class EmpleadosController {
     @FXML private TextField campo_cservicios;
     @FXML private TextField campo_cventas;
     @FXML private  TextField campo_l_cservicios;
+
+    @FXML private PasswordField campo_contrasenya;
+    @FXML private ChoiceBox campo_rol;
+    @FXML private ChoiceBox campo_estado;
 
     @FXML private Button boton_crear;
     @FXML private Button boton_limpiar;
@@ -108,6 +112,11 @@ public class EmpleadosController {
         campo_cservicios.setText(empleadoSeleccionado.getComision_servicios().toString() + "%");
         campo_cventas.setText(empleadoSeleccionado.getComision_ventas().toString() + "%");
         campo_l_cservicios.setText(empleadoSeleccionado.getLimite_comision().toString()+ "%");
+
+        campo_contrasenya.setText(empleadoSeleccionado.getContrasenya());
+        campo_rol.setValue(empleadoSeleccionado.getRol());
+        campo_estado.setValue(empleadoSeleccionado.getEstado());
+
     }
 
     public void limpiarInputs(){
@@ -121,22 +130,14 @@ public class EmpleadosController {
         campo_cservicios.setText("");
         campo_cventas.setText("");
         campo_l_cservicios.setText("");
+
+        campo_contrasenya.setText("");
+        campo_rol.setValue(null);
+        campo_estado.setValue(null);
+
+        empleadoSeleccionado = null;
     }
 
-    public Empleados mostrarDatosTabla(){
-        try{
-            empleadosTabla.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    Empleados empleadoSeleccionado = newValue; // Objeto de la fila seleccionada
-                    rellenarInputs(empleadoSeleccionado);  //Rellena los inputs
-                }
-            });
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return empleadoSeleccionado;
-    }
 
 
     @FXML
@@ -144,6 +145,8 @@ public class EmpleadosController {
         //Inicializa la tabla
         if (empleadosTabla !=null){
             mostrarUsuarios();
+            campo_rol.getItems().addAll("administrador", "empleado", "invitado");
+            campo_estado.getItems().addAll("Activo", "Inactivo");
 
             // Establece el listener para actualizar empleadoSeleccionado al cambiar la selección
             empleadosTabla.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -156,7 +159,23 @@ public class EmpleadosController {
             //Botones
 
             boton_crear.setOnAction(event -> {
+                if (empleadoSeleccionado == null){
+                    try{
+                        Float cventas = Float.parseFloat(campo_cventas.getText().substring(0, campo_cventas.getText().length() - 1));
+                        Float cservicios = Float.parseFloat(campo_cservicios.getText().substring(0, campo_cservicios.getText().length() - 1));
+                        Float lcservicios = Float.parseFloat(campo_l_cservicios.getText().substring(0, campo_l_cservicios.getText().length() - 1));
+                        modelo.crearEmpleado(campo_id.getText(), campo_usuario.getText(), campo_nombre.getText(), campo_apellido.getText(), campo_correo.getText(), campo_contrasenya.getText(), campo_telefono.getText(), campo_direccion.getText(), cventas, cservicios, lcservicios, campo_rol.getValue().toString(), campo_estado.getValue().toString());
+                        mostrarUsuarios();
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
+                        alert.setContentText("Usuario registrado correctamente");
+                        alert.showAndWait();
+                    }
+                    catch (Exception e){
+                        Alert alert = new Alert(Alert.AlertType.WARNING );
+                        alert.showAndWait();
+                    }
+                }
 
             });
             boton_limpiar.setOnAction(event -> {
@@ -164,7 +183,14 @@ public class EmpleadosController {
             });
 
             boton_modificar.setOnAction(event ->{
+                if(empleadoSeleccionado != null){
+                    Float cventas = Float.parseFloat(campo_cventas.getText().substring(0, campo_cventas.getText().length() - 1));
+                    Float cservicios = Float.parseFloat(campo_cservicios.getText().substring(0, campo_cservicios.getText().length() - 1));
+                    Float lcservicios = Float.parseFloat(campo_l_cservicios.getText().substring(0, campo_l_cservicios.getText().length() - 1));
 
+                    modelo.editarEmpleado(campo_id.getText(), campo_usuario.getText(), campo_nombre.getText(), campo_apellido.getText(), campo_correo.getText(), campo_contrasenya.getText(), campo_telefono.getText(), campo_direccion.getText(), cventas, cservicios, lcservicios, campo_rol.getValue().toString(), campo_estado.getValue().toString());
+                    mostrarUsuarios();
+                }
             });
             boton_eliminar.setOnAction(event -> {
 

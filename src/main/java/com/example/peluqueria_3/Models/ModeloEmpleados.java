@@ -70,6 +70,8 @@ public class ModeloEmpleados extends DataBase{
             stmt.setString(12, rol);
             stmt.setString(13, estado);
 
+            stmt.executeUpdate();
+
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -131,6 +133,36 @@ public class ModeloEmpleados extends DataBase{
         return filas;
     }
 
+    public void editarEmpleado(String DNI, String usuario, String nombre, String apellido, String correo, String password, String tel, String direccion, float comision_ventas, float comision_servicios, float limite_comision_servicios, String rol, String estado){
+        DataBase db = new DataBase();
+        String query = "UPDATE trabajadores SET usuario = ?, nombre = ?, apellido = ?, correo = ?, password = ?, tel = ?, direccion = ?, comision_ventas = ?, comision_servicios = ?, limite_comision_servicios = ?, rol = ?, estado = ? WHERE DNI = ?";
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, usuario);
+            stmt.setString(2, nombre);
+            stmt.setString(3, apellido);
+            stmt.setString(4, correo);
+            stmt.setString(5, password);
+            stmt.setString(6, tel);
+            stmt.setString(7, direccion);
+            stmt.setFloat(8, comision_ventas);
+            stmt.setFloat(9, comision_servicios);
+            stmt.setFloat(10, limite_comision_servicios);
+            stmt.setString(11, rol);
+            stmt.setString(12, estado);
+            stmt.setString(13, DNI);
+
+            stmt.executeUpdate();
+
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /*
     public void cambiarEstadoEmpleado(String estado, String DNI){
         DataBase db = new DataBase();
         String query = "UPDATE trabajadores SET estado = ? WHERE DNI = ?";
@@ -163,19 +195,5 @@ public class ModeloEmpleados extends DataBase{
             System.out.println(e.getMessage());
         }
     }
-
-    public void editarEmpleado(String DNI, String usuario, String nombre, String apellido, String correo, String password, String tel, String direccion, float comision_ventas, float comision_servicios, float limite_comision_servicios, String rol, String estado){
-        DataBase db = new DataBase();
-        String query = "UPDATE trabajadores SET usuario = ? , nombre = ?, apellido = ?, correo = ?, password = ?, tel = ?, direccion = ? WHERE DNI = ?";
-        try{
-            Connection conexion = db.getConnection();
-            PreparedStatement stmt = conexion.prepareStatement(query);
-
-            stmt.setString(1, estado);
-            stmt.setString(2, DNI);
-
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+*/
 }
