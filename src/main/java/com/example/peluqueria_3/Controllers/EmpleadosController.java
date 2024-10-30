@@ -159,18 +159,25 @@ public class EmpleadosController {
             boton_crear.setOnAction(event -> {
                 if (empleadoSeleccionado == null){
                     try{
-                        Float cventas = Float.parseFloat(campo_cventas.getText().substring(0, campo_cventas.getText().length() - 1));
-                        Float cservicios = Float.parseFloat(campo_cservicios.getText().substring(0, campo_cservicios.getText().length() - 1));
-                        Float lcservicios = Float.parseFloat(campo_l_cservicios.getText().substring(0, campo_l_cservicios.getText().length() - 1));
-                        modelo.crearEmpleado(campo_id.getText(), campo_usuario.getText(), campo_nombre.getText(), campo_apellido.getText(), campo_correo.getText(), campo_contrasenya.getText(), campo_telefono.getText(), campo_direccion.getText(), cventas, cservicios, lcservicios, campo_rol.getValue().toString(), campo_estado.getValue().toString());
-                        mostrarUsuarios();
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-                        alert.setContentText("Usuario registrado correctamente");
-                        alert.showAndWait();
+                        if(!modelo.empleadoExiste(campo_id.getText())){
+                            Float cventas = Float.parseFloat(campo_cventas.getText().substring(0, campo_cventas.getText().length() - 1));
+                            Float cservicios = Float.parseFloat(campo_cservicios.getText().substring(0, campo_cservicios.getText().length() - 1));
+                            Float lcservicios = Float.parseFloat(campo_l_cservicios.getText().substring(0, campo_l_cservicios.getText().length() - 1));
+                            modelo.crearEmpleado(campo_id.getText(), campo_usuario.getText(), campo_nombre.getText(), campo_apellido.getText(), campo_correo.getText(), campo_contrasenya.getText(), campo_telefono.getText(), campo_direccion.getText(), cventas, cservicios, lcservicios, campo_rol.getValue().toString(), campo_estado.getValue().toString());
+                            mostrarUsuarios();
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setContentText("Usuario registrado correctamente");
+                            alert.showAndWait();
+                        }
+                        else{
+                            Alert alerta = new Alert(Alert.AlertType.ERROR);
+                            alerta.setContentText("Usuario ya existente");
+                            alerta.showAndWait();
+                        }
                     }
                     catch (Exception e){
                         Alert alert = new Alert(Alert.AlertType.WARNING );
+                        alert.setContentText(e.getMessage());
                         alert.showAndWait();
                     }
                 }

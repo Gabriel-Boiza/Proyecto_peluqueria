@@ -5,9 +5,33 @@ import com.example.peluqueria_3.Controllers.EmpleadosController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 public class ModeloEmpleados extends DataBase{
+
+    public boolean empleadoUsuarioExiste(String usuario){
+        DataBase db = new DataBase();
+        String query  = "SELECT usuario FROM trabajadores WHERE DNI = ?";
+        boolean usuarioEmpleadoExiste = false;
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+            stmt.setString(1, usuario);
+
+            ResultSet rs = stmt.getResultSet();
+
+            if(rs.next()){
+                usuarioEmpleadoExiste = true;
+            }
+
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return usuarioEmpleadoExiste;
+    }
 
     public Empleados validarEmpleado(String user, String contrasenya) {
 
@@ -47,6 +71,27 @@ public class ModeloEmpleados extends DataBase{
             System.out.println(e.getMessage());
         }
         return empleado;
+    }
+
+    public boolean empleadoExiste(String DNI){
+        DataBase db = new DataBase();
+        String query = "SELECT * FROM trabajadores WHERE DNI = ?";
+        boolean duplicado = false;
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+            stmt.setString(1, DNI);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                duplicado = true;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return duplicado;
     }
 
     public void crearEmpleado(String DNI,  String usuario, String nombre, String apellido, String correo, String password, String tel, String direccion,  float comision_ventas, float comision_servicios, float limite_comision_servicios, String rol, String estado){

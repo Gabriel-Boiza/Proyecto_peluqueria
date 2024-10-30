@@ -30,13 +30,12 @@ public class ModeloServicios extends  DataBase{
     public void eliminarServicio(int idServicio){
         DataBase db = new DataBase();
         String query = "DELETE FROM servicios WHERE id_servicio = ?";
-        int filas = -1;
         try{
             Connection conexion = db.getConnection();
             PreparedStatement stmt = conexion.prepareStatement(query);
 
             stmt.setInt(1, idServicio);
-            filas = stmt.executeUpdate();
+            stmt.executeUpdate();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -45,7 +44,7 @@ public class ModeloServicios extends  DataBase{
 
     public void editarServicio(int idServicio, String nombre, String descripcion, String fecha, String hora, float precio){
         DataBase db = new DataBase();
-        String query = "UPDATE productos SET nombre = ?, descripcion = ?, fecha = ?, hora = ?, precio = ?";
+        String query = "UPDATE servicios SET nombre = ?, descripcion = ?, fecha = ?, hora = ?, precio = ? WHERE id_servicio = ?";
 
         try{
             Connection conexion = db.getConnection();
@@ -56,6 +55,7 @@ public class ModeloServicios extends  DataBase{
             stmt.setString(3, fecha);
             stmt.setString(4, hora);
             stmt.setFloat(5, precio);
+            stmt.setInt(6, idServicio);
 
             stmt.executeUpdate();
         }catch (Exception e){
