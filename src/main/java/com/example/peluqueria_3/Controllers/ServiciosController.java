@@ -102,10 +102,9 @@ public class ServiciosController {
             boton_crear.setOnAction(event -> {
                 if (servicioSeleccionado == null){
                     try{
-                        int id = Integer.parseInt(campo_id.getText());
                         float precio = Float.parseFloat(campo_precio.getText());
 
-                        modelo.crearServicio(id, campo_nombre.getText(), campo_descripcion.getText(), campo_fecha.getText(), campo_hora.getText(), precio);
+                        modelo.crearServicio(campo_nombre.getText(), campo_descripcion.getText(), campo_fecha.getText(), campo_hora.getText(), precio);
                         mostrarServicios();
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 

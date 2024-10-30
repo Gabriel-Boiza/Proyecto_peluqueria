@@ -7,12 +7,12 @@ import lombok.*;
 @AllArgsConstructor
 
 public class Productos {
-    private int idProducto;
+    private Integer id_producto;
     private String nombre;
     private String marca;
     private String descripcion;
-    private float precio;
-    private int stock;
-    private String codigoBarras;
+    private Float precio;
+    private Integer stock;
+    private String codigo_barras;
 
 }

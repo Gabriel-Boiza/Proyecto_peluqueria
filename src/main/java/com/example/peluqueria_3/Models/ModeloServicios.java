@@ -7,14 +7,13 @@ import java.util.ArrayList;
 
 public class ModeloServicios extends  DataBase{
 
-    public void crearServicio(int idServicio, String nombre, String descripcion, String fecha, String hora, float precio){
+    public void crearServicio(String nombre, String descripcion, String fecha, String hora, float precio){
         DataBase db = new DataBase();
         String query = "INSERT INTO servicios (id_servicio, nombre, descripcion, fecha, hora, precio) VALUES (?, ?, ?, ?, ? ,?)";
         try{
             Connection conexion = db.getConnection();
             PreparedStatement stmt = conexion.prepareStatement(query);
 
-            stmt.setInt(1, idServicio);
             stmt.setString(2, nombre);
             stmt.setString(3, descripcion);
             stmt.setString(4, fecha);
