@@ -27,14 +27,14 @@ public class ModeloClientes extends DataBase{
             while (rs.next()) {
                 int id_cliente = rs.getInt("id_cliente");
                 String nombre =rs.getString("nombre");
-                String apeliido = rs.getString("apellido");
+                String apellido = rs.getString("apellido");
                 String correo = rs.getString("correo");
                 String telefono = rs.getString("telefono");
                 String observaciones= rs.getString("observaciones");
                 Boolean ley_datos = rs.getBoolean("ley_datos");
 
 
-                Clientes cliente = new Clientes(id_cliente, nombre, apeliido, correo, telefono, observaciones, ley_datos);
+                Clientes cliente = new Clientes(id_cliente, nombre, apellido, correo, telefono, observaciones, ley_datos);
                 array.add(cliente);
             }
 

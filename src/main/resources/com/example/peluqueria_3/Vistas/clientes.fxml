@@ -32,12 +32,17 @@
         <GridPane alignment="CENTER" hgap="10" prefHeight="1400.0" prefWidth="1600.0" vgap="10" BorderPane.alignment="CENTER">
             <children>
                 <!-- TableView for clients -->
-                <TableView fx:id="clientsTable" accessibleRole="BUTTON" prefHeight="594.0" prefWidth="1046.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                <TableView fx:id="clientesTable" accessibleRole="BUTTON" prefHeight="594.0" prefWidth="1046.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <columns>
+                        <TableColumn fx:id="colId_Cliente" text="ID Cliente" />
                         <TableColumn fx:id="colNombre" prefWidth="176.0" text="Nombre" />
                         <TableColumn fx:id="colApellido" prefWidth="287.0" text="Apellido" />
-                        <TableColumn fx:id="colEmail" prefWidth="287.0" text="Email" />
+                        <TableColumn fx:id="colCorreo" prefWidth="287.0" text="Email" />
                         <TableColumn fx:id="colTelefono" prefWidth="187.0" text="Teléfono" />
+                        <TableColumn fx:id="colObservaciones" text="Observaciones" />
+                        <TableColumn fx:id="colLeyDatos" text="Ley_datos" />
+
+
                     </columns>
                 </TableView>
 
