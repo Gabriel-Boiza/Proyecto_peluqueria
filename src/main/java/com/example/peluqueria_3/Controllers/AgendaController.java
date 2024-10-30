@@ -12,6 +12,7 @@ public class AgendaController {
 
     //Aqui irá la agenda, demomento solo se aplicarán los botones para acceder a los CRUDS
     @FXML private Button botonEmpleados;
+    @FXML private Button botonServicios;
     @FXML private Button cerrarSesion;
 
 
@@ -28,6 +29,11 @@ public class AgendaController {
         botonEmpleados.setOnAction(event -> {
             LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/empleados.fxml", "Empleados");
         });
+
+        botonServicios.setOnAction(event -> {
+            LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/servicios.fxml", "Empleados");
+        });
+
         cerrarSesion.setOnAction(event-> {
             LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "login");
         });

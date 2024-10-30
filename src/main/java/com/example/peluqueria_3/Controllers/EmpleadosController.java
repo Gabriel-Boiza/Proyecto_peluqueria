@@ -82,9 +82,7 @@ public class EmpleadosController {
     public void mostrarUsuarios(){
         ModeloEmpleados modelo = new ModeloEmpleados();
         ArrayList<Empleados> empleados = modelo.mostrarEmpleados();
-        empleadosObervable = FXCollections.observableArrayList(
-                empleados
-        );
+        empleadosObervable = FXCollections.observableArrayList(empleados);
 
         empleadosTabla.setItems(empleadosObervable);
         ID.setCellValueFactory(new PropertyValueFactory<Empleados, String>("Id_empleado"));
