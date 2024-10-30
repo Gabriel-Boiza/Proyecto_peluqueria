@@ -14,6 +14,8 @@ public class AgendaController {
     @FXML private Button botonEmpleados;
     @FXML private Button botonServicios;
     @FXML private Button cerrarSesion;
+    @FXML private Button botonClientes;
+
 
 
     @FXML
@@ -36,6 +38,9 @@ public class AgendaController {
 
         cerrarSesion.setOnAction(event-> {
             LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "login");
+        });
+        botonClientes.setOnAction(event-> {
+            LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/clientes.fxml", "clientes");
         });
     }
 

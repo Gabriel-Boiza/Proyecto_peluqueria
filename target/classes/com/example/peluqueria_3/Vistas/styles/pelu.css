@@ -1,45 +1,71 @@
 /* Estilo general del fondo */
 .root {
-    -fx-background-color: #E9E5E0;
+   -fx-background-color: #E9E5E0;
 }
+
 
 /* Estilo del título principal */
 .label-title {
-    -fx-font-family: 'Arial';
-    -fx-font-size: 58px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #3A3B38;
-    -fx-effect: dropshadow(gaussian, #B1AAA2, 4, 0.0, -4, 4);
+   -fx-font-family: 'Arial';
+   -fx-font-size: 58px;
+   -fx-font-weight: bold;
+   -fx-text-fill: #3A3B38;
+   -fx-effect: dropshadow(gaussian, #B1AAA2, 4, 0.0, -4, 4);
 }
+
 
 /* Estilo del subtítulo */
 .label-subtitle {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
+   -fx-font-size: 20px;
+   -fx-font-weight: bold;
 }
+
 
 /* Estilo para las líneas */
 .line-bold {
-    -fx-stroke: white;
-    -fx-stroke-width: 8;
+   -fx-stroke: white;
+   -fx-stroke-width: 8;
 }
 
+
 .line-thin {
-    -fx-stroke: white;
-    -fx-stroke-width: 4;
+   -fx-stroke: white;
+   -fx-stroke-width: 4;
 }
+
 
 /* Estilo para el botón de login */
 .button-login {
-    -fx-background-color: #3A3B38;
-    -fx-text-fill: white;
+   -fx-background-color: #3A3B38;
+   -fx-text-fill: white;
 }
 .button:hover {
-    -fx-background-color: #5A5B58; /* Color al pasar el mouse */
+   -fx-background-color: #5A5B58; /* Color al pasar el mouse */
 }
+
 
 /* Estilo para los campos de entrada */
 .textfield-input, .passwordfield-input {
-    -fx-pref-height: 28px;
-    -fx-pref-width: 250px;
+   -fx-pref-height: 28px;
+   -fx-pref-width: 250px;
+}
+/* Estilo para el borde de la tabla */
+.table-view {
+   -fx-border-color: black;
+   -fx-border-width: 5;
+   -fx-background-color: #f0f0f0;
+}
+
+
+/* Estilo para las celdas de la tabla */
+.table-view .column-header, .table-view .cell {
+   -fx-border-color: black;
+   -fx-border-width: 1 1 1 1;
+}
+
+
+/* Estilo para el borde inferior */
+.table-view .column-header-background {
+   -fx-border-color: black;
+   -fx-border-width: 0 0 1 0;
 }

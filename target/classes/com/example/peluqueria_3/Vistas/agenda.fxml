@@ -10,6 +10,7 @@
             <Button fx:id="cerrarSesion" layoutX="501.0" layoutY="20.0" mnemonicParsing="false" text="Cerrar sesión" />
             <Button fx:id="botonEmpleados" layoutX="400.0" layoutY="20.0" mnemonicParsing="false" text="Empleados" />
             <Button fx:id="botonServicios" layoutX="300.0" layoutY="20.0" mnemonicParsing="false" text="Servicios" />
+            <Button fx:id="botonClientes" layoutX="300.0" layoutY="20.0" mnemonicParsing="false" text="Clientes" />
          </children></Pane>
    </children>
 </Pane>
