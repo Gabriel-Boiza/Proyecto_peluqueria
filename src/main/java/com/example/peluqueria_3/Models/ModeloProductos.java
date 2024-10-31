@@ -22,6 +22,7 @@ public class ModeloProductos extends DataBase{
             stmt.setString(6, codigo_barras);
 
             stmt.executeUpdate();
+            conexion.close();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -45,6 +46,7 @@ public class ModeloProductos extends DataBase{
             stmt.setInt(7, idProducto);
 
             stmt.executeUpdate();
+            conexion.close();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -60,6 +62,7 @@ public class ModeloProductos extends DataBase{
             stmt.setInt(1, idProducto);
 
             stmt.executeUpdate();
+            conexion.close();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -80,6 +83,7 @@ public class ModeloProductos extends DataBase{
             if (rs.next()){
                 stock = rs.getInt("stock");
             }
+            conexion.close();
 
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -111,6 +115,7 @@ public class ModeloProductos extends DataBase{
                 Productos producto = new Productos(id, nombre, marca, descripcion, precio, stock, codigo_barras);
                 productos.add(producto);
             }
+            conexion.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -141,6 +146,7 @@ public class ModeloProductos extends DataBase{
 
                 producto = new Productos(id_producto, nombre, marca, descripcion, precio, stock, codigo_barras);
             }
+            conexion.close();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());

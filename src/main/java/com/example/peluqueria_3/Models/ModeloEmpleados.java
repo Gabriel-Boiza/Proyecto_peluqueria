@@ -25,7 +25,7 @@ public class ModeloEmpleados extends DataBase{
             if(rs.next()){
                 usuarioEmpleadoExiste = true;
             }
-
+            conexion.close();
 
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -67,6 +67,7 @@ public class ModeloEmpleados extends DataBase{
 
                 empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion,  comision_ventas, comision_servicios, lim_comision_servicios, rol, estado);
             }
+            conexion.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -87,6 +88,7 @@ public class ModeloEmpleados extends DataBase{
             if(rs.next()){
                 duplicado = true;
             }
+            conexion.close();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -116,6 +118,7 @@ public class ModeloEmpleados extends DataBase{
             stmt.setString(13, estado);
 
             stmt.executeUpdate();
+            conexion.close();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -155,6 +158,7 @@ public class ModeloEmpleados extends DataBase{
                 Empleados empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion, comision_ventas, comision_servicios, lim_comision_servicios, rol, estado);
                 empleados.add(empleado);
             }
+            conexion.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -171,6 +175,7 @@ public class ModeloEmpleados extends DataBase{
 
             stmt.setString(1, DNI);
             filas = stmt.executeUpdate();
+            conexion.close();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -200,7 +205,7 @@ public class ModeloEmpleados extends DataBase{
             stmt.setString(13, DNI);
 
             stmt.executeUpdate();
-
+            conexion.close();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());

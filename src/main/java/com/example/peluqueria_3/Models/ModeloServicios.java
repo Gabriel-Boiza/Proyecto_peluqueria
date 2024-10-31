@@ -22,6 +22,7 @@ public class ModeloServicios extends  DataBase{
             stmt.setFloat(5, precio);
 
             stmt.executeUpdate();
+            conexion.close();
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -36,7 +37,7 @@ public class ModeloServicios extends  DataBase{
 
             stmt.setInt(1, idServicio);
             stmt.executeUpdate();
-
+            conexion.close();
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -58,6 +59,7 @@ public class ModeloServicios extends  DataBase{
             stmt.setInt(6, idServicio);
 
             stmt.executeUpdate();
+            conexion.close();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -85,6 +87,7 @@ public class ModeloServicios extends  DataBase{
 
                 servicio = new Servicios(idServicio, nombre, descripcion, fecha, hora, precio);
             }
+            conexion.close();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -115,6 +118,7 @@ public class ModeloServicios extends  DataBase{
                 Servicios servicio = new Servicios(id, nombre, descripcion, fecha, hora, precio);
                 servicios.add(servicio);
             }
+            conexion.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

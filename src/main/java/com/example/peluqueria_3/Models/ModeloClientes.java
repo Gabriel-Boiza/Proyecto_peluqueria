@@ -22,6 +22,7 @@ public class ModeloClientes extends DataBase{
             stmt.setBoolean(6, ley_datos);
 
             stmt.executeUpdate();
+            conexion.close();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -39,6 +40,7 @@ public class ModeloClientes extends DataBase{
             stmt.setInt(1, idCliente);
 
             stmt.executeUpdate();
+            conexion.close();
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -67,6 +69,7 @@ public class ModeloClientes extends DataBase{
 
                 cliente = new Clientes(idCliente, nombre, apellido, tel, correo, observaciones, ley_datos);
             }
+            conexion.close();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -91,6 +94,7 @@ public class ModeloClientes extends DataBase{
             stmt.setInt(7, idCliente);
 
             stmt.executeUpdate();
+            conexion.close();
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -120,6 +124,7 @@ public class ModeloClientes extends DataBase{
                 Clientes cliente = new Clientes(id, nombre, apellido, tel, correo, observaciones, ley_datos);
                 clientes.add(cliente);
             }
+            conexion.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
