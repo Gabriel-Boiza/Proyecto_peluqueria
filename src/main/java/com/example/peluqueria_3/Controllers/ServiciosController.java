@@ -28,7 +28,6 @@ public class ServiciosController {
 
     private ObservableList<Servicios> serviciosObervable;
 
-    @FXML private TextField campo_id;
     @FXML private TextField campo_nombre;
     @FXML private TextField campo_descripcion;
     @FXML private TextField campo_fecha;
@@ -62,7 +61,6 @@ public class ServiciosController {
     }
 
     public void rellenarInputs(Servicios servicioSeleccionado){
-        campo_id.setText(servicioSeleccionado.getId_servicio().toString());
         campo_nombre.setText(servicioSeleccionado.getNombre());
         campo_descripcion.setText(servicioSeleccionado.getDescripcion());
         campo_fecha.setText(servicioSeleccionado.getFecha());
@@ -72,7 +70,6 @@ public class ServiciosController {
     }
 
     public void limpiarInputs(){
-        campo_id.setText("");
         campo_nombre.setText("");
         campo_descripcion.setText("");
         campo_fecha.setText("");
@@ -90,6 +87,7 @@ public class ServiciosController {
         if (serviciosTabla != null){
             mostrarServicios();
 
+
             // Establece el listener para actualizar empleadoSeleccionado al cambiar la selección
             serviciosTabla.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
@@ -97,28 +95,26 @@ public class ServiciosController {
                     rellenarInputs(servicioSeleccionado); // Rellena los inputs
                 }
             });
-            campo_id.setEditable(false);
+
 
             //Botones
 
             boton_crear.setOnAction(event -> {
-                if (servicioSeleccionado == null){
-                    try{
-                        float precio = Float.parseFloat(campo_precio.getText());
 
-                        modelo.crearServicio(campo_nombre.getText(), campo_descripcion.getText(), campo_fecha.getText(), campo_hora.getText(), precio);
-                        mostrarServicios();
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                try{
+                    float precio = Float.parseFloat(campo_precio.getText());
 
-                        alert.setContentText("Servicio registrado correctamente");
-                        alert.showAndWait();
-                    }
-                    catch (Exception e){
-                        Alert alert = new Alert(Alert.AlertType.WARNING );
-                        alert.showAndWait();
-                    }
+                    modelo.crearServicio(campo_nombre.getText(), campo_descripcion.getText(), campo_fecha.getText(), campo_hora.getText(), precio);
+                    mostrarServicios();
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                    alert.setContentText("Servicio registrado correctamente");
+                    alert.showAndWait();
                 }
-
+                catch (Exception e){
+                    Alert alert = new Alert(Alert.AlertType.WARNING );
+                    alert.showAndWait();
+                }
             });
             boton_limpiar.setOnAction(event -> {
                 limpiarInputs();
@@ -126,7 +122,7 @@ public class ServiciosController {
 
             boton_modificar.setOnAction(event ->{
                 if(servicioSeleccionado != null){
-                    int id = Integer.parseInt(campo_id.getText());
+                    int id = servicioSeleccionado.getId_servicio();
                     float precio = Float.parseFloat(campo_precio.getText());
 
                     modelo.editarServicio(id, campo_nombre.getText(), campo_descripcion.getText(), campo_fecha.getText(), campo_hora.getText(), precio);

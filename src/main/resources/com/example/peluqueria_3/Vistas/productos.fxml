@@ -12,7 +12,7 @@
     <children>
         <Pane prefHeight="532.0" prefWidth="227.0" style="-fx-background-color: #e9e5e0;" />
         <Pane layoutX="227.0" prefHeight="323.0" prefWidth="813.0" style="-fx-background-color: beige;">
-            <Button fx:id="boton_volver" layoutX="450.0" layoutY="20.0" mnemonicParsing="false" text="Volver" />
+            <Button fx:id="boton_volver" layoutX="725.0" layoutY="20.0" mnemonicParsing="false" text="Volver" />
             <children>
                 <TableView fx:id="productosTabla" layoutX="19.0" layoutY="52.0" prefHeight="239.0" prefWidth="758.0">
                     <columns>
@@ -29,7 +29,6 @@
         </Pane>
         <VBox layoutX="256.0" layoutY="343.0" prefHeight="134.0" prefWidth="54.0" spacing="20.0">
             <children>
-                <Label text="ID" />
                 <Label text="Nombre" />
                 <Label text="Marca" />
                 <Label text="Descripcion" />
@@ -37,7 +36,6 @@
         </VBox>
         <VBox layoutX="310.0" layoutY="343.0" prefHeight="102.0" prefWidth="129.0" spacing="10.0">
             <children>
-                <TextField fx:id="campo_id" />
                 <TextField fx:id="campo_nombre" />
                 <TextField fx:id="campo_marca" />
                 <TextField fx:id="campo_descripcion" />

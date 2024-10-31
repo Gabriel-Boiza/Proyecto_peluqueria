@@ -27,7 +27,6 @@ public class ProductosController {
 
     private ObservableList<Productos> productosObervable;
 
-    @FXML private TextField campo_id;
     @FXML private TextField campo_nombre;
     @FXML private TextField campo_marca;
     @FXML private TextField campo_descripcion;
@@ -63,7 +62,6 @@ public class ProductosController {
     }
 
     public void rellenarInputs(Productos productoSeleccionado){
-        campo_id.setText(productoSeleccionado.getId_producto().toString());
         campo_nombre.setText(productoSeleccionado.getNombre());
         campo_marca.setText(productoSeleccionado.getMarca());
         campo_descripcion.setText(productoSeleccionado.getDescripcion());
@@ -74,7 +72,6 @@ public class ProductosController {
     }
 
     public void limpiarInputs(){
-        campo_id.setText("");
         campo_nombre.setText("");
         campo_marca.setText("");
         campo_descripcion.setText("");
@@ -104,24 +101,22 @@ public class ProductosController {
             //Botones
 
             boton_crear.setOnAction(event -> {
-                if (productosSeleccionado == null){
-                    try{
-                        float precio = Float.parseFloat(campo_precio.getText());
-                        int stock = Integer.parseInt(campo_stock.getText());
 
-                        modelo.crearProducto(campo_nombre.getText(), campo_marca.getText(), campo_descripcion.getText(), precio, stock, campo_codigo_barras.getText());
-                        mostrarProductos();
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                try{
+                    float precio = Float.parseFloat(campo_precio.getText());
+                    int stock = Integer.parseInt(campo_stock.getText());
 
-                        alert.setContentText("Producto registrado correctamente");
-                        alert.showAndWait();
-                    }
-                    catch (Exception e){
-                        Alert alert = new Alert(Alert.AlertType.WARNING );
-                        alert.showAndWait();
-                    }
+                    modelo.crearProducto(campo_nombre.getText(), campo_marca.getText(), campo_descripcion.getText(), precio, stock, campo_codigo_barras.getText());
+                    mostrarProductos();
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                    alert.setContentText("Producto registrado correctamente");
+                    alert.showAndWait();
                 }
-
+                catch (Exception e){
+                    Alert alert = new Alert(Alert.AlertType.WARNING );
+                    alert.showAndWait();
+                }
             });
             boton_limpiar.setOnAction(event -> {
                 limpiarInputs();
@@ -129,7 +124,7 @@ public class ProductosController {
 
             boton_modificar.setOnAction(event ->{
                 if(productosSeleccionado != null){
-                    int id = Integer.parseInt(campo_id.getText());
+                    int id = productosSeleccionado.getId_producto();
                     float precio = Float.parseFloat(campo_precio.getText());
                     int stock = Integer.parseInt(campo_stock.getText());
 

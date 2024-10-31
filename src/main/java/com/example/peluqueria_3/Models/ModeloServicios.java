@@ -9,16 +9,17 @@ public class ModeloServicios extends  DataBase{
 
     public void crearServicio(String nombre, String descripcion, String fecha, String hora, float precio){
         DataBase db = new DataBase();
-        String query = "INSERT INTO servicios (id_servicio, nombre, descripcion, fecha, hora, precio) VALUES (?, ?, ?, ?, ? ,?)";
+        String query = "INSERT INTO servicios (nombre, descripcion, fecha, hora, precio) VALUES (?, ?, ?, ? ,?)";
         try{
             Connection conexion = db.getConnection();
             PreparedStatement stmt = conexion.prepareStatement(query);
 
-            stmt.setString(2, nombre);
-            stmt.setString(3, descripcion);
-            stmt.setString(4, fecha);
-            stmt.setString(5, hora);
-            stmt.setFloat(6, precio);
+
+            stmt.setString(1, nombre);
+            stmt.setString(2, descripcion);
+            stmt.setString(3, fecha);
+            stmt.setString(4, hora);
+            stmt.setFloat(5, precio);
 
             stmt.executeUpdate();
         }catch (Exception e) {

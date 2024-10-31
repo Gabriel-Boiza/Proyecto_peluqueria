@@ -9,7 +9,7 @@ public class ModeloClientes extends DataBase{
 
     public void crearCliente(String nombre, String apellido, String tel, String correo, String observaciones, boolean ley_datos){
         DataBase db = new DataBase();
-        String query = "INSERT INTO clientes (nombre, apellido, correo, observaciones, ley_datos) VALUES (?, ?, ?, ?, ? ,?)";
+        String query = "INSERT INTO clientes (nombre, apellido, tel, correo, observaciones, ley_datos) VALUES (?, ?, ?, ?, ? ,?)";
         try{
             Connection conexion = db.getConnection();
             PreparedStatement stmt = conexion.prepareStatement(query);

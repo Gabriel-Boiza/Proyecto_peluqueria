@@ -27,13 +27,12 @@ public class ClientesController {
 
     private ObservableList<Clientes> clientesObervable;
 
-    @FXML private TextField campo_id;
     @FXML private TextField campo_nombre;
     @FXML private TextField campo_apellido;
     @FXML private TextField campo_telefono;
     @FXML private TextField campo_correo;
     @FXML private TextField campo_observaciones;
-    @FXML private TextField campo_ley_datos;
+    @FXML private ChoiceBox campo_ley_datos;
 
     @FXML private Button boton_volver;
     @FXML private Button boton_crear;
@@ -73,8 +72,6 @@ public class ClientesController {
 
     public void rellenarInputs(Clientes clientesSeleccionado){
         String res;
-
-        campo_id.setText(clientesSeleccionado.getId_cliente().toString());
         campo_nombre.setText(clientesSeleccionado.getNombre());
         campo_apellido.setText(clientesSeleccionado.getApellido());
         campo_telefono.setText(clientesSeleccionado.getTel());
@@ -86,17 +83,16 @@ public class ClientesController {
         }else{
             res = "NO";
         }
-        campo_ley_datos.setText(res);
+        campo_ley_datos.setValue(res);
     }
 
     public void limpiarInputs(){
-        campo_id.setText("");
         campo_nombre.setText("");
         campo_apellido.setText("");
         campo_telefono.setText("");
         campo_correo.setText("");
         campo_observaciones.setText("");
-        campo_ley_datos.setText("");
+        campo_ley_datos.setValue("");
 
         clientesSeleccionado = null;
     }
@@ -108,6 +104,7 @@ public class ClientesController {
         //Inicializa la tabla
         if (clientesTabla != null){
             mostrarClientes();
+            campo_ley_datos.getItems().addAll("SI", "NO");
 
             // Establece el listener para actualizar empleadoSeleccionado al cambiar la selección
             clientesTabla.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -120,23 +117,23 @@ public class ClientesController {
             //Botones
 
             boton_crear.setOnAction(event -> {
-                if (clientesSeleccionado == null){
-                    try{
-                        Boolean leyDatos = Boolean.parseBoolean(campo_ley_datos.getText());
 
-                        modelo.crearCliente(campo_nombre.getText(), campo_apellido.getText(), campo_telefono.getText(), campo_correo.getText(), campo_observaciones.getText(), leyDatos);
-                        mostrarClientes();
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                try{
+                    clientesSeleccionado = null;
 
-                        alert.setContentText("Cliente registrado correctamente");
-                        alert.showAndWait();
-                    }
-                    catch (Exception e){
-                        Alert alert = new Alert(Alert.AlertType.WARNING );
-                        alert.showAndWait();
-                    }
+                    boolean leyDatos = campo_ley_datos.getValue().equals("SI") ? true : false;
+
+                    modelo.crearCliente(campo_nombre.getText(), campo_apellido.getText(), campo_telefono.getText(), campo_correo.getText(), campo_observaciones.getText(), leyDatos);
+                    mostrarClientes();
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                    alert.setContentText("Cliente registrado correctamente");
+                    alert.showAndWait();
                 }
-
+                catch (Exception e){
+                    Alert alert = new Alert(Alert.AlertType.WARNING );
+                    alert.showAndWait();
+                }
             });
             boton_limpiar.setOnAction(event -> {
                 limpiarInputs();
@@ -144,8 +141,8 @@ public class ClientesController {
 
             boton_modificar.setOnAction(event ->{
                 if(clientesSeleccionado != null){
-                    int id = Integer.parseInt(campo_id.getText());
-                    boolean leyDatos = Boolean.parseBoolean(campo_ley_datos.getText());
+                    int id = clientesSeleccionado.getId_cliente();
+                    boolean leyDatos = campo_ley_datos.getValue().equals("SI") ? true : false;
 
                     modelo.editarCliente(id, campo_nombre.getText(), campo_apellido.getText(), campo_telefono.getText(), campo_correo.getText(), campo_observaciones.getText(), leyDatos);
                     mostrarClientes();
