@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 public class AgendaController {
 
     //Aqui irá la agenda, demomento solo se aplicarán los botones para acceder a los CRUDS
+    @FXML private Button botonClientes;
     @FXML private Button botonProductos;
     @FXML private Button botonEmpleados;
     @FXML private Button botonServicios;
@@ -29,6 +30,10 @@ public class AgendaController {
             botonEmpleados.setVisible(false);
         }
         // ACCIONES DE LOS BOTONES
+        botonClientes.setOnAction(event -> {
+            LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/clientes.fxml", "Clientes");
+        });
+
         botonProductos.setOnAction(event -> {
             LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/productos.fxml", "Productos");
         });

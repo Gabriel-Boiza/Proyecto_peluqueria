@@ -35,6 +35,7 @@ public class ProductosController {
     @FXML private TextField campo_stock;
     @FXML private TextField campo_codigo_barras;
 
+    @FXML private Button boton_volver;
     @FXML private Button boton_crear;
     @FXML private Button boton_limpiar;
     @FXML private Button boton_modificar;
@@ -143,6 +144,10 @@ public class ProductosController {
                     productosObervable.remove(productosSeleccionado);
                 }
 
+            });
+
+            boton_volver.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
             });
         }
 

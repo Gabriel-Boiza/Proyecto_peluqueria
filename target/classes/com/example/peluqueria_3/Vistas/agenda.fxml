@@ -7,10 +7,11 @@
    <children>
       <Pane prefHeight="65.0" prefWidth="600.0" style="-fx-background-color: grey;">
          <children>
-            <Button fx:id="cerrarSesion" layoutX="501.0" layoutY="20.0" mnemonicParsing="false" text="Cerrar sesión" />
+            <Button fx:id="cerrarSesion" layoutX="500.0" layoutY="20.0" mnemonicParsing="false" text="Cerrar sesión" />
             <Button fx:id="botonEmpleados" layoutX="400.0" layoutY="20.0" mnemonicParsing="false" text="Empleados" />
             <Button fx:id="botonServicios" layoutX="300.0" layoutY="20.0" mnemonicParsing="false" text="Servicios" />
             <Button fx:id="botonProductos" layoutX="200.0" layoutY="20.0" mnemonicParsing="false" text="Productos" />
+            <Button fx:id="botonClientes" layoutX="100.0" layoutY="20.0" mnemonicParsing="false" text="Clientes" />
          </children></Pane>
    </children>
 </Pane>

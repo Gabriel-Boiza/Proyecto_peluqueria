@@ -12,6 +12,7 @@
     <children>
         <Pane prefHeight="532.0" prefWidth="227.0" style="-fx-background-color: #e9e5e0;" />
         <Pane layoutX="227.0" prefHeight="323.0" prefWidth="813.0" style="-fx-background-color: beige;">
+            <Button fx:id="boton_volver" layoutX="450.0" layoutY="20.0" mnemonicParsing="false" text="Volver" />
             <children>
                 <TableView fx:id="productosTabla" layoutX="19.0" layoutY="52.0" prefHeight="239.0" prefWidth="758.0">
                     <columns>

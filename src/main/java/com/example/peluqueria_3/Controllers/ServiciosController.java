@@ -35,6 +35,7 @@ public class ServiciosController {
     @FXML private TextField campo_hora;
     @FXML private TextField campo_precio;
 
+    @FXML private Button boton_volver;
     @FXML private Button boton_crear;
     @FXML private Button boton_limpiar;
     @FXML private Button boton_modificar;
@@ -96,6 +97,7 @@ public class ServiciosController {
                     rellenarInputs(servicioSeleccionado); // Rellena los inputs
                 }
             });
+            campo_id.setEditable(false);
 
             //Botones
 
@@ -138,6 +140,9 @@ public class ServiciosController {
                     serviciosObervable.remove(servicioSeleccionado);
                 }
 
+            });
+            boton_volver.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
             });
         }
 

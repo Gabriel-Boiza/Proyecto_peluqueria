@@ -1,113 +1,61 @@
 package com.example.peluqueria_3.Models;
 
-
-import lombok.Data;
-
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-
 
 public class ModeloClientes extends DataBase{
 
-
-    private int id_Cliente;
-
-
-    public ArrayList<Clientes> cargarClientes() {
+    public void crearCliente(String nombre, String apellido, String tel, String correo, String observaciones, boolean ley_datos){
         DataBase db = new DataBase();
-        ArrayList<Clientes> array = new ArrayList<>();
-        String query = "SELECT * FROM clientes";
-
-
-        try {
-            Connection conn = db.getConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                int id_cliente = rs.getInt("id_cliente");
-                String nombre =rs.getString("nombre");
-                String apellido = rs.getString("apellido");
-                String correo = rs.getString("correo");
-                String telefono = rs.getString("telefono");
-                String observaciones= rs.getString("observaciones");
-                Boolean ley_datos = rs.getBoolean("ley_datos");
-
-
-                Clientes cliente = new Clientes(id_cliente, nombre, apellido, correo, telefono, observaciones, ley_datos);
-                array.add(cliente);
-            }
-
-
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return array;
-    }
-
-
-
-
-
-
-    public void crearCliente(String nombre, String apellido, String correo, String telefono, String observaciones, boolean leyDatos) {
-        String query = "INSERT INTO clientes (nombre, apellido, telefono, correo, observaciones, ley_datos) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conexion = getConnection();
-             PreparedStatement stmt = conexion.prepareStatement(query)) {
-
-
-            stmt.setString(1, nombre);
-            stmt.setString(2, apellido);
-            stmt.setString(3, telefono);
-            stmt.setString(4, correo);
-            stmt.setString(5, observaciones);
-            stmt.setBoolean(6, leyDatos);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-
-
-
-    public void eliminarCliente(int idCliente){
-        DataBase db = new DataBase();
-        String query = "DELETE FROM clientes WHERE tel = ?";
-
-
+        String query = "INSERT INTO clientes (nombre, apellido, correo, observaciones, ley_datos) VALUES (?, ?, ?, ?, ? ,?)";
         try{
             Connection conexion = db.getConnection();
             PreparedStatement stmt = conexion.prepareStatement(query);
 
+            stmt.setString(1, nombre);
+            stmt.setString(2, apellido);
+            stmt.setString(3, tel);
+            stmt.setString(4, correo);
+            stmt.setString(5, observaciones);
+            stmt.setBoolean(6, ley_datos);
 
-            stmt.setInt(1, idCliente);
-
+            stmt.executeUpdate();
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
+    public void eliminarCliente(int idCliente){
+        DataBase db = new DataBase();
+        String query = "DELETE FROM clientes WHERE id_cliente = ?";
+
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setInt(1, idCliente);
+
+            stmt.executeUpdate();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     public Clientes obtenerCliente(int idCliente){
         DataBase db = new DataBase();
         String query = "SELECT * FROM clientes WHERE id_cliente = ?";
-
 
         Clientes cliente = null;
         try{
             Connection conexion = db.getConnection();
             PreparedStatement stmt = conexion.prepareStatement(query);
 
-
             stmt.setInt(1, idCliente);
 
-
             ResultSet rs = stmt.executeQuery();   //devuelve las filas de la query
-
 
             if (rs.next()) {
                 String nombre = rs.getString("nombre");
@@ -115,14 +63,10 @@ public class ModeloClientes extends DataBase{
                 String tel = rs.getString("tel");
                 String correo = rs.getString("correo");
                 String observaciones = rs.getString("observaciones");
-                Boolean ley_datos = rs.getBoolean("ley_datos"); // Verifica que el nombre sea correcto en la base de datos
-
-
-
+                boolean ley_datos = rs.getBoolean("ley_datos");
 
                 cliente = new Clientes(idCliente, nombre, apellido, tel, correo, observaciones, ley_datos);
             }
-
 
         }catch (Exception e) {
             System.out.println(e.getMessage());
@@ -130,25 +74,55 @@ public class ModeloClientes extends DataBase{
         return cliente;
     }
 
+    public void editarCliente(int idCliente, String nombre, String apellido, String tel, String correo, String observaciones, boolean ley_datos){
+        DataBase db = new DataBase();
+        String query = "UPDATE clientes SET nombre = ?, apellido = ?, tel = ?, correo = ?, observaciones = ?, ley_datos = ? WHERE id_cliente = ?";
 
-    public void editarCliente(int idCliente, String nombre, String apellido, String tel, String correo, String observaciones, boolean ley_Datos) {
-        String query = "UPDATE clientes SET nombre = ?, apellido = ?, telefono = ?, correo = ?, observaciones = ?, ley_datos = ? WHERE id_cliente = ?";
-        try (Connection conexion = getConnection();
-             PreparedStatement stmt = conexion.prepareStatement(query)) {
-
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
 
             stmt.setString(1, nombre);
             stmt.setString(2, apellido);
             stmt.setString(3, tel);
             stmt.setString(4, correo);
             stmt.setString(5, observaciones);
-            stmt.setBoolean(6, ley_Datos);
+            stmt.setBoolean(6, ley_datos);
             stmt.setInt(7, idCliente);
+
             stmt.executeUpdate();
-        } catch (SQLException e) {
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
 
+    public ArrayList<Clientes> mostrarClientes(){
 
+        ArrayList<Clientes> clientes = new ArrayList<Clientes>();
+        DataBase db = new DataBase();
+        String query = "SELECT * FROM clientes";
+
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            ResultSet rs = stmt.executeQuery();   //devuelve las filas de la query
+
+            while (rs.next()){  //mientras existan registros
+                Integer id = rs.getInt("id_cliente");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String tel = rs.getString("tel");
+                String correo = rs.getString("correo");
+                String observaciones = rs.getString("observaciones");
+                Boolean ley_datos = rs.getBoolean("ley_datos");
+
+                Clientes cliente = new Clientes(id, nombre, apellido, tel, correo, observaciones, ley_datos);
+                clientes.add(cliente);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return clientes;
+    }
 }

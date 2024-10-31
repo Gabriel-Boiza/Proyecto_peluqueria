@@ -1,112 +1,169 @@
 package com.example.peluqueria_3.Controllers;
 
-
-import com.example.peluqueria_3.Models.Clientes;
 import com.example.peluqueria_3.Models.ModeloClientes;
+import com.example.peluqueria_3.Models.Clientes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.util.ArrayList;
 
 public class ClientesController {
 
+    ModeloClientes modelo = new ModeloClientes();
 
-    @FXML
-    private TableView<Clientes> clientesTable;
-    @FXML
-    private TableColumn<Clientes, Integer> colId_Cliente;
-    @FXML
-    private TableColumn<Clientes, String> colNombre;
-    @FXML
-    private TableColumn<Clientes, String> colApellido;
-    @FXML
-    private TableColumn<Clientes, String> colCorreo;
-    @FXML
-    private TableColumn<Clientes, String> colTelefono;
-    @FXML
-    private TableColumn<Clientes, String> colObservaciones;
-    @FXML
-    private TableColumn<Clientes, Boolean> colLeyDatos;
+    //Elementos vista CRUD clientes
 
+    @FXML private TableView<Clientes> clientesTabla;
+    @FXML private TableColumn<Clientes, Integer> ID;
+    @FXML private TableColumn<Clientes, String> nombre;
+    @FXML private TableColumn<Clientes, String> apellido;
+    @FXML private TableColumn<Clientes, String> telefono;
+    @FXML private TableColumn<Clientes, String> correo;
+    @FXML private TableColumn<Clientes, String> observaciones;
+    @FXML private TableColumn<Clientes, Boolean> ley_datos;
 
-    @FXML
-    private TextField txtNombre, txtApellido, txtCorreo, txtTelefono, txtObservaciones;
+    private ObservableList<Clientes> clientesObervable;
 
+    @FXML private TextField campo_id;
+    @FXML private TextField campo_nombre;
+    @FXML private TextField campo_apellido;
+    @FXML private TextField campo_telefono;
+    @FXML private TextField campo_correo;
+    @FXML private TextField campo_observaciones;
+    @FXML private TextField campo_ley_datos;
 
-    private ObservableList<Clientes> clientesList = FXCollections.observableArrayList();
-    private ModeloClientes modeloClientes = new ModeloClientes();
+    @FXML private Button boton_volver;
+    @FXML private Button boton_crear;
+    @FXML private Button boton_limpiar;
+    @FXML private Button boton_modificar;
+    @FXML private Button boton_eliminar;
 
-
-    @FXML
-    public void initialize() {
-        // Configuración de columnas para que muestren los datos correctos de Clientes
-        colId_Cliente.setCellValueFactory(new PropertyValueFactory<>("id_Cliente"));
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colApellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
-        colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-        colTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-        colObservaciones.setCellValueFactory(new PropertyValueFactory<>("observaciones"));
-        colLeyDatos.setCellValueFactory(new PropertyValueFactory<>("ley_datos"));
+    Clientes clientesSeleccionado;
 
 
-        cargarClientes();  // Cargar los datos al inicializar
+
+    // METODOS
+
+    public void mostrarClientes(){
+        ModeloClientes modelo = new ModeloClientes();
+        ArrayList<Clientes> clientes = modelo.mostrarClientes();
+        clientesObervable = FXCollections.observableArrayList(clientes);
+
+        clientesTabla.setItems(clientesObervable);
+        ID.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
+        nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        apellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
+        telefono.setCellValueFactory(new PropertyValueFactory<>("tel"));
+        correo.setCellValueFactory(new PropertyValueFactory<>("correo"));
+        observaciones.setCellValueFactory(new PropertyValueFactory<>("observaciones"));
+        ley_datos.setCellValueFactory(new PropertyValueFactory<>("ley_datos"));
+
+        // Mostrar Si o No en la tabla
+        ley_datos.setCellFactory(columna -> new TableCell<>(){
+            @Override
+            protected  void updateItem(Boolean item, boolean empty){
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item ? "SI" : "NO");
+            }
+        });
     }
 
+    public void rellenarInputs(Clientes clientesSeleccionado){
+        String res;
 
-    // Método para cargar clientes desde la base de datos
-    private void cargarClientes() {
-        clientesList.clear();
-        clientesList.addAll(modeloClientes.cargarClientes());
-        clientesTable.setItems(clientesList);
-    }
+        campo_id.setText(clientesSeleccionado.getId_cliente().toString());
+        campo_nombre.setText(clientesSeleccionado.getNombre());
+        campo_apellido.setText(clientesSeleccionado.getApellido());
+        campo_telefono.setText(clientesSeleccionado.getTel());
+        campo_correo.setText(clientesSeleccionado.getCorreo());
+        campo_observaciones.setText(clientesSeleccionado.getObservaciones());
 
-
-    // Método para agregar un cliente
-    @FXML
-    private void handleAgregarCliente() {
-        String nombre = txtNombre.getText();
-        String apellido = txtApellido.getText();
-        String correo = txtCorreo.getText();
-        String telefono = txtTelefono.getText();
-        String observaciones = txtObservaciones.getText();
-        boolean leyDatos = true; // Puedes cambiar esto según la lógica de la aplicación
-
-
-        modeloClientes.crearCliente(nombre, apellido, correo, telefono, observaciones, leyDatos);
-        cargarClientes(); // Actualiza la tabla después de agregar
-    }
-
-
-    // Método para editar un cliente
-    @FXML
-    private void handleEditarCliente() {
-        Clientes clienteSeleccionado = clientesTable.getSelectionModel().getSelectedItem();
-        if (clienteSeleccionado != null) {
-            String nombre = txtNombre.getText();
-            String apellido = txtApellido.getText();
-            String correo = txtCorreo.getText();
-            String telefono = txtTelefono.getText();
-            String observaciones = txtObservaciones.getText();
-            boolean leyDatos = true; // Ajustar según sea necesario
-
-
-            modeloClientes.editarCliente(clienteSeleccionado.getId_cliente(), nombre, apellido, telefono, correo, observaciones, leyDatos);
-            cargarClientes(); // Actualiza la tabla después de editar
+        if (clientesSeleccionado.getLey_datos()){
+            res = "SI";
+        }else{
+            res = "NO";
         }
+        campo_ley_datos.setText(res);
+    }
+
+    public void limpiarInputs(){
+        campo_id.setText("");
+        campo_nombre.setText("");
+        campo_apellido.setText("");
+        campo_telefono.setText("");
+        campo_correo.setText("");
+        campo_observaciones.setText("");
+        campo_ley_datos.setText("");
+
+        clientesSeleccionado = null;
     }
 
 
-    // Método para eliminar un cliente
+
     @FXML
-    private void handleEliminarCliente() {
-        Clientes clienteSeleccionado = clientesTable.getSelectionModel().getSelectedItem();
-        if (clienteSeleccionado != null) {
-            modeloClientes.eliminarCliente(clienteSeleccionado.getId_cliente());
-            cargarClientes(); // Actualiza la tabla después de eliminar
+    public void initialize(){
+        //Inicializa la tabla
+        if (clientesTabla != null){
+            mostrarClientes();
+
+            // Establece el listener para actualizar empleadoSeleccionado al cambiar la selección
+            clientesTabla.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    clientesSeleccionado = newValue; // Actualiza el empleadoSeleccionado aquí
+                    rellenarInputs(clientesSeleccionado); // Rellena los inputs
+                }
+            });
+
+            //Botones
+
+            boton_crear.setOnAction(event -> {
+                if (clientesSeleccionado == null){
+                    try{
+                        Boolean leyDatos = Boolean.parseBoolean(campo_ley_datos.getText());
+
+                        modelo.crearCliente(campo_nombre.getText(), campo_apellido.getText(), campo_telefono.getText(), campo_correo.getText(), campo_observaciones.getText(), leyDatos);
+                        mostrarClientes();
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                        alert.setContentText("Cliente registrado correctamente");
+                        alert.showAndWait();
+                    }
+                    catch (Exception e){
+                        Alert alert = new Alert(Alert.AlertType.WARNING );
+                        alert.showAndWait();
+                    }
+                }
+
+            });
+            boton_limpiar.setOnAction(event -> {
+                limpiarInputs();
+            });
+
+            boton_modificar.setOnAction(event ->{
+                if(clientesSeleccionado != null){
+                    int id = Integer.parseInt(campo_id.getText());
+                    boolean leyDatos = Boolean.parseBoolean(campo_ley_datos.getText());
+
+                    modelo.editarCliente(id, campo_nombre.getText(), campo_apellido.getText(), campo_telefono.getText(), campo_correo.getText(), campo_observaciones.getText(), leyDatos);
+                    mostrarClientes();
+                }
+            });
+            boton_eliminar.setOnAction(event -> {
+
+                if(clientesSeleccionado != null){
+                    modelo.eliminarCliente(clientesSeleccionado.getId_cliente());
+                    clientesObervable.remove(clientesSeleccionado);
+                }
+
+            });
+
+            boton_volver.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            });
         }
+
     }
 }

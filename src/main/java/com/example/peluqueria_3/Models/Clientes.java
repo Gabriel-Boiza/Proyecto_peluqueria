@@ -3,16 +3,15 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
-@Data
 @AllArgsConstructor
+
 public class Clientes {
-    private int id_cliente;
+    private Integer id_cliente;
     private String nombre;
     private String apellido;
-    private String telefono;
+    private String tel;
     private String correo;
     private String observaciones;
-    private boolean ley_datos;
+    private Boolean ley_datos;
+
 }
-
-
