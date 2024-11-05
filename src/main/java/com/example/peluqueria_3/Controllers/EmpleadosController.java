@@ -7,9 +7,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class EmpleadosController {
@@ -22,6 +26,8 @@ public class EmpleadosController {
     @FXML private TextField input_usuario;
 
     //Elementos vista CRUD empleados
+
+    @FXML private Label welcome;
 
     @FXML private TableView<Empleados> empleadosTabla;
     @FXML private TableColumn<Empleados, String> ID;
@@ -46,7 +52,7 @@ public class EmpleadosController {
     @FXML private TextField campo_direccion;
     @FXML private TextField campo_cservicios;
     @FXML private TextField campo_cventas;
-    @FXML private  TextField campo_l_cservicios;
+    @FXML private TextField campo_l_cservicios;
 
     @FXML private PasswordField campo_contrasenya;
     @FXML private ChoiceBox campo_rol;
@@ -57,6 +63,12 @@ public class EmpleadosController {
     @FXML private Button boton_limpiar;
     @FXML private Button boton_modificar;
     @FXML private Button boton_eliminar;
+
+    // Botones Nav
+    @FXML private Button agenda;
+
+    // Boton salir
+    @FXML private Button salir;
 
     Empleados empleadoSeleccionado;
 
@@ -71,9 +83,7 @@ public class EmpleadosController {
 
             if (empleadoRegistrado != null) {
                 DatosGlobales.setEmpleadoActual(empleadoRegistrado);
-
                 LoadStage loadStage = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
-
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -138,7 +148,6 @@ public class EmpleadosController {
     }
 
 
-
     @FXML
     public void initialize(){
         //Inicializa la tabla
@@ -154,7 +163,6 @@ public class EmpleadosController {
                     rellenarInputs(empleadoSeleccionado); // Rellena los inputs
                 }
             });
-
             //Botones
 
             boton_crear.setOnAction(event -> {
@@ -210,15 +218,13 @@ public class EmpleadosController {
             boton_volver.setOnAction(event ->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
             });
+            agenda.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            });
+
+            salir.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
+            });
         }
-
     }
-
-
-
-
-
-
-
-
 }

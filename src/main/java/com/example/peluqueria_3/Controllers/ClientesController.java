@@ -40,6 +40,12 @@ public class ClientesController {
     @FXML private Button boton_modificar;
     @FXML private Button boton_eliminar;
 
+    // Boton nav
+    @FXML private Button agenda;
+
+    // Boton Salir
+    @FXML private Button salir;
+
     Clientes clientesSeleccionado;
 
 
@@ -159,6 +165,14 @@ public class ClientesController {
 
             boton_volver.setOnAction(event ->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            });
+
+            agenda.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            });
+
+            salir.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
             });
         }
 

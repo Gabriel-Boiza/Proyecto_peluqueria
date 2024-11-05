@@ -1,0 +1,81 @@
+#boton_volver {
+  -fx-background-color: transparent;
+  -fx-border-color: black;
+  -fx-border-width: 1px;
+}
+
+#boton_volver:pressed {
+  -fx-background-color: black;
+  -fx-text-fill: white;
+}
+
+#boton_volver:hover {
+  -fx-background-color: black;
+  -fx-text-fill: white;
+}
+
+.div_nav{
+    -fx-background-color: transparent;
+    -fx-border: none;
+    -fx-text-fill: gray;
+    -fx-border-color: transparent transparent gray transparent;
+    -fx-border-width: 1px;
+}
+
+.div_nav:hover {
+    /*-fx-background-color: #c8bfba;*/
+    -fx-text-fill: white;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-border-width: 1px;
+    /*-fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-transition: -fx-scale 0.5s ease-in-out;*/
+}
+
+.div_nav:pressed {
+    -fx-background-color: #d0d0d0;
+}
+
+#salir{
+    -fx-background-color: transparent;
+    -fx-border: none;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+#salir:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-transition: -fx-scale 0.5s ease-in-out;
+}
+
+.input{
+    -fx-background-color: transparent;
+    -fx-border: none;
+    -fx-border-color: transparent transparent black transparent;
+    -fx-border-width: 1px;
+}
+
+.acciones{
+    -fx-background-color: transparent;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+}
+
+.acciones:pressed{
+    -fx-background-color: #d0d0d0;
+}
+
+.acciones:hover{
+    -fx-background-color: #d0d0d0;
+}
+
+.table-view .table-header-cell {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-border-insets: 0;
+}

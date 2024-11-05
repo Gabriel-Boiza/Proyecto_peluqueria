@@ -40,6 +40,9 @@ public class ServiciosController {
     @FXML private Button boton_modificar;
     @FXML private Button boton_eliminar;
 
+    // Boton
+    @FXML private Button agenda;
+    @FXML private Button salir;
     Servicios servicioSeleccionado;
 
 
@@ -139,6 +142,14 @@ public class ServiciosController {
             });
             boton_volver.setOnAction(event ->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            });
+
+            agenda.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            });
+
+            salir.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
             });
         }
 
