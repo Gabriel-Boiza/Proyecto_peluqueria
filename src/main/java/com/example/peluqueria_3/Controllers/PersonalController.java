@@ -1,15 +1,10 @@
 package com.example.peluqueria_3.Controllers;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class AgendaController {
+public class PersonalController {
 
     @FXML private Text bienvenido;
     //Aqui irá la agenda, demomento solo se aplicarán los botones para acceder a los CRUDS
@@ -29,7 +24,6 @@ public class AgendaController {
 
     @FXML
     public void initialize(){
-        bienvenido.setText("hola1");
 
         if (DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
             botonEmpleados.setVisible(true);
@@ -59,7 +53,7 @@ public class AgendaController {
         });
 
         agenda.setOnAction(event-> {
-            LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "login");
+            LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "login");
         });
 
 

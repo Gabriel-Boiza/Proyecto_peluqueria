@@ -4,6 +4,7 @@ import com.example.peluqueria_3.Controllers.DatosGlobales;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;

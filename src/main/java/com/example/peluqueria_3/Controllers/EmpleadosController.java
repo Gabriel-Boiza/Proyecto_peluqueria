@@ -4,16 +4,15 @@ import com.example.peluqueria_3.Models.Empleados;
 import com.example.peluqueria_3.Models.ModeloEmpleados;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class EmpleadosController {
@@ -54,6 +53,8 @@ public class EmpleadosController {
     @FXML private TextField campo_cventas;
     @FXML private TextField campo_l_cservicios;
 
+    @FXML private TextField buscador;
+
     @FXML private PasswordField campo_contrasenya;
     @FXML private ChoiceBox campo_rol;
     @FXML private ChoiceBox campo_estado;
@@ -83,7 +84,7 @@ public class EmpleadosController {
 
             if (empleadoRegistrado != null) {
                 DatosGlobales.setEmpleadoActual(empleadoRegistrado);
-                LoadStage loadStage = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+                LoadStage loadStage = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Personal");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -147,12 +148,31 @@ public class EmpleadosController {
         empleadoSeleccionado = null;
     }
 
+    public void filtroBuscador(TextField buscador, TableView<Empleados> tabla){
+        FilteredList<Empleados> filtro = new FilteredList<>(empleadosObervable,p -> true);
+        buscador.textProperty().addListener((observable, oldValue, newValue) ->{
+            filtro.setPredicate(item ->{
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Filtrar por nombre o categoría
+                String lowerCaseFilter = newValue.toLowerCase();
+                return item.getNombre().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+        SortedList<Empleados> sortedData = new SortedList<>(filtro);
+        sortedData.comparatorProperty().bind(tabla.comparatorProperty());
+        tabla.setItems(sortedData);
+    }
+
 
     @FXML
     public void initialize(){
         //Inicializa la tabla
         if (empleadosTabla !=null){
             mostrarUsuarios();
+            filtroBuscador(buscador, empleadosTabla);
             campo_rol.getItems().addAll("administrador", "empleado", "invitado");
             campo_estado.getItems().addAll("Activo", "Inactivo");
 
@@ -216,10 +236,10 @@ public class EmpleadosController {
             });
 
             boton_volver.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
             });
             agenda.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
             });
 
             salir.setOnAction(event ->{

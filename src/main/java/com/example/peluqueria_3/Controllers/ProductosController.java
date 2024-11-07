@@ -148,11 +148,11 @@ public class ProductosController {
             });
 
             boton_volver.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
             });
 
             agenda.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
             });
 
             salir.setOnAction(event ->{

@@ -53,8 +53,8 @@
             <children>
                 <VBox alignment="TOP_RIGHT" prefHeight="134.0" prefWidth="54.0" spacing="25.0">
                     <children>
-                        <Label text="ID" />
                         <Label text="Nombre" />
+                        <Label text="Fecha" />
                         <Label text="Descripción" />
                     </children>
                     <HBox.margin>
@@ -63,14 +63,13 @@
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="150.0" spacing="15.0">
                     <children>
-                        <TextField fx:id="campo_id" styleClass="input" />
                         <TextField fx:id="campo_nombre" styleClass="input" />
+                        <TextField fx:id="campo_fecha" styleClass="input" />
                         <TextField fx:id="campo_descripcion" styleClass="input" />
                     </children>
                 </VBox>
                 <VBox alignment="TOP_RIGHT" prefHeight="134.0" prefWidth="54.0" spacing="25.0">
                     <children>
-                        <Label text="Fecha" />
                         <Label text="Hora" />
                         <Label text="Precio" />
                     </children>
@@ -80,7 +79,7 @@
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="150.0" spacing="15.0">
                     <children>
-                        <TextField fx:id="campo_fecha" styleClass="input" />
+
                         <TextField fx:id="campo_hora" styleClass="input" />
                         <TextField fx:id="campo_precio" styleClass="input" />
                     </children>

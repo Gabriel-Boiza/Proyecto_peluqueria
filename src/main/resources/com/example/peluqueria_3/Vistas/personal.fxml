@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles/ficha.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.AgendaController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles/ficha.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.PersonalController">
    <children>
       <Pane prefHeight="450.0" prefWidth="1280.0" style="-fx-background-color: white;" />
       <Pane prefHeight="720.0" prefWidth="250.0" style="-fx-background-color: DBD0CA;">
@@ -33,7 +33,7 @@
                </graphic>
                <text>Salir</text>
             </Button>
-            <Text id="bienvenido" layoutX="111.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+
          </children></Pane>
    </children>
 </Pane>
