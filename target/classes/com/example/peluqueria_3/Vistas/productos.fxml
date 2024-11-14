@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles/ficha.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.ProductosController">
+    <children>
+        <Pane prefHeight="450.0" prefWidth="1280.0" style="-fx-background-color: white;">
+            <children>
+                <TableView fx:id="productosTabla" layoutX="286.0" layoutY="66.0" prefHeight="350.0" prefWidth="950.0" styleClass="tabla">
+                    <columns>
+                        <TableColumn fx:id="ID" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="nombre" prefWidth="75.0" text="Nombre" />
+                        <TableColumn fx:id="marca" prefWidth="75.0" text="Marca" />
+                        <TableColumn fx:id="descripcion" prefWidth="75.0" text="Descripcion" />
+                        <TableColumn fx:id="precio" prefWidth="75.0" text="Precio" />
+                        <TableColumn fx:id="stock" prefWidth="75.0" text="Stock" />
+                        <TableColumn fx:id="codigo_barras" prefWidth="75.0" text="Codigo Barras" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+                <Button fx:id="boton_volver" layoutX="1136.0" layoutY="24.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Volver" />
+            </children>
+        </Pane>
+        <Pane prefHeight="720.0" prefWidth="250.0" style="-fx-background-color: DBD0CA;">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="50.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../img/usuarioIcon.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="welcome" layoutX="102.0" layoutY="208.0" prefHeight="17.0" prefWidth="47.0" />
+                <VBox alignment="TOP_CENTER" layoutX="26.0" layoutY="300.0" prefHeight="300.0" prefWidth="200.0" spacing="10.0">
+                    <Button fx:id="agenda" mnemonicParsing="false" prefHeight="35.0" prefWidth="170.0" styleClass="div_nav" text="Agenda" />
+                    <Button fx:id="productos" mnemonicParsing="false" prefHeight="35.0" prefWidth="170.0" styleClass="div_nav" text="Productos" />
+                    <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="170.0" styleClass="div_nav" text="Estadísticas" />
+                </VBox>
+                <Button fx:id="salir" layoutX="26.0" layoutY="659.0" prefHeight="35.0" prefWidth="200.0">
+                    <graphic>
+                        <ImageView fitHeight="25" fitWidth="25">
+                            <image>
+                                <Image url="@../../../../img/cerrarSesionIcon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <text>Salir</text>
+                </Button>
+            </children>
+        </Pane>
+        <HBox layoutX="287.0" layoutY="472.0" prefHeight="200.0" prefWidth="950.0" spacing="10.0">
+            <children>
+                <VBox alignment="TOP_RIGHT" prefHeight="134.0" prefWidth="54.0" spacing="25.0">
+                    <children>
+                        <Label text="Nombre" />
+                        <Label text="Marca" />
+                        <Label text="Descripcion" />
+                        <Label text="Precio" />
+                    </children>
+                    <HBox.margin>
+                        <Insets top="10.0" />
+                    </HBox.margin>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="150.0" spacing="15.0">
+                    <children>
+                        <TextField fx:id="campo_nombre" styleClass="input" />
+                        <TextField fx:id="campo_marca" styleClass="input" />
+                        <TextField fx:id="campo_descripcion" styleClass="input" />
+                        <TextField fx:id="campo_precio" styleClass="input" />
+                    </children>
+                </VBox>
+                <VBox alignment="TOP_RIGHT" prefHeight="134.0" prefWidth="62.0" spacing="25.0">
+                    <children>
+                        <Label text="Stock" />
+                        <Label text="Codigo Barras" />
+                    </children>
+                    <HBox.margin>
+                        <Insets left="25.0" top="10.0" />
+                    </HBox.margin>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="150.0" spacing="15.0">
+                    <children>
+                        <TextField fx:id="campo_stock" styleClass="input" />
+                        <TextField fx:id="campo_codigo_barras" styleClass="input" />
+                    </children>
+                </VBox>
+                <VBox prefHeight="203.0" prefWidth="122.0" spacing="25.0">
+                    <children>
+                        <Button fx:id="boton_crear" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" styleClass="acciones" text="Crear" />
+                        <Button fx:id="boton_limpiar" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" styleClass="acciones" text="Limpiar" />
+                        <Button fx:id="boton_modificar" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" styleClass="acciones" text="Modificar" />
+                        <Button fx:id="boton_eliminar" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" styleClass="acciones" text="Eliminar" />
+                    </children>
+                    <HBox.margin>
+                        <Insets left="100.0" />
+                    </HBox.margin>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</Pane>

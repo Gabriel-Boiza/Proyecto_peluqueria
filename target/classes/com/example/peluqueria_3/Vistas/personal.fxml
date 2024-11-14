@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles/ficha.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.PersonalController">
+   <children>
+      <Pane prefHeight="450.0" prefWidth="1280.0" style="-fx-background-color: white;" />
+      <Pane prefHeight="720.0" prefWidth="250.0" style="-fx-background-color: DBD0CA;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="50.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../img/usuarioIcon.png" />
+               </image>
+            </ImageView>
+            <VBox alignment="TOP_CENTER" layoutX="26.0" layoutY="300.0" prefHeight="300.0" prefWidth="200.0" spacing="10.0">
+               <Button fx:id="agenda" mnemonicParsing="false" prefHeight="35.0" prefWidth="170.0" styleClass="div_nav" text="Agenda" />
+               <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="170.0" styleClass="div_nav" text="Estadísticas" />
+               <Button fx:id="botonClientes" mnemonicParsing="false" prefHeight="30.0" prefWidth="170.0" styleClass="div_nav" text="Clientes" />
+               <Button fx:id="botonProductos" mnemonicParsing="false" prefHeight="30.0" prefWidth="170.0" styleClass="div_nav" text="Productos" />
+               <Button fx:id="botonServicios" mnemonicParsing="false" prefHeight="30.0" prefWidth="170.0" styleClass="div_nav" text="Servicios" />
+               <Button fx:id="botonEmpleados" mnemonicParsing="false" prefHeight="30.0" prefWidth="170.0" styleClass="div_nav" text="Empleados" />
+            </VBox>
+            <Button fx:id="salir" layoutX="40.0" layoutY="660.0" prefHeight="35.0" prefWidth="170.0">
+               <graphic>
+                  <ImageView fitHeight="25" fitWidth="25">
+                     <image>
+                        <Image url="@../../../../img/cerrarSesionIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <text>Salir</text>
+            </Button>
+
+         </children></Pane>
+   </children>
+</Pane>
