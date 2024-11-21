@@ -10,5 +10,8 @@
         <module name="peluqueria_3" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="application" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
