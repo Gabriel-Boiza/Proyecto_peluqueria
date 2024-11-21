@@ -3,8 +3,8 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/ficha.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.PersonalController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/ficha.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.AgendaController">
    <children>
-      <Pane layoutX="29.0" layoutY="90.0" prefHeight="661.0" prefWidth="1301.0" style="-fx-background-color: gray;" />
+      <Pane fx:id="panelAgenda" layoutX="29.0" layoutY="90.0" prefHeight="661.0" prefWidth="1301.0" style="-fx-background-color: gray;" />
    </children>
 </Pane>

@@ -20,7 +20,7 @@ public class EmpleadosController {
     ModeloEmpleados modelo = new ModeloEmpleados();
 
     //Elementos vista login
-    @FXML private Button BotonLogin;
+
     @FXML private PasswordField input_contrasenya;
 
     //Elementos vista CRUD empleados
@@ -84,7 +84,7 @@ public class EmpleadosController {
 
             if (empleadoRegistrado != null) {
                 DatosGlobales.setEmpleadoActual(empleadoRegistrado);
-                LoadStage loadStage = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Personal");
+                LoadStage loadStage = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

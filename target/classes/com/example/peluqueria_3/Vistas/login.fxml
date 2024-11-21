@@ -46,7 +46,7 @@
                                 </HBox>
                                 <PasswordField fx:id="input_contrasenya" prefHeight="30.0" prefWidth="239.0">
                                     <cursor>
-                                        <Cursor fx:constant="TEXT" />
+                                        <Cursor fx:constant="TEXT"/>
                                     </cursor>
                                 </PasswordField>
                                 <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Entrar" fx:id="BotonLogin" onAction="#ValidarUser"/>

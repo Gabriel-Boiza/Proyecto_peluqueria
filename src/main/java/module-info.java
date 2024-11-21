@@ -4,6 +4,7 @@ module com.example.peluqueria_3 {
     requires java.desktop;
     requires java.sql;
     requires static lombok;
+    requires com.calendarfx.view;
 
     // Abre el paquete Models a javafx.base para acceder a las propiedades de las clases
     opens com.example.peluqueria_3.Models to javafx.base;
