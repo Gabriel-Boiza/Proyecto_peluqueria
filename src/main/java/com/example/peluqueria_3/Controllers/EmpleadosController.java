@@ -22,7 +22,6 @@ public class EmpleadosController {
     //Elementos vista login
     @FXML private Button BotonLogin;
     @FXML private PasswordField input_contrasenya;
-    @FXML private TextField input_usuario;
 
     //Elementos vista CRUD empleados
 
@@ -79,8 +78,9 @@ public class EmpleadosController {
 
     public void ValidarUser(){
         try{
+            String user = "Administrador";
             ModeloEmpleados modeloEmpleado = new ModeloEmpleados();
-            Empleados empleadoRegistrado = modeloEmpleado.validarEmpleado(input_usuario.getText(), input_contrasenya.getText());
+            Empleados empleadoRegistrado = modeloEmpleado.validarEmpleado(user, input_contrasenya.getText());
 
             if (empleadoRegistrado != null) {
                 DatosGlobales.setEmpleadoActual(empleadoRegistrado);

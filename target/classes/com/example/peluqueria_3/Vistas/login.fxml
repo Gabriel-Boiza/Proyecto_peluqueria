@@ -1,54 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.layout.HBox?>
-<?import java.io.IOException?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController"
-            stylesheets="@styles/pelu.css"
-            prefHeight="720.0" prefWidth="1280.0">
-
-
-    <!-- Parte superior con el logo y líneas -->
-    <top>
-        <VBox alignment="CENTER" spacing="0" BorderPane.alignment="CENTER">
-            <Label alignment="CENTER" text="DREAM'S" styleClass="label-title"/>
-            <HBox alignment="CENTER" spacing="5">
-                <Line startX="0" startY="0" endX="65" endY="0" stroke="black" strokeWidth="2"/>
-                <Label text="Perruqueria" styleClass="label-subtitle"/>
-                <Line startX="0" startY="0" endX="65" endY="0" stroke="black" strokeWidth="2"/>
-            </HBox>
-            <VBox spacing="30" alignment="CENTER">
-                <Line startX="0" startY="0" endX="2000" endY="0" styleClass="line-bold"/>
-                <Line startX="0" startY="0" endX="600" endY="0" styleClass="line-thin"/>
-            </VBox>
-        </VBox>
-    </top>
-
-    <!-- Parte central con el formulario de login -->
-    <center>
-        <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER" maxWidth="200" minHeight="400" minWidth="300" style="-fx-background-color:#E9E5E0;">
-            <HBox alignment="CENTER_LEFT" spacing="10" maxWidth="250">
-                <Label text="&#x1F464;" style="-fx-font-size: 20px;"/>
-                <TextField prefHeight="28.0" prefWidth="200.0" promptText="Usuario" fx:id="input_usuario"/>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" spacing="10" maxWidth="250">
-                <Label text="&#x1F512;" style="-fx-font-size: 20px;"/> <!-- Ícono de candado -->
-                <PasswordField prefHeight="28.0" prefWidth="200.0" promptText="Contraseña" fx:id="input_contrasenya"/>
-            </HBox>
-            <Button text="Iniciar sesión" styleClass="button-login" fx:id="BotonLogin" onAction="#ValidarUser"/>
-
-
-        </VBox>
-    </center>
-
-</BorderPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController">
+    <children>
+        <ImageView fitHeight="542.0" fitWidth="683.0" layoutX="711.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../img/logoIcon.png" />
+            </image></ImageView>
+        <Pane layoutX="-12.0" layoutY="-7.0" prefHeight="768.0" prefWidth="683.0" style="-fx-background-color: white;">
+            <children>
+                <VBox layoutX="96.0" layoutY="233.0" prefHeight="437.0" prefWidth="492.0" style="-fx-padding: 30px;">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido!">
+                            <font>
+                                <Font name="DejaVu Sans Bold" size="64.0" />
+                            </font>
+                        </Text>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="432.0" spacing="20.0">
+                            <children>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Line endX="-0.5" startX="-100.0" />
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Administrador">
+                                            <font>
+                                                <Font name="DejaVu Sans Bold" size="18.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets left="10.0" right="10.0" />
+                                            </HBox.margin>
+                                        </Text>
+                                        <Line endX="-0.5" startX="-100.0" />
+                                    </children>
+                                </HBox>
+                                <PasswordField fx:id="input_contrasenya" prefHeight="30.0" prefWidth="239.0">
+                                    <cursor>
+                                        <Cursor fx:constant="TEXT" />
+                                    </cursor>
+                                </PasswordField>
+                                <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Entrar" fx:id="BotonLogin" onAction="#ValidarUser"/>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</Pane>
