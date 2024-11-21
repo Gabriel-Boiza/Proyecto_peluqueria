@@ -78,9 +78,9 @@ public class EmpleadosController {
 
     public void ValidarUser(){
         try{
-            String user = "Administrador";
+            String username = "Administrador";
             ModeloEmpleados modeloEmpleado = new ModeloEmpleados();
-            Empleados empleadoRegistrado = modeloEmpleado.validarEmpleado(user, input_contrasenya.getText());
+            Empleados empleadoRegistrado = modeloEmpleado.validarEmpleado(username, input_contrasenya.getText());
 
             if (empleadoRegistrado != null) {
                 DatosGlobales.setEmpleadoActual(empleadoRegistrado);
