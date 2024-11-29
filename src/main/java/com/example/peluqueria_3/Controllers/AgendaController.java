@@ -8,7 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 
 import java.time.LocalDate;
@@ -23,16 +24,18 @@ public class AgendaController{
     @FXML Button guardarAgenda;
 
     final String[] horas = {
-            "08:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-            "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
-            "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
-            "18:00", "18:30", "19:00", "20:30"
+            "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+            "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+            "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
+            "17:00", "17:30", "18:00", "18:30", "19:00", "19:30",
+            "20:00"
     };
-    Map<String,TextField> mapInputs = new HashMap<>();
+    Map<String,TextArea> mapInputs = new HashMap<>();
     Map<String, String> mapComparacion = new HashMap<>();
 
     ModeloEmpleados empleados = new ModeloEmpleados();
     ArrayList<Empleados> arrayEmpleados = empleados.mostrarEmpleados();
+
 
     ModeloAgenda modeloAgenda = new ModeloAgenda();
 
@@ -72,7 +75,7 @@ public class AgendaController{
     }
 
 
-    public void insercion(String clave, TextField textField){
+    public void insercion(String clave, TextArea textField){
         String componentes[] = clave.split("_");
 
         String fecha = componentes[0];
@@ -93,6 +96,7 @@ public class AgendaController{
         for(String hora: horas){
             Label label = new Label(hora);
             label.setPrefHeight(200);
+            label.setMinWidth(30);
             vbox.getChildren().add(label);
         }
         box.getChildren().add(vbox);
@@ -111,8 +115,11 @@ public class AgendaController{
             vboxEmpleados.getChildren().add(label2);
 
             for(int i = 0; i<horas.length; i++){
-                TextField textoplano = new TextField();
-                textoplano.setPrefHeight(200); // No funciona
+                TextArea textoplano = new TextArea();
+
+                double c = arrayEmpleados.toArray().length;
+                textoplano.setMaxWidth((box.getMaxWidth())/c);
+
 
                 // Añadir IDs a los TextFileds
                 String fecha = date.getValue().toString();
@@ -127,7 +134,7 @@ public class AgendaController{
                 mapComparacion.put(textoplano.getId(), textoplano.getText());  //ambos son parecidos para compararlos al guardar
                 mapInputs.put(textoplano.getId(), textoplano);
 
-                // Añadir los TextFields a la columna de cada empleado
+                // Añadir los TextAreas a la columna de cada empleado
                 vboxEmpleados.getChildren().add(textoplano);
             }
             box.getChildren().add(vboxEmpleados);
