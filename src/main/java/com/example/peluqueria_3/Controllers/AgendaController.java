@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
+import javafx.scene.text.TextAlignment;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -89,26 +90,26 @@ public class AgendaController{
     public void columnaHoras(){
         VBox vbox = new VBox();
         vbox.setId("vHoras");
-
         Label labelHora1 = new Label("");
         vbox.getChildren().add(labelHora1);
 
         for(String hora: horas){
             Label label = new Label(hora);
-            label.setPrefHeight(200);
-            label.setMinWidth(30);
+            label.getStyleClass().add("labelHoras");
+            label.setTextAlignment(TextAlignment.CENTER);
             vbox.getChildren().add(label);
         }
         box.getChildren().add(vbox);
     }
 
     public void columnaEmpleados(){
-
+        String fecha = date.getValue().toString();
+        ArrayList<String> existeCita = modeloAgenda.arrayCitas(fecha);
         HashMap<String, Agenda> arrayAgenda = modeloAgenda.obtenerCitas();
         // Iterar los empleados para crear las columnas
         for(Empleados empleado: arrayEmpleados){
             VBox vboxEmpleados = new VBox();
-
+            vboxEmpleados.setSpacing(5);
             vboxEmpleados.setId(empleado.getId_empleado());
             Label label2 = new Label(empleado.getUsuario());
             label2.setPrefHeight(200);
@@ -116,18 +117,17 @@ public class AgendaController{
 
             for(int i = 0; i<horas.length; i++){
                 TextArea textoplano = new TextArea();
-
+                textoplano.getStyleClass().add("inputs");
                 double c = arrayEmpleados.toArray().length;
                 textoplano.setMaxWidth((box.getMaxWidth())/c);
 
 
                 // Añadir IDs a los TextFileds
-                String fecha = date.getValue().toString();
                 String trabajador = empleado.getId_empleado();
                 String id = fecha + "_" + horas[i] + "_" + trabajador;
                 textoplano.setId(id);
 
-                if(modeloAgenda.comprobarCita(id)){
+                if(existeCita.contains(id)){
                     textoplano.setText(arrayAgenda.get(id).getTextoPlano());
                 }
 

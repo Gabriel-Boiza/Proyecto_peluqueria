@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/ficha.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.AgendaController">
-   <children>
-      <DatePicker fx:id="date" layoutX="49.0" layoutY="14.0" prefHeight="40.0" prefWidth="227.0" />
-      <ScrollPane fx:id="panelHoras" layoutY="54.0" maxWidth="1280.0" prefHeight="718.0" prefViewportWidth="100.0" prefWidth="1280.0" style="-fx-background-color: gray;">
-         <content>
-               <HBox fx:id="box" maxWidth="1260.0" prefHeight="680.0" prefWidth="1260.0" />
-         </content>
-      </ScrollPane>
-      <Button fx:id="guardarAgenda" layoutX="412.0" layoutY="21.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Guardar" />
-   </children>
+<Pane prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/agenda.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.AgendaController">
+   <DatePicker fx:id="date" layoutX="49.0" layoutY="14.0" prefHeight="40.0" prefWidth="227.0" />
+   <ScrollPane fx:id="panelHoras" layoutX="19.0" layoutY="66.0" maxWidth="1327.0" prefHeight="685.0" prefViewportWidth="100.0" prefWidth="1327.0" style="-fx-background-color: gray;">
+      <HBox fx:id="box" maxWidth="1325.0" prefHeight="685.0" prefWidth="1325.0" />
+   </ScrollPane>
+   <Button fx:id="guardarAgenda" layoutX="412.0" layoutY="21.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" text="Guardar" />
 </Pane>
