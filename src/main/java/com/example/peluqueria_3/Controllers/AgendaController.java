@@ -71,6 +71,9 @@ public class AgendaController{
                     }
                 }
             });
+            Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+            alerta.setContentText("");
+            alerta.showAndWait();
         });
     }
 
@@ -103,6 +106,8 @@ public class AgendaController{
     }
 
     public void columnaEmpleados(){
+        String fecha = date.getValue().toString();
+        ArrayList<String> existeCita = modeloAgenda.arrayCitas(fecha);
 
         HashMap<String, Agenda> arrayAgenda = modeloAgenda.obtenerCitas();
         // Iterar los empleados para crear las columnas
@@ -122,12 +127,12 @@ public class AgendaController{
 
 
                 // Añadir IDs a los TextFileds
-                String fecha = date.getValue().toString();
+
                 String trabajador = empleado.getId_empleado();
                 String id = fecha + "_" + horas[i] + "_" + trabajador;
                 textoplano.setId(id);
 
-                if(modeloAgenda.comprobarCita(id)){
+                if(existeCita.contains(id)){   //verifica si existe alguna cita en el input
                     textoplano.setText(arrayAgenda.get(id).getTextoPlano());
                 }
 

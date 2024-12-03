@@ -125,4 +125,27 @@ public class ModeloAgenda extends DataBase{
             System.out.println(e.getMessage());
         }
     }
+
+    public ArrayList<String> arrayCitas(String fecha){
+        DataBase db = new DataBase();
+        ArrayList<String> arrayCitas = new ArrayList<>();
+        String query = "SELECT id_agenda FROM agenda WHERE fecha = ?";
+
+        try{
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, fecha);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                String idArray = rs.getString("id_agenda");
+                arrayCitas.add(idArray);
+            }
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return arrayCitas;
+    }
 }
