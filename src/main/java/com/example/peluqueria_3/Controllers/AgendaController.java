@@ -5,12 +5,17 @@ import com.example.peluqueria_3.Models.Empleados;
 import com.example.peluqueria_3.Models.ModeloAgenda;
 import com.example.peluqueria_3.Models.ModeloEmpleados;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,7 +52,7 @@ public class AgendaController{
             columnaEmpleados();
 
             date.valueProperty().addListener((observable, oldValue, newValue) -> {  //genera los campos cada ves que cambia la fecha
-                if(newValue != null){
+                if (newValue != null) {
                     mapInputs.clear();
                     String idDate = date.getValue().toString();
                     box.getChildren().clear();
@@ -56,25 +61,6 @@ public class AgendaController{
                 }
             });
         }
-        guardarAgenda.setOnAction(e->{
-
-            mapInputs.forEach((clave, textField) -> {
-                if(!mapComparacion.get(clave).equals(textField.getText())){ //Comprueban los valores que hayan cambiado
-                    if (!modeloAgenda.comprobarCita(clave)){
-                        insercion(clave, textField);
-                    }
-                    else if(modeloAgenda.comprobarCita(clave) && !textField.getText().isEmpty()){
-                        modeloAgenda.modificarCita(clave, textField.getText());
-                    }
-                    else{
-                        modeloAgenda.deleteCitas(clave);
-                    }
-                }
-            });
-            Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-            alerta.setContentText("");
-            alerta.showAndWait();
-        });
     }
 
 
@@ -92,14 +78,20 @@ public class AgendaController{
     public void columnaHoras(){
         VBox vbox = new VBox();
         vbox.setId("vHoras");
+        vbox.setMinWidth(50);
+        vbox.setAlignment(Pos.CENTER);
 
         Label labelHora1 = new Label("");
+        labelHora1.setMinHeight(50);
         vbox.getChildren().add(labelHora1);
 
         for(String hora: horas){
             Label label = new Label(hora);
-            label.setPrefHeight(200);
-            label.setMinWidth(30);
+            label.getStyleClass().add("labelHoras");
+            label.setMinHeight(100);
+            Font fontHora = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 15);
+            label.setFont(fontHora);
+            label.setTextAlignment(TextAlignment.CENTER);
             vbox.getChildren().add(label);
         }
         box.getChildren().add(vbox);
@@ -108,26 +100,27 @@ public class AgendaController{
     public void columnaEmpleados(){
         String fecha = date.getValue().toString();
         ArrayList<String> existeCita = modeloAgenda.arrayCitas(fecha);
-
         HashMap<String, Agenda> arrayAgenda = modeloAgenda.obtenerCitas();
         // Iterar los empleados para crear las columnas
         for(Empleados empleado: arrayEmpleados){
             VBox vboxEmpleados = new VBox();
-
+            vboxEmpleados.setAlignment(Pos.CENTER);
             vboxEmpleados.setId(empleado.getId_empleado());
-            Label label2 = new Label(empleado.getUsuario());
-            label2.setPrefHeight(200);
+            Label label2 = new Label();
+            label2.setText(empleado.getUsuario());
+            label2.setMinHeight(50);
+            Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
+            label2.setFont(font);
             vboxEmpleados.getChildren().add(label2);
 
             for(int i = 0; i<horas.length; i++){
                 TextArea textoplano = new TextArea();
-
                 double c = arrayEmpleados.toArray().length;
                 textoplano.setMaxWidth((box.getMaxWidth())/c);
+                textoplano.setMinHeight(100);
 
 
                 // Añadir IDs a los TextFileds
-
                 String trabajador = empleado.getId_empleado();
                 String id = fecha + "_" + horas[i] + "_" + trabajador;
                 textoplano.setId(id);
@@ -142,6 +135,7 @@ public class AgendaController{
                 // Añadir los TextAreas a la columna de cada empleado
                 vboxEmpleados.getChildren().add(textoplano);
             }
+
             box.getChildren().add(vboxEmpleados);
         }
     }
