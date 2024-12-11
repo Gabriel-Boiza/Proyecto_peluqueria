@@ -1,3 +1,22 @@
-.labelHoras{
-    -fx-height: 100;
+#main{
+    -fx-background-color: #DBD0CA;
+}
+
+#panelHoras{
+    -fx-background-color: #DBD0CA;
+    -fx-border-color: #DBD0CA;
+}
+
+#box{
+    -fx-background-color: #DBD0CA;
+}
+
+#left:hover {
+    -fx-transition: all 0.2s ease-in-out;
+    -fx-translate-y: -1px;
+}
+
+#right:hover {
+    -fx-transition: all 0.2s ease-in-out;
+    -fx-translate-y: -1px;
 }

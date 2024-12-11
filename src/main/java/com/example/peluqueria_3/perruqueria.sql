@@ -4,6 +4,7 @@
 
 create table trabajadores(
     DNI varchar(255) primary key,
+    img varchar(255),
     usuario varchar(255) not null,
     nombre varchar(255) not null,
     apellido varchar(255),

@@ -65,7 +65,9 @@ public class ModeloEmpleados extends DataBase{
                 String rol = rs.getString("rol");
                 String estado = rs.getString("estado");
 
-                empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion,  comision_ventas, comision_servicios, lim_comision_servicios, rol, estado);
+                String img = rs.getString("img");
+
+                empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion,  comision_ventas, comision_servicios, lim_comision_servicios, rol, estado, img);
             }
             conexion.close();
         } catch (Exception e) {
@@ -155,7 +157,9 @@ public class ModeloEmpleados extends DataBase{
                 String rol = rs.getString("rol");
                 String estado = rs.getString("estado");
 
-                Empleados empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion, comision_ventas, comision_servicios, lim_comision_servicios, rol, estado);
+                String img = rs.getString("img");
+
+                Empleados empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion, comision_ventas, comision_servicios, lim_comision_servicios, rol, estado, img);
                 empleados.add(empleado);
             }
             conexion.close();
