@@ -29,7 +29,8 @@ import java.util.Map;
 public class AgendaController{
     @FXML  DatePicker date;
     @FXML HBox box;
-    @FXML Button guardarAgenda;
+    @FXML ImageView left;
+    @FXML ImageView right;
 
     final String[] horas = {
             "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
@@ -63,7 +64,18 @@ public class AgendaController{
                     columnaEmpleados();
                 }
             });
+
+            left.setOnMouseClicked(event ->{
+                LocalDate diaSeleccionado = date.getValue();
+                date.setValue(diaSeleccionado.minusDays(1));
+            });
+
+            right.setOnMouseClicked(event ->{
+                LocalDate diaSeleccionado = date.getValue();
+                date.setValue(diaSeleccionado.plusDays(1));
+            });
         }
+
     }
 
 
@@ -112,13 +124,12 @@ public class AgendaController{
             vboxEmpleados.setAlignment(Pos.CENTER);
             vboxEmpleados.setId(empleado.getId_empleado());
 
-            System.out.println(empleado.getImg());
 
-            Button botonUser = new Button();
+           /* Button botonUser = new Button();
             Image imgUser = new Image("@../../../../img/cerrarSesionIcon.png");
             ImageView imageView = new ImageView(imgUser);
             imageView.setFitHeight(15);
-            imageView.setFitWidth(15);
+            imageView.setFitWidth(15); */
 
 
             Label label2 = new Label(empleado.getUsuario());
@@ -128,28 +139,74 @@ public class AgendaController{
             Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
             label2.setFont(font);
 
-            VBox vBoxImgLabel = new VBox(5);
-            vBoxImgLabel.getChildren().addAll(imageView, label2);
+          /*  VBox vBoxImgLabel = new VBox(5);
+            vBoxImgLabel.getChildren().addAll(imageView, label2);*/
 
 
-            vboxEmpleados.getChildren().add(botonUser);
+            vboxEmpleados.getChildren().add(label2);
 
             for(int i = 0; i<horas.length; i++){
                 TextArea textoplano = new TextArea();
+
                 double c = arrayEmpleados.toArray().length;
                 textoplano.setMaxWidth((box.getMaxWidth())/c);
-                textoplano.setMinHeight(100);
-
 
                 // Añadir IDs a los TextFileds
+
                 String trabajador = empleado.getId_empleado();
                 String id = fecha + "_" + horas[i] + "_" + trabajador;
                 textoplano.setId(id);
+
+                if(existeCita.contains(id)){   //verifica si existe alguna cita en el input
+                    textoplano.setText(arrayAgenda.get(id).getTextoPlano());
+                    textoplano.getStyleClass().add("rojo");
+                }
+
+
+                //comparar 2 maps por sus claves
+                mapComparacion.put(textoplano.getId(), textoplano.getText());  //ambos son parecidos para compararlos al guardar
+                Map<String, String> mapComparacion2 = mapComparacion;
+                mapInputs.put(textoplano.getId(), textoplano);  //mapInputs guarda el textfield como tal, si su texto cambia, el del objeto guardado en el map tambien
+
+                textoplano.focusedProperty().addListener((observable, old_value, new_value) ->{
+                    if(!observable.getValue()){
+                        String nuevoValor = textoplano.getText();
+                        String antiguoValor = mapComparacion2.get(textoplano.getId());
+                        System.out.println("----------------------------------");
+                        System.out.println("El nuevo valor es: " + nuevoValor);
+                        System.out.println("El valor inicial es: " + antiguoValor);
+
+                        if (!nuevoValor.equals(antiguoValor) && antiguoValor.isEmpty()){
+                            System.out.println("hago un insert");
+                            insercion(textoplano.getId(), textoplano);
+                            textoplano.getStyleClass().add("rojo");
+                            mapComparacion2.put(textoplano.getId(), nuevoValor);
+                        } else if (!nuevoValor.equals(antiguoValor) && nuevoValor.isEmpty()) {
+                            System.out.println("Hago un delete");
+                            modeloAgenda.deleteCitas(textoplano.getId());
+                            textoplano.getStyleClass().remove("rojo");
+                            mapComparacion2.put(textoplano.getId(), nuevoValor);
+
+                        } else if (!nuevoValor.equals(antiguoValor) && !nuevoValor.isEmpty()) {
+                            System.out.println("Hago un update");
+                            modeloAgenda.modificarCita(textoplano.getId(), nuevoValor);
+                            textoplano.getStyleClass().add("rojo");
+                            mapComparacion2.put(textoplano.getId(), nuevoValor);
+                        }
+                        else {
+                            System.out.println("No hago nada");
+                        }
+                        System.out.println("----------------------------------");
+                    }
+                });
                 // Añadir los TextAreas a la columna de cada empleado
                 vboxEmpleados.getChildren().add(textoplano);
             }
+
             box.getChildren().add(vboxEmpleados);
         }
     }
+
+
 }
 

@@ -25,7 +25,7 @@
    </Label>
    <HBox alignment="CENTER" layoutX="1230.0" layoutY="15.0" prefHeight="40.0" prefWidth="75.0" spacing="15.0">
       <children>
-         <ImageView id="left" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="left" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../../../../img/left.png" />
             </image>
@@ -33,7 +33,7 @@
                <Cursor fx:constant="HAND" />
             </cursor>
          </ImageView>
-         <ImageView id="right" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="right" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../../../../img/right.png" />
             </image>
