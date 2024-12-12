@@ -4,7 +4,6 @@
 
 create table trabajadores(
     DNI varchar(255) primary key,
-    img varchar(255),
     usuario varchar(255) not null,
     nombre varchar(255) not null,
     apellido varchar(255),
@@ -17,7 +16,9 @@ create table trabajadores(
     limite_comision_servicios float not null,
 
     rol ENUM('administrador', 'empleado', 'invitado') NOT NULL,
-    estado ENUM('Activo', 'Inactivo') NOT NULL
+    estado ENUM('Activo', 'Inactivo') NOT NULL,
+
+    img varchar(255)
 );
 
 create table clientes(
