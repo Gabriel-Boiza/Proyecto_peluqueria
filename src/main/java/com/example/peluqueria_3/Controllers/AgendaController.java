@@ -46,7 +46,7 @@ public class AgendaController{
             columnaHoras();
             columnaEmpleados();
 
-            date.valueProperty().addListener((observable, oldValue, newValue) -> {  //genera los campos cada ves que cambia la fecha
+            date.valueProperty().addListener((observable, oldValue, newValue) -> {  //genera los campos cada vez que cambia la fecha
                 if(newValue != null){
                     mapInputs.clear();
                     String idDate = date.getValue().toString();
@@ -125,7 +125,6 @@ public class AgendaController{
                 double c = arrayEmpleados.toArray().length;
                 textoplano.setMaxWidth((box.getMaxWidth())/c);
 
-
                 // Añadir IDs a los TextFileds
 
                 String trabajador = empleado.getId_empleado();
@@ -136,9 +135,40 @@ public class AgendaController{
                     textoplano.setText(arrayAgenda.get(id).getTextoPlano());
                 }
 
-                mapComparacion.put(textoplano.getId(), textoplano.getText());  //ambos son parecidos para compararlos al guardar
-                mapInputs.put(textoplano.getId(), textoplano);
 
+                //comparar 2 maps por sus claves
+                mapComparacion.put(textoplano.getId(), textoplano.getText());  //ambos son parecidos para compararlos al guardar
+                Map<String, String> mapComparacion2 = mapComparacion;
+                mapInputs.put(textoplano.getId(), textoplano);  //mapInputs guarda el textfield como tal, si su texto cambia, el del objeto guardado en el map tambien
+
+                textoplano.focusedProperty().addListener((observable, old_value, new_value) ->{
+                    if(!observable.getValue()){
+                        String nuevoValor = textoplano.getText();
+                        String antiguoValor = mapComparacion2.get(textoplano.getId());
+                        System.out.println("----------------------------------");
+                        System.out.println("El nuevo valor es: " + nuevoValor);
+                        System.out.println("El valor inicial es: " + antiguoValor);
+
+                        if (!nuevoValor.equals(antiguoValor) && antiguoValor.isEmpty()){
+                            System.out.println("hago un insert");
+                            insercion(textoplano.getId(), textoplano);
+                            mapComparacion2.put(textoplano.getId(), nuevoValor);
+                        } else if (!nuevoValor.equals(antiguoValor) && nuevoValor.isEmpty()) {
+                            System.out.println("Hago un delete");
+                            modeloAgenda.deleteCitas(textoplano.getId());
+                            mapComparacion2.put(textoplano.getId(), nuevoValor);
+
+                        } else if (!nuevoValor.equals(antiguoValor) && !nuevoValor.isEmpty()) {
+                            System.out.println("Hago un update");
+                            modeloAgenda.modificarCita(textoplano.getId(), nuevoValor);
+                            mapComparacion2.put(textoplano.getId(), nuevoValor);
+                        }
+                        else {
+                            System.out.println("No hago nada");
+                        }
+                        System.out.println("----------------------------------");
+                    }
+                });
                 // Añadir los TextAreas a la columna de cada empleado
                 vboxEmpleados.getChildren().add(textoplano);
             }
