@@ -1,6 +1,5 @@
 package com.example.peluqueria_3;
 
-import com.calendarfx.util.CalendarFX;
 import com.example.peluqueria_3.Controllers.DatosGlobales;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +12,8 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Vistas/login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 700);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Vistas/agenda.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1366, 768);
         stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();

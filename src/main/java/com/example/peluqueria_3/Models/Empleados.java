@@ -20,5 +20,6 @@ public class Empleados extends DataBase {
     private Float limite_comision;
     private String rol;
     private String estado;
+    private String img;
 
 }

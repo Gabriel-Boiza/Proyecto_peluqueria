@@ -121,6 +121,7 @@
                      <VBox.margin>
                         <Insets />
                      </VBox.margin></ChoiceBox>
+                  <Button mnemonicParsing="false" text="Añadir imagen " />
                </children>
             </VBox>
             <VBox prefHeight="203.0" prefWidth="122.0" spacing="25.0">
