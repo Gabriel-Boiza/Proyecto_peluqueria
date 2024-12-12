@@ -11,12 +11,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +55,7 @@ public class AgendaController{
             columnaEmpleados();
 
             date.valueProperty().addListener((observable, oldValue, newValue) -> {  //genera los campos cada ves que cambia la fecha
-                if (newValue != null) {
+                if(newValue != null){
                     mapInputs.clear();
                     String idDate = date.getValue().toString();
                     box.getChildren().clear();
@@ -75,7 +78,7 @@ public class AgendaController{
         modeloAgenda.insertarCita(clave, id_empleado, fecha, hora, descripcion);
     }
 
-    public void columnaHoras(){
+    public void columnaHoras() {
         VBox vbox = new VBox();
         vbox.setId("vHoras");
         vbox.setMinWidth(50);
@@ -85,8 +88,10 @@ public class AgendaController{
         labelHora1.setMinHeight(50);
         vbox.getChildren().add(labelHora1);
 
-        for(String hora: horas){
+        for (String hora : horas) {
             Label label = new Label(hora);
+            label.setPrefHeight(200);
+            label.setMinWidth(30);
             label.getStyleClass().add("labelHoras");
             label.setMinHeight(100);
             Font fontHora = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 15);
@@ -106,12 +111,28 @@ public class AgendaController{
             VBox vboxEmpleados = new VBox();
             vboxEmpleados.setAlignment(Pos.CENTER);
             vboxEmpleados.setId(empleado.getId_empleado());
-            Label label2 = new Label();
+
+            System.out.println(empleado.getImg());
+
+            Button botonUser = new Button();
+            Image imgUser = new Image("@../../../../img/cerrarSesionIcon.png");
+            ImageView imageView = new ImageView(imgUser);
+            imageView.setFitHeight(15);
+            imageView.setFitWidth(15);
+
+
+            Label label2 = new Label(empleado.getUsuario());
+            label2.setPrefHeight(200);
             label2.setText(empleado.getUsuario());
             label2.setMinHeight(50);
             Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
             label2.setFont(font);
-            vboxEmpleados.getChildren().add(label2);
+
+            VBox vBoxImgLabel = new VBox(5);
+            vBoxImgLabel.getChildren().addAll(imageView, label2);
+
+
+            vboxEmpleados.getChildren().add(botonUser);
 
             for(int i = 0; i<horas.length; i++){
                 TextArea textoplano = new TextArea();
@@ -124,22 +145,11 @@ public class AgendaController{
                 String trabajador = empleado.getId_empleado();
                 String id = fecha + "_" + horas[i] + "_" + trabajador;
                 textoplano.setId(id);
-
-                if(existeCita.contains(id)){   //verifica si existe alguna cita en el input
-                    textoplano.setText(arrayAgenda.get(id).getTextoPlano());
-                }
-
-                mapComparacion.put(textoplano.getId(), textoplano.getText());  //ambos son parecidos para compararlos al guardar
-                mapInputs.put(textoplano.getId(), textoplano);
-
                 // Añadir los TextAreas a la columna de cada empleado
                 vboxEmpleados.getChildren().add(textoplano);
             }
-
             box.getChildren().add(vboxEmpleados);
         }
     }
-
-
 }
 
