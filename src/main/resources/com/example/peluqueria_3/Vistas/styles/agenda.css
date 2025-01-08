@@ -22,5 +22,9 @@
 }
 
 .rojo{
-    -fx-control-inner-background: red;
+    -fx-control-inner-background: #ffd7d7;
+}
+
+.verde{
+    -fx-control-inner-background: #e5ffd7;
 }

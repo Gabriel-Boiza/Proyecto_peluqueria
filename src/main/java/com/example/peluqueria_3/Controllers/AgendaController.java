@@ -133,7 +133,7 @@ public class AgendaController{
 
 
             Label label2 = new Label(empleado.getUsuario());
-            label2.setPrefHeight(200);
+            label2.setPrefHeight(100);
             label2.setText(empleado.getUsuario());
             label2.setMinHeight(50);
             Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
@@ -161,7 +161,6 @@ public class AgendaController{
                     textoplano.setText(arrayAgenda.get(id).getTextoPlano());
                     textoplano.getStyleClass().add("rojo");
                 }
-
 
                 //comparar 2 maps por sus claves
                 mapComparacion.put(textoplano.getId(), textoplano.getText());  //ambos son parecidos para compararlos al guardar
