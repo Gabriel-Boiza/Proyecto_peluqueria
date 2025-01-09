@@ -1,6 +1,6 @@
--- DROP DATABASE bugffmlodzmfiksquriy;
--- CREATE DATABASE bugffmlodzmfiksquriy;
--- USE bugffmlodzmfiksquriy;
+DROP DATABASE bugffmlodzmfiksquriy;
+CREATE DATABASE bugffmlodzmfiksquriy;
+USE bugffmlodzmfiksquriy;
 
 create table trabajadores(
     DNI varchar(255) primary key,
@@ -69,13 +69,18 @@ create table productos_ventas (
 
 create table cobros(
     fk_id_cliente int not null,
-    fk_id_servicio int not null,
+    fk_id_servicio int,
     fk_id_trabajador varchar(255) not null,
-    fecha_cobro varchar(255) not null,
+    fk_id_producto int,
+    fecha_cobro date not null,
+    bizum float not null,
+    tarjeta float not null,
+    efectivo float not null,
 
     FOREIGN KEY (fk_id_cliente) REFERENCES clientes(id_cliente),
     FOREIGN KEY (fk_id_servicio) REFERENCES servicios(id_servicio),
-    FOREIGN KEY (fk_id_trabajador) REFERENCES trabajadores(DNI)
+    FOREIGN KEY (fk_id_trabajador) REFERENCES trabajadores(DNI),
+    FOREIGN KEY (fk_id_producto) REFERENCES productos(id_producto)
 );
 
 create table agenda(
