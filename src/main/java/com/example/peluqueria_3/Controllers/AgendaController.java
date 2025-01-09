@@ -125,15 +125,7 @@ public class AgendaController{
             vboxEmpleados.setId(empleado.getId_empleado());
 
 
-           /* Button botonUser = new Button();
-            Image imgUser = new Image("@../../../../img/cerrarSesionIcon.png");
-            ImageView imageView = new ImageView(imgUser);
-            imageView.setFitHeight(15);
-            imageView.setFitWidth(15); */
-
-
             Label label2 = new Label(empleado.getUsuario());
-            label2.setPrefHeight(100);
             label2.setText(empleado.getUsuario());
             label2.setMinHeight(50);
             Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 18);
