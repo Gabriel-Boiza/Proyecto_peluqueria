@@ -16,7 +16,7 @@
          <Cursor fx:constant="HAND" />
       </cursor></DatePicker>
    <ScrollPane fx:id="panelHoras" layoutX="19.0" layoutY="66.0" maxWidth="1327.0" pannable="true" prefHeight="685.0" prefViewportWidth="100.0" prefWidth="1327.0" style="-fx-background-color: transparent;">
-      <HBox fx:id="box" maxWidth="1325.0" prefHeight="685.0" prefWidth="1325.0" style="-fx-border-color: #DBD0CA;" />
+      <HBox fx:id="box" alignment="CENTER" maxWidth="1325.0" prefHeight="685.0" prefWidth="1325.0" style="-fx-border-color: #DBD0CA;" />
    </ScrollPane>
    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="67.0" layoutY="14.0" prefHeight="40.0" prefWidth="130.0" text="Agenda" textAlignment="CENTER">
       <font>
