@@ -31,6 +31,7 @@ public class AgendaController{
     @FXML HBox box;
     @FXML ImageView left;
     @FXML ImageView right;
+    @FXML Button btnClientes;
 
     final String[] horas = {
             "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
@@ -73,6 +74,10 @@ public class AgendaController{
             right.setOnMouseClicked(event ->{
                 LocalDate diaSeleccionado = date.getValue();
                 date.setValue(diaSeleccionado.plusDays(1));
+            });
+
+            btnClientes.setOnMouseClicked(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/clientes.fxml", "Clientes");
             });
         }
 

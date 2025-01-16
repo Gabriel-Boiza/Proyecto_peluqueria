@@ -183,8 +183,8 @@ public class EmpleadosController {
                     rellenarInputs(empleadoSeleccionado); // Rellena los inputs
                 }
             });
-            //Botones
 
+            //Botones
             boton_crear.setOnAction(event -> {
                 if (empleadoSeleccionado == null){
                     try{
