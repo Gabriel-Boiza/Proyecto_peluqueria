@@ -1,5 +1,6 @@
 package com.example.peluqueria_3.Controllers;
 
+import com.example.peluqueria_3.Models.Cobros;
 import com.example.peluqueria_3.Models.ModeloClientes;
 import com.example.peluqueria_3.Models.Clientes;
 import javafx.collections.FXCollections;
@@ -7,6 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
@@ -50,6 +53,8 @@ public class ClientesController {
     //Datos pagina ficha
     @FXML private Label nombre_ficha;
     @FXML private Button nueva_sesion;
+    @FXML private Button guardar;
+    @FXML private VBox sesiones;
 
     //dato general
     static Clientes clientesSeleccionado;
@@ -186,7 +191,19 @@ public class ClientesController {
 
         //
         if(nombre_ficha != null){
-            System.out.println("hola");
+            System.out.println(clientesSeleccionado);
+            ArrayList<Cobros> cobrosCliente = modelo.datosFichaCliente(clientesSeleccionado.getId_cliente());
+            System.out.println(cobrosCliente);
+            for(Cobros cobro: cobrosCliente){
+                HBox hbox = new HBox();
+                String bizum = String.valueOf(cobro.getBizum());
+                String efectivo = String.valueOf(cobro.getBizum());
+                String tarjeta = String.valueOf(cobro.getBizum());
+
+                hbox.getChildren().addAll(new Label(cobro.getNombre_servicio()), new Label(cobro.getNombre_producto()),
+                        new Label(cobro.getNombre_empleado()), new Label(bizum), new Label(efectivo), new Label(tarjeta) );
+                sesiones.getChildren().add(hbox);
+            }
             nueva_sesion.setOnAction(event->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/cobro.fxml", "Agenda");
             });

@@ -18,6 +18,11 @@ public class CobrosController {
 
     @FXML
     public void initialize(){
-        System.out.println("hola");
+        agregar_servicio.setOnAction(actionEvent -> {
+
+        });
+        agregar_producto.setOnAction(actionEvent -> {
+            System.out.println("hola");
+        });
     }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Vistas.FichaCliente">
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.ClientesController">
    <children>
       <Label layoutX="52.0" layoutY="51.0" text="Ficha Cliente - ">
          <font>
@@ -24,7 +24,7 @@
          </content>
       </ScrollPane>
       <TextArea layoutX="52.0" layoutY="600.0" prefHeight="144.0" prefWidth="1270.0" />
-      <Label fx:id="nombre" layoutX="245.0" layoutY="54.0">
+      <Label fx:id="nombre_ficha" layoutX="245.0" layoutY="54.0">
          <font>
             <Font size="24.0" />
          </font>
