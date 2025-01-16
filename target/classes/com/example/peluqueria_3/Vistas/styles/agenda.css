@@ -2,6 +2,11 @@
     -fx-background-color: #DBD0CA;
 }
 
+#btnClientes{
+    -fx-background-color: #393B35;
+    -fx-text-fill: white;
+}
+
 #panelHoras{
     -fx-background-color: #DBD0CA;
     -fx-border-color: #DBD0CA;
