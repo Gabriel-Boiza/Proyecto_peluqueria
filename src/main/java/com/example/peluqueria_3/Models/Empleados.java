@@ -3,7 +3,7 @@ package com.example.peluqueria_3.Models;
 import lombok.*;
 @Setter
 @Getter
-@ToString
+
 @AllArgsConstructor
 
 public class Empleados extends DataBase {
@@ -21,5 +21,10 @@ public class Empleados extends DataBase {
     private String rol;
     private String estado;
     private String img;
+
+    @Override
+    public String toString() {
+        return nombre; // Solo el nombre será mostrado en el ChoiceBox
+    }
 
 }
