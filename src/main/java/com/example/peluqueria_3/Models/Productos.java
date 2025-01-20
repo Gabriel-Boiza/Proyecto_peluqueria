@@ -3,7 +3,7 @@ package com.example.peluqueria_3.Models;
 import lombok.*;
 @Setter
 @Getter
-@ToString
+
 @AllArgsConstructor
 
 public class Productos {
@@ -14,5 +14,9 @@ public class Productos {
     private Float precio;
     private Integer stock;
     private String codigo_barras;
+
+    public String toString() {
+        return nombre; // Solo el nombre será mostrado en el ChoiceBox
+    }
 
 }
