@@ -111,6 +111,8 @@ public class CobrosController {
 
     @FXML
     public void initialize() {
+
+
         ArrayList<Productos> productos = modeloProductos.mostrarProductos();
         ArrayList<Servicios> servicios = modeloServicios.mostrarServicios();
         ArrayList<Empleados> empleadosServicios = modeloEmpleados.mostrarEmpleados();
@@ -158,6 +160,10 @@ public class CobrosController {
                 return null;
             }
         };
+
+        volver.setOnAction(actionEvent -> {
+            LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
+        });
 
         agregar_servicio.setOnAction(actionEvent -> {
             HBox fila_servicio = new HBox();
@@ -267,4 +273,5 @@ public class CobrosController {
             }
         });
     }
+
 }
