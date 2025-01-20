@@ -390,7 +390,7 @@ public class EmpleadosController {
                     for (Float valor : valores) {
                         sum += valor;
                     }
-                    totalDinero.setText(String.valueOf(sum));
+                    totalDinero.setText(String.valueOf(sum) + "€");
                 }
 
             } catch (Exception e) {
