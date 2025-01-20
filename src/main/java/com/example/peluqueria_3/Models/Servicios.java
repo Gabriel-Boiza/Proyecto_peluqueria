@@ -7,14 +7,16 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@ToString
+
 @AllArgsConstructor
 
 public class Servicios {
     private Integer id_servicio;
     private String nombre;
     private String descripcion;
-    private String fecha;
-    private String hora;
     private Float precio;
+
+    public String toString() {
+        return nombre; // Solo el nombre será mostrado en el ChoiceBox
+    }
 }
