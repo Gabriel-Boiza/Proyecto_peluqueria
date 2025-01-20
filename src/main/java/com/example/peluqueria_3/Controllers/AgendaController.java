@@ -32,6 +32,10 @@ public class AgendaController{
     @FXML ImageView left;
     @FXML ImageView right;
 
+    @FXML Button btnAdmin;
+    @FXML Button btnClientes;
+    @FXML Button btnLoginTrabajador;
+
     final String[] horas = {
             "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
             "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
@@ -74,10 +78,21 @@ public class AgendaController{
                 LocalDate diaSeleccionado = date.getValue();
                 date.setValue(diaSeleccionado.plusDays(1));
             });
+
+            btnClientes.setOnMouseClicked(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/clientes.fxml", "Clientes");
+            });
+
+            btnLoginTrabajador.setOnAction( event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/loginTrabajador.fxml", "Login Trabajadores");
+            });
+
+            btnAdmin.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/loginAdmin.fxml", "Login Administración");
+            });
         }
 
     }
-
 
     public void insercion(String clave, TextArea textField){
         String componentes[] = clave.split("_");
