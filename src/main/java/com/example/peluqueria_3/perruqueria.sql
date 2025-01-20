@@ -1,6 +1,6 @@
--- DROP DATABASE bugffmlodzmfiksquriy;
--- CREATE DATABASE bugffmlodzmfiksquriy;
--- USE bugffmlodzmfiksquriy;
+DROP DATABASE bugffmlodzmfiksquriy;
+CREATE DATABASE bugffmlodzmfiksquriy;
+USE bugffmlodzmfiksquriy;
 
 create table trabajadores(
     DNI varchar(255) primary key,
@@ -72,7 +72,7 @@ create table cobros(
     fk_id_servicio int,
     fk_id_trabajador varchar(255) not null,
     fk_id_producto int,
-    fecha_cobro varchar(255) not null,
+    fecha_cobro date not null,
     bizum float not null,
     tarjeta float not null,
     efectivo float not null,

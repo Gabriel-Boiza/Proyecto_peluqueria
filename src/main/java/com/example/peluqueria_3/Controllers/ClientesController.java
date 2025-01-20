@@ -34,6 +34,7 @@ public class ClientesController {
     @FXML private TextField campo_observaciones;
     @FXML private ChoiceBox campo_ley_datos;
 
+    @FXML private Button ficha_cliente;
     @FXML private Button boton_volver;
     @FXML private Button boton_crear;
     @FXML private Button boton_limpiar;
@@ -46,12 +47,14 @@ public class ClientesController {
     // Boton Salir
     @FXML private Button salir;
 
-    Clientes clientesSeleccionado;
+    //Datos pagina ficha
+    @FXML private Label nombre_ficha;
+    @FXML private Button nueva_sesion;
 
-
+    //dato general
+    static Clientes clientesSeleccionado;
 
     // METODOS
-
     public void mostrarClientes(){
         ModeloClientes modelo = new ModeloClientes();
         ArrayList<Clientes> clientes = modelo.mostrarClientes();
@@ -173,6 +176,19 @@ public class ClientesController {
 
             salir.setOnAction(event ->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
+            });
+
+            ficha_cliente.setOnAction(actionEvent -> {
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
+            });
+        }
+
+
+        //
+        if(nombre_ficha != null){
+            System.out.println("hola");
+            nueva_sesion.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/cobro.fxml", "Agenda");
             });
         }
 
