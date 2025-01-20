@@ -75,9 +75,11 @@ public class EmpleadosController {
     @FXML Button volveragenda;
     @FXML ComboBox<String> listaUsuarios;
     @FXML PasswordField passwordTrabajador;
+    @FXML Button entrarTrabajador;
 
     // Facturación Trabajador
     @FXML Label facturacionTrabajador;
+    @FXML TabPane tabPane;
 
     // Login Administradores
     @FXML ComboBox<String> listaAdministradores;
@@ -87,6 +89,7 @@ public class EmpleadosController {
     // Administración
     @FXML Label panelAdmin;
     @FXML Button adminTrabajadores;
+
 
     Empleados empleadoSeleccionado;
 
@@ -376,6 +379,23 @@ public class EmpleadosController {
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/empleados.fxml", "Trabajadores");
             });
         }
+
+        /*if (tabPane != null){
+
+            tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+                if (newTab != null) {
+                    String mesSeleccionado = newTab.getText();
+                    System.out.println("Pestaña seleccionada: " + mesSeleccionado);
+
+                    grafico<String, Number> barChart = generarBarChart(mesSeleccionado);
+
+                    if (root.getChildren().size() > 1) {
+                        root.getChildren().remove(1);
+                    }
+                    root.getChildren().add(barChart);
+                }
+            });
+        }*/
     }
 }
 
