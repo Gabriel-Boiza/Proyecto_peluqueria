@@ -76,6 +76,49 @@ public class ModeloEmpleados extends DataBase{
         return empleado;
     }
 
+    public Empleados validarAdministrador(String user, String contrasenya) {
+
+        DataBase db = new DataBase();
+        String query = "SELECT * FROM trabajadores WHERE usuario = ? AND password = ? AND rol = 'administrador'";
+        Empleados empleado = null;
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, user);
+            stmt.setString(2, contrasenya);
+
+            ResultSet rs = stmt.executeQuery();   //devuelve las filas de la query
+
+            if (rs.next()) {
+                String id = rs.getString("DNI");
+                String usuario = rs.getString("usuario");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String correo = rs.getString("correo");
+                String password = rs.getString("password");
+                String telefono = rs.getString("tel");
+                String direccion = rs.getString("direccion");
+
+
+                Float comision_ventas = rs.getFloat("comision_ventas");
+                Float comision_servicios = rs.getFloat("comision_servicios");
+                Float lim_comision_servicios = rs.getFloat("limite_comision_servicios");
+
+                String rol = rs.getString("rol");
+                String estado = rs.getString("estado");
+
+                String img = rs.getString("img");
+
+                empleado = new Empleados(id, usuario, nombre, apellido, correo, password, telefono, direccion,  comision_ventas, comision_servicios, lim_comision_servicios, rol, estado, img);
+            }
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return empleado;
+    }
+
     public boolean empleadoExiste(String DNI){
         DataBase db = new DataBase();
         String query = "SELECT * FROM trabajadores WHERE DNI = ?";

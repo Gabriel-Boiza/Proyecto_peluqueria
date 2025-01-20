@@ -7,10 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.FacturacionController">
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController">
    <children>
-      <Label layoutX="86.0" layoutY="52.0" prefHeight="37.0" prefWidth="155.0" text="Facturacion:">
+      <Label layoutX="86.0" layoutY="52.0" prefHeight="37.0" prefWidth="136.0" text="Facturacion:">
          <font>
             <Font size="24.0" />
          </font>
@@ -85,5 +84,10 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Label fx:id="facturacionTrabajador" layoutX="222.0" layoutY="52.0" prefHeight="37.0" prefWidth="259.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

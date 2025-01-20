@@ -12,7 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.w3c.dom.ls.LSOutput;
 
+import javax.swing.text.html.ImageView;
 import java.util.ArrayList;
 
 public class EmpleadosController {
@@ -24,7 +26,6 @@ public class EmpleadosController {
     @FXML private PasswordField input_contrasenya;
 
     //Elementos vista CRUD empleados
-
     @FXML private Label welcome;
 
     @FXML private TableView<Empleados> empleadosTabla;
@@ -70,9 +71,25 @@ public class EmpleadosController {
     // Boton salir
     @FXML private Button salir;
 
+    // Login Trabajadores
+    @FXML Button volveragenda;
+    @FXML ComboBox<String> listaUsuarios;
+    @FXML PasswordField passwordTrabajador;
+
+    // Facturación Trabajador
+    @FXML Label facturacionTrabajador;
+
+    // Login Administradores
+    @FXML ComboBox<String> listaAdministradores;
+    @FXML PasswordField passwordAdministrador;
+    @FXML Button entrarAdministrador;
+
+    // Administración
+    @FXML Label panelAdmin;
+    @FXML Button adminTrabajadores;
+
+
     Empleados empleadoSeleccionado;
-
-
 
     // METODOS
 
@@ -91,6 +108,7 @@ public class EmpleadosController {
         }
 
     }
+
     public void mostrarUsuarios(){
         ModeloEmpleados modelo = new ModeloEmpleados();
         ArrayList<Empleados> empleados = modelo.mostrarEmpleados();
@@ -166,6 +184,65 @@ public class EmpleadosController {
         tabla.setItems(sortedData);
     }
 
+    public void validarTrabajador(){
+        try{
+            String usuario = listaUsuarios.getValue();
+            String password = passwordTrabajador.getText();
+
+            if (!usuario.equals("Selecciona un Trabajador")){
+                ModeloEmpleados empleado = new ModeloEmpleados();
+                Empleados empleadoLogeado = empleado.validarEmpleado(usuario, password);
+
+                if(empleadoLogeado != null){
+                    DatosGlobales.setEmpleadoActual(empleadoLogeado);
+                    LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaTrabajador.fxml", "Ficha Trabajador");
+                }else{
+                    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                    alerta.setTitle("Error");
+                    alerta.setHeaderText("Contraseña incorrecta.");
+                    alerta.showAndWait();
+                }
+            } else{
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("Error");
+                alerta.setHeaderText("Debes de sleccionar un Trabajador");
+                alerta.showAndWait();
+            }
+
+        }catch (Exception e){
+            System.out.println("Error al validar trabajador: " + e.getMessage());
+        }
+    }
+
+    public void validarAdministrador(){
+        try{
+            String usuario = listaAdministradores.getValue();
+            String password = passwordAdministrador.getText();
+
+            if (!usuario.equals("Selecciona un Administrador")){
+                ModeloEmpleados empleado = new ModeloEmpleados();
+                Empleados empleadoLogeado = empleado.validarAdministrador(usuario, password);
+
+                if(empleadoLogeado != null){
+                    DatosGlobales.setEmpleadoActual(empleadoLogeado);
+                    LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/administracion.fxml", "Panel Administrador");
+                }else{
+                    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                    alerta.setTitle("Error");
+                    alerta.setHeaderText("Contraseña incorrecta.");
+                    alerta.showAndWait();
+                }
+            } else{
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("Error");
+                alerta.setHeaderText("Debes de sleccionar un Administrador");
+                alerta.showAndWait();
+            }
+
+        }catch (Exception e){
+            System.out.println("Error al validar trabajador: " + e.getMessage());
+        }
+    }
 
     @FXML
     public void initialize(){
@@ -227,7 +304,6 @@ public class EmpleadosController {
                 }
             });
             boton_eliminar.setOnAction(event -> {
-
                 if(empleadoSeleccionado != null){
                     modelo.eliminarEmpleado(empleadoSeleccionado.getId_empleado());
                     empleadosObervable.remove(empleadoSeleccionado);
@@ -244,6 +320,61 @@ public class EmpleadosController {
 
             salir.setOnAction(event ->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
+            });
+        }
+
+        if(listaUsuarios != null){
+            volveragenda.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            });
+
+            try{
+                ModeloEmpleados modelo = new ModeloEmpleados();
+                ArrayList<Empleados> empleados = modelo.mostrarEmpleados();
+                listaUsuarios.setValue("Selecciona un Trabajador");
+
+                for (Empleados empleado : empleados) {
+                    if(!empleado.getUsuario().equals("Administrador") && empleado.getEstado().equals("Activo")){
+                        listaUsuarios.getItems().add(empleado.getUsuario());
+                    }
+
+                }
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (facturacionTrabajador != null){
+            System.out.println(DatosGlobales.getEmpleadoActual().getUsuario());
+            facturacionTrabajador.setText(DatosGlobales.getEmpleadoActual().getUsuario());
+        }
+
+        if (listaAdministradores != null){
+            volveragenda.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            });
+
+            try{
+                ModeloEmpleados modelo = new ModeloEmpleados();
+                ArrayList<Empleados> empleados = modelo.mostrarEmpleados();
+                listaAdministradores.setValue("Selecciona un Administrador");
+
+                for (Empleados empleado : empleados) {
+                    if(!empleado.getUsuario().equals("Administrador") && empleado.getRol().equals("administrador") && empleado.getEstado().equals("Activo")){
+                        listaAdministradores.getItems().add(empleado.getUsuario());
+                    }
+
+                }
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (panelAdmin != null){
+            adminTrabajadores.setOnAction(event ->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/empleados.fxml", "Trabajadores");
             });
         }
     }
