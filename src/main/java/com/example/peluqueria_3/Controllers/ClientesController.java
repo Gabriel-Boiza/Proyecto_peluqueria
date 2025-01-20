@@ -44,6 +44,9 @@ public class ClientesController {
     @FXML private Button boton_modificar;
     @FXML private Button boton_eliminar;
 
+    @FXML private Button ver_servicios;
+    @FXML private Button ver_productos;
+
     // Boton nav
     @FXML private Button agenda;
 
@@ -194,18 +197,41 @@ public class ClientesController {
         //
         if(nombre_ficha != null){
             System.out.println(clientesSeleccionado);
-            ArrayList<Cobros> cobrosCliente = modelo.datosFichaCliente(clientesSeleccionado.getId_cliente());
-            System.out.println(cobrosCliente);
-            for(Cobros cobro: cobrosCliente){
-                HBox hbox = new HBox();
-                String bizum = String.valueOf(cobro.getBizum());
-                String efectivo = String.valueOf(cobro.getBizum());
-                String tarjeta = String.valueOf(cobro.getBizum());
+            ArrayList<Cobros> cobrosCliente = modelo.datosFichaClienteServicios(clientesSeleccionado.getId_cliente());
+            ArrayList<Cobros> cobrosClienteProductos = modelo.datosFichaClienteProductos(clientesSeleccionado.getId_cliente());
 
-                hbox.getChildren().addAll(new Label(cobro.getNombre_servicio()), new Label(cobro.getNombre_producto()),
-                        new Label(cobro.getNombre_empleado()), new Label(bizum), new Label(efectivo), new Label(tarjeta) );
-                sesiones.getChildren().add(hbox);
-            }
+
+            ver_servicios.setOnAction(actionEvent -> {
+                sesiones.getChildren().clear();
+
+                for(Cobros cobro: cobrosCliente){
+                    HBox hbox = new HBox();
+                    String bizum = String.valueOf(cobro.getBizum());
+                    String efectivo = String.valueOf(cobro.getBizum());
+                    String tarjeta = String.valueOf(cobro.getBizum());
+
+                    hbox.getChildren().addAll(new Label(cobro.getNombre_servicio()),
+                            new Label(cobro.getNombre_empleado()), new Label(bizum), new Label(efectivo), new Label(tarjeta) );
+
+                    sesiones.getChildren().add(hbox);
+                }
+            });
+            ver_productos.setOnAction(actionEvent -> {
+                sesiones.getChildren().clear();
+
+                for(Cobros cobro: cobrosClienteProductos){
+                    HBox hbox = new HBox();
+                    String bizum = String.valueOf(cobro.getBizum());
+                    String efectivo = String.valueOf(cobro.getBizum());
+                    String tarjeta = String.valueOf(cobro.getBizum());
+
+                    hbox.getChildren().addAll( new Label(cobro.getNombre_producto()),
+                            new Label(cobro.getNombre_empleado()), new Label(bizum), new Label(efectivo), new Label(tarjeta) );
+
+                    sesiones.getChildren().add(hbox);
+                }
+            });
+
             nueva_sesion.setOnAction(event->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/cobro.fxml", "Agenda");
             });
