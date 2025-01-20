@@ -178,9 +178,11 @@ public class ClientesController {
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
             });
 
-            ficha_cliente.setOnAction(actionEvent -> {
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
-            });
+            if (ficha_cliente != null){
+                ficha_cliente.setOnAction(actionEvent -> {
+                    LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
+                });
+            }
         }
 
 

@@ -369,6 +369,20 @@ public class EmpleadosController {
 
                 }
 
+                /*tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+                    if (newTab != null) {
+                        String mesSeleccionado = newTab.getText();
+                        System.out.println("Pestaña seleccionada: " + mesSeleccionado);
+
+                        BarChart<String, Number> barChart = generarBarChart(mesSeleccionado);
+
+                        if (root.getChildren().size() > 1) {
+                            root.getChildren().remove(1);
+                        }
+                        root.getChildren().add(barChart);
+                    }
+                });*/
+
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
