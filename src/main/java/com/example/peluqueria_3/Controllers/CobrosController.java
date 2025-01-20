@@ -59,10 +59,14 @@ public class CobrosController {
 
             ChoiceBox<Servicios> casilla_servicios = new ChoiceBox<>();
             ChoiceBox<Empleados> casilla_empleados = new ChoiceBox<>();
+
             TextField textoBizum = new TextField();
             TextField textoTarjeta = new TextField();
             TextField textoEfectivo = new TextField();
 
+            textoBizum.setText("0");
+            textoTarjeta.setText("0");
+            textoEfectivo.setText("0");
 
             casilla_servicios.getItems().addAll(servicios);
             casilla_empleados.getItems().addAll(empleadosServicios);
@@ -92,14 +96,20 @@ public class CobrosController {
 
 
         });
+
         agregar_producto.setOnAction(actionEvent -> {
             HBox fila_producto = new HBox();
 
             ChoiceBox<Productos> casilla_productos = new ChoiceBox<>();
             ChoiceBox<Empleados> casilla_empleados = new ChoiceBox<>();
+
             TextField textoBizum = new TextField();
             TextField textoTarjeta = new TextField();
             TextField textoEfectivo = new TextField();
+
+            textoBizum.setText("0");
+            textoTarjeta.setText("0");
+            textoEfectivo.setText("0");
 
             casilla_productos.getItems().addAll(productos);
             casilla_empleados.getItems().addAll(empleadosProductos);
@@ -144,4 +154,6 @@ public class CobrosController {
             }
         });
     }
+
+
 }
