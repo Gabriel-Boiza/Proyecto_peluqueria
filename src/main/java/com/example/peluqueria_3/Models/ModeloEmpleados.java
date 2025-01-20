@@ -259,6 +259,61 @@ public class ModeloEmpleados extends DataBase{
         }
     }
 
+    public ArrayList<Float> obtenerSumasCobros(String DNI) {
+        ArrayList<Float> sumas = new ArrayList<>();
+        DataBase db = new DataBase();
+        String query = "SELECT SUM(bizum) AS suma_bizum, SUM(tarjeta) AS suma_tarjeta, SUM(efectivo) AS suma_efectivo FROM cobros WHERE DNI = ?";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+            stmt.setString(1, DNI);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) { // Si hay un registro
+                Float sumaBizum = rs.getFloat("suma_bizum");
+                Float sumaTarjeta = rs.getFloat("suma_tarjeta");
+                Float sumaEfectivo = rs.getFloat("suma_efectivo");
+
+                sumas.add(sumaBizum);
+                sumas.add(sumaTarjeta);
+                sumas.add(sumaEfectivo);
+            }
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return sumas;
+    }
+
+    public int contarCobros(String dni) {
+        int count = 0; // Inicializamos el contador
+        DataBase db = new DataBase();
+        String query = "SELECT COUNT(*) AS total FROM cobros WHERE DNI = ?";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, dni);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) { // Si hay resultados
+                count = rs.getInt("total");
+            }
+            conexion.close(); // Cerramos la conexión
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return count;
+    }
+
+
+
     /*
     public void cambiarEstadoEmpleado(String estado, String DNI){
         DataBase db = new DataBase();
