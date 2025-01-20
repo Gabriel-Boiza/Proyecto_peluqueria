@@ -80,6 +80,7 @@ public class EmpleadosController {
     // Facturación Trabajador
     @FXML Label facturacionTrabajador;
     @FXML TabPane tabPane;
+    @FXML Label totalDinero;
 
     // Login Administradores
     @FXML ComboBox<String> listaAdministradores;
@@ -383,6 +384,15 @@ public class EmpleadosController {
                     }
                 });*/
 
+                if (totalDinero != null){
+                    ArrayList<Float> valores =  modelo.obtenerSumasCobros(DatosGlobales.getEmpleadoActual().getId_empleado());
+                    float sum = 0.0f;
+                    for (Float valor : valores) {
+                        sum += valor;
+                    }
+                    totalDinero.setText(String.valueOf(sum));
+                }
+
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -394,8 +404,15 @@ public class EmpleadosController {
             });
         }
 
-        /*if (tabPane != null){
-
+        if(tabPane != null){
+            /*tabPane.getTabs().forEach(tab -> {
+                System.out.println("Tab: " + tab.getText());
+                if (tab.getContent() != null) {
+                    System.out.println("Contenido: " + tab.getContent());
+                } else {
+                    System.out.println("Contenido vacío");
+                }
+            });
             tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
                 if (newTab != null) {
                     String mesSeleccionado = newTab.getText();
@@ -408,8 +425,9 @@ public class EmpleadosController {
                     }
                     root.getChildren().add(barChart);
                 }
-            });
-        }*/
+            });*/
+
+        }
     }
 }
 
