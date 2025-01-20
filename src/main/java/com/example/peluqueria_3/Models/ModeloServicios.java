@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class ModeloServicios extends  DataBase{
 
-    public void crearServicio(String nombre, String descripcion, String fecha, String hora, float precio){
+    public void crearServicio(String nombre, String descripcion, float precio){
         DataBase db = new DataBase();
-        String query = "INSERT INTO servicios (nombre, descripcion, fecha, hora, precio) VALUES (?, ?, ?, ? ,?)";
+        String query = "INSERT INTO servicios (nombre, descripcion, precio) VALUES (?, ?, ?)";
         try{
             Connection conexion = db.getConnection();
             PreparedStatement stmt = conexion.prepareStatement(query);
@@ -17,9 +17,7 @@ public class ModeloServicios extends  DataBase{
 
             stmt.setString(1, nombre);
             stmt.setString(2, descripcion);
-            stmt.setString(3, fecha);
-            stmt.setString(4, hora);
-            stmt.setFloat(5, precio);
+            stmt.setFloat(3, precio);
 
             stmt.executeUpdate();
             conexion.close();
@@ -43,9 +41,9 @@ public class ModeloServicios extends  DataBase{
         }
     }
 
-    public void editarServicio(int idServicio, String nombre, String descripcion, String fecha, String hora, float precio){
+    public void editarServicio(int idServicio, String nombre, String descripcion,float precio){
         DataBase db = new DataBase();
-        String query = "UPDATE servicios SET nombre = ?, descripcion = ?, fecha = ?, hora = ?, precio = ? WHERE id_servicio = ?";
+        String query = "UPDATE servicios SET nombre = ?, descripcion = ?, precio = ? WHERE id_servicio = ?";
 
         try{
             Connection conexion = db.getConnection();
@@ -53,10 +51,8 @@ public class ModeloServicios extends  DataBase{
 
             stmt.setString(1, nombre);
             stmt.setString(2, descripcion);
-            stmt.setString(3, fecha);
-            stmt.setString(4, hora);
-            stmt.setFloat(5, precio);
-            stmt.setInt(6, idServicio);
+            stmt.setFloat(3, precio);
+            stmt.setInt(4, idServicio);
 
             stmt.executeUpdate();
             conexion.close();
@@ -81,11 +77,9 @@ public class ModeloServicios extends  DataBase{
             if (rs.next()) {
                 String nombre = rs.getString("nombre");
                 String descripcion = rs.getString("descripcion");
-                String fecha = rs.getString("fecha");
-                String hora = rs.getString("hora");
                 float precio = rs.getFloat("precio");
 
-                servicio = new Servicios(idServicio, nombre, descripcion, fecha, hora, precio);
+                servicio = new Servicios(idServicio, nombre, descripcion, precio);
             }
             conexion.close();
 
@@ -111,11 +105,9 @@ public class ModeloServicios extends  DataBase{
                 int id = rs.getInt("id_servicio");
                 String nombre = rs.getString("nombre");
                 String descripcion = rs.getString("descripcion");
-                String fecha = rs.getString("fecha");
-                String hora = rs.getString("hora");
                 Float precio = rs.getFloat("precio");
 
-                Servicios servicio = new Servicios(id, nombre, descripcion, fecha, hora, precio);
+                Servicios servicio = new Servicios(id, nombre, descripcion, precio);
                 servicios.add(servicio);
             }
             conexion.close();

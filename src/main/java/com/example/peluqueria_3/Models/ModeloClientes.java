@@ -1,8 +1,10 @@
 package com.example.peluqueria_3.Models;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ModeloClientes extends DataBase{
@@ -130,4 +132,81 @@ public class ModeloClientes extends DataBase{
         }
         return clientes;
     }
+
+    public ArrayList<Cobros> datosFichaClienteServicios(int id_cliente) {
+
+        ArrayList<Cobros> arrayCobros = new ArrayList<>();
+        DataBase db = new DataBase();
+        String query = "SELECT * FROM cobros co " +
+                "INNER JOIN clientes c ON co.fk_id_cliente = c.id_cliente " +
+                "INNER JOIN servicios s ON co.fk_id_servicio = s.id_servicio " +
+                "INNER JOIN trabajadores t ON co.fk_id_trabajador = t.DNI " +
+                "WHERE co.fk_id_cliente = ?";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setInt(1, id_cliente);
+
+            ResultSet rs = stmt.executeQuery();   // Devuelve las filas de la query
+
+            while (rs.next()) {  // Mientras existan registros
+
+                String nombre = rs.getString("c.nombre");
+                String servicio = rs.getString("s.nombre");
+                String trabajador = rs.getString("t.nombre");
+                Date fecha = rs.getDate("co.fecha_cobro");
+                float bizum = rs.getFloat("co.bizum");
+                float efectivo = rs.getFloat("co.efectivo");
+                float tarjeta = rs.getFloat("co.tarjeta");
+
+                Cobros cobro = new Cobros(nombre, servicio, "sin valor", trabajador, fecha, bizum, tarjeta, efectivo);
+                arrayCobros.add(cobro);
+            }
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return arrayCobros;
+    }
+
+    public ArrayList<Cobros> datosFichaClienteProductos(int id_cliente) {
+
+        ArrayList<Cobros> arrayCobros = new ArrayList<Cobros>();
+        DataBase db = new DataBase();
+        String query = "SELECT * FROM cobros co " +
+                "INNER JOIN clientes c ON co.fk_id_cliente = c.id_cliente " +
+                "INNER JOIN productos p ON co.fk_id_producto = p.id_producto " +
+                "INNER JOIN trabajadores t ON co.fk_id_trabajador = t.DNI " +
+                "WHERE co.fk_id_cliente = ?";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setInt(1, id_cliente);
+
+            ResultSet rs = stmt.executeQuery();   // Devuelve las filas de la query
+
+            while (rs.next()) {  // Mientras existan registros
+
+                String nombre = rs.getString("c.nombre");
+                String trabajador = rs.getString("t.nombre");
+                String producto = rs.getString("p.nombre");
+                Date fecha = rs.getDate("co.fecha_cobro");
+                float bizum = rs.getFloat("co.bizum");
+                float efectivo = rs.getFloat("co.efectivo");
+                float tarjeta = rs.getFloat("co.tarjeta");
+
+                Cobros cobro = new Cobros(nombre, "sin valor", producto , trabajador, fecha, bizum, tarjeta, efectivo);
+                arrayCobros.add(cobro);
+            }
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return arrayCobros;
+    }
+
 }

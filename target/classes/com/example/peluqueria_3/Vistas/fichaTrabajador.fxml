@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController">
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController">
    <children>
       <Label layoutX="86.0" layoutY="52.0" prefHeight="37.0" prefWidth="136.0" text="Facturacion:">
          <font>
@@ -20,7 +20,7 @@
          </font>
       </Label>
       <Button fx:id="volver" layoutX="1256.0" layoutY="53.0" mnemonicParsing="false" text="Volver" />
-      <TabPane layoutX="78.0" layoutY="155.0" prefHeight="374.0" prefWidth="1244.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" layoutX="78.0" layoutY="155.0" prefHeight="374.0" prefWidth="1244.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="enero" text="Enero">
             <content>
@@ -89,5 +89,7 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <Label layoutX="68.0" layoutY="624.0" text="Total euros:" />
+      <Label fx:id="totalDinero" layoutX="146.0" layoutY="625.0" prefHeight="16.0" prefWidth="97.0" />
    </children>
 </AnchorPane>

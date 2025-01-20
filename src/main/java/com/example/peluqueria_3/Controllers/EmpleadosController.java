@@ -75,9 +75,12 @@ public class EmpleadosController {
     @FXML Button volveragenda;
     @FXML ComboBox<String> listaUsuarios;
     @FXML PasswordField passwordTrabajador;
+    @FXML Button entrarTrabajador;
 
     // Facturación Trabajador
     @FXML Label facturacionTrabajador;
+    @FXML TabPane tabPane;
+    @FXML Label totalDinero;
 
     // Login Administradores
     @FXML ComboBox<String> listaAdministradores;
@@ -87,6 +90,7 @@ public class EmpleadosController {
     // Administración
     @FXML Label panelAdmin;
     @FXML Button adminTrabajadores;
+
 
     Empleados empleadoSeleccionado;
 
@@ -366,6 +370,20 @@ public class EmpleadosController {
 
                 }
 
+                /*tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+                    if (newTab != null) {
+                        String mesSeleccionado = newTab.getText();
+                        System.out.println("Pestaña seleccionada: " + mesSeleccionado);
+
+                        BarChart<String, Number> barChart = generarBarChart(mesSeleccionado);
+
+                        if (root.getChildren().size() > 1) {
+                            root.getChildren().remove(1);
+                        }
+                        root.getChildren().add(barChart);
+                    }
+                });*/
+
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -375,6 +393,39 @@ public class EmpleadosController {
             adminTrabajadores.setOnAction(event ->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/empleados.fxml", "Trabajadores");
             });
+        }
+
+        if(tabPane != null){
+            if (totalDinero != null){
+                ArrayList<Float> valores =  modelo.obtenerSumasCobros(DatosGlobales.getEmpleadoActual().getId_empleado());
+                float sum = 0.00f;
+                for (Float valor : valores) {
+                    sum += valor;
+                }
+                totalDinero.setText(String.valueOf(sum) + "€");
+            }
+            /*tabPane.getTabs().forEach(tab -> {
+                System.out.println("Tab: " + tab.getText());
+                if (tab.getContent() != null) {
+                    System.out.println("Contenido: " + tab.getContent());
+                } else {
+                    System.out.println("Contenido vacío");
+                }
+            });
+            tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+                if (newTab != null) {
+                    String mesSeleccionado = newTab.getText();
+                    System.out.println("Pestaña seleccionada: " + mesSeleccionado);
+
+                    grafico<String, Number> barChart = generarBarChart(mesSeleccionado);
+
+                    if (root.getChildren().size() > 1) {
+                        root.getChildren().remove(1);
+                    }
+                    root.getChildren().add(barChart);
+                }
+            });*/
+
         }
     }
 }

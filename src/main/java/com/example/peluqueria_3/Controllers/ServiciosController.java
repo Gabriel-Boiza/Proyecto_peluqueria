@@ -20,16 +20,12 @@ public class ServiciosController {
     @FXML private TableColumn<Servicios, Integer> ID;
     @FXML private TableColumn<Servicios, String> nombre;
     @FXML private TableColumn<Servicios, String> descripcion;
-    @FXML private TableColumn<Servicios, String> fecha;
-    @FXML private TableColumn<Servicios, String> hora;
     @FXML private TableColumn<Servicios, Float> precio;
 
     private ObservableList<Servicios> serviciosObervable;
 
     @FXML private TextField campo_nombre;
     @FXML private TextField campo_descripcion;
-    @FXML private TextField campo_fecha;
-    @FXML private TextField campo_hora;
     @FXML private TextField campo_precio;
 
     @FXML private Button boton_volver;
@@ -56,16 +52,12 @@ public class ServiciosController {
         ID.setCellValueFactory(new PropertyValueFactory<>("id_servicio"));
         nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         descripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        hora.setCellValueFactory(new PropertyValueFactory<>("hora"));
         precio.setCellValueFactory(new PropertyValueFactory<>("precio"));
     }
 
     public void rellenarInputs(Servicios servicioSeleccionado){
         campo_nombre.setText(servicioSeleccionado.getNombre());
         campo_descripcion.setText(servicioSeleccionado.getDescripcion());
-        campo_fecha.setText(servicioSeleccionado.getFecha());
-        campo_hora.setText(servicioSeleccionado.getHora());
         campo_precio.setText(servicioSeleccionado.getPrecio().toString());
 
     }
@@ -73,8 +65,6 @@ public class ServiciosController {
     public void limpiarInputs(){
         campo_nombre.setText("");
         campo_descripcion.setText("");
-        campo_fecha.setText("");
-        campo_hora.setText("");
         campo_precio.setText("");
 
         servicioSeleccionado = null;
@@ -105,7 +95,7 @@ public class ServiciosController {
                 try{
                     float precio = Float.parseFloat(campo_precio.getText());
 
-                    modelo.crearServicio(campo_nombre.getText(), campo_descripcion.getText(), campo_fecha.getText(), campo_hora.getText(), precio);
+                    modelo.crearServicio(campo_nombre.getText(), campo_descripcion.getText(), precio);
                     mostrarServicios();
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
@@ -126,7 +116,7 @@ public class ServiciosController {
                     int id = servicioSeleccionado.getId_servicio();
                     float precio = Float.parseFloat(campo_precio.getText());
 
-                    modelo.editarServicio(id, campo_nombre.getText(), campo_descripcion.getText(), campo_fecha.getText(), campo_hora.getText(), precio);
+                    modelo.editarServicio(id, campo_nombre.getText(), campo_descripcion.getText(), precio);
                     mostrarServicios();
                 }
             });
