@@ -384,15 +384,6 @@ public class EmpleadosController {
                     }
                 });*/
 
-                if (totalDinero != null){
-                    ArrayList<Float> valores =  modelo.obtenerSumasCobros(DatosGlobales.getEmpleadoActual().getId_empleado());
-                    float sum = 0.0f;
-                    for (Float valor : valores) {
-                        sum += valor;
-                    }
-                    totalDinero.setText(String.valueOf(sum) + "€");
-                }
-
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -405,6 +396,14 @@ public class EmpleadosController {
         }
 
         if(tabPane != null){
+            if (totalDinero != null){
+                ArrayList<Float> valores =  modelo.obtenerSumasCobros(DatosGlobales.getEmpleadoActual().getId_empleado());
+                float sum = 0.00f;
+                for (Float valor : valores) {
+                    sum += valor;
+                }
+                totalDinero.setText(String.valueOf(sum) + "€");
+            }
             /*tabPane.getTabs().forEach(tab -> {
                 System.out.println("Tab: " + tab.getText());
                 if (tab.getContent() != null) {

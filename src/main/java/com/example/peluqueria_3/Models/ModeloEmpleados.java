@@ -262,7 +262,7 @@ public class ModeloEmpleados extends DataBase{
     public ArrayList<Float> obtenerSumasCobros(String DNI) {
         ArrayList<Float> sumas = new ArrayList<>();
         DataBase db = new DataBase();
-        String query = "SELECT SUM(bizum) AS suma_bizum, SUM(tarjeta) AS suma_tarjeta, SUM(efectivo) AS suma_efectivo FROM cobros WHERE DNI = ?";
+        String query = "SELECT SUM(bizum) AS suma_bizum, SUM(tarjeta) AS suma_tarjeta, SUM(efectivo) AS suma_efectivo FROM cobros WHERE fk_id_trabajador = ?";
 
         try {
             Connection conexion = db.getConnection();
