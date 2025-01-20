@@ -251,7 +251,7 @@ public class CobrosController {
             System.out.println("SERVICIOS ______________");
             int cont = 0;
             for(ComboBox<Servicios> servicio : arrayServicios){
-                String id_empleado = empleadosServicios.get(cont).getId_empleado();
+                String id_empleado = arrayEmpleadosServicios.get(cont).getValue().getId_empleado();
                 System.out.println(id_empleado + " : " + servicio.getValue().getId_servicio() + " precio: " + arrayTarjetaServicios.get(cont).getText());
                 float bizum = Float.parseFloat(arrayBizumServicios.get(cont).getText());
                 float efectivo = Float.parseFloat(arrayEfectivoServicios.get(cont).getText());
@@ -263,7 +263,7 @@ public class CobrosController {
             System.out.println("PRODUCTOS ______________");
             cont = 0;
             for(ComboBox<Productos> producto : arrayProductos){
-                String id_empleado = empleadosProductos.get(cont).getId_empleado();
+                String id_empleado = arrayEmpleadosProductos.get(cont).getValue().getId_empleado();
                 System.out.println(id_empleado + " : " + producto.getValue().getId_producto() + " precio: " + arrayTarjetaProductos.get(cont).getText());
                 float bizum = Float.parseFloat(arrayBizumProductos.get(cont).getText());
                 float efectivo = Float.parseFloat(arrayEfectivoProductos.get(cont).getText());
