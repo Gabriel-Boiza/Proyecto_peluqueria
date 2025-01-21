@@ -1,0 +1,25 @@
+.combox {
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+    -fx-border-color: #444;
+    -fx-border-width: 1;
+    -fx-font-size: 14px;
+}
+
+.combox .list-cell {
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+}
+
+.combox .list-cell:hover {
+    -fx-background-color: #444;
+}
+
+.combox .arrow {
+    -fx-background-color: #333;
+    -fx-padding: 5;
+}
+
+.combox:focused {
+    -fx-border-color: #555;
+}

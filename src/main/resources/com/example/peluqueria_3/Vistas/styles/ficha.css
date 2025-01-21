@@ -1,5 +1,5 @@
 #boton_volver {
-  -fx-background-color: #393B35;
+  -fx-background-color: #333;
   -fx-text-fill: white;
 }
 
@@ -56,9 +56,8 @@
 }
 
 .acciones{
-    -fx-background-color: transparent;
-    -fx-border-color: black;
-    -fx-border-width: 1px;
+    -fx-background-color: #333;
+    -fx-text-fill: white;
 }
 
 .acciones:pressed{
@@ -77,4 +76,40 @@
     -fx-border-color: #ccc;
     -fx-border-width: 1px;
     -fx-border-insets: 0;
+}
+
+.choiceBox{
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+    -fx-border-color: #444;
+    -fx-border-width: 1;
+    -fx-font-size: 14px;
+}
+.choiceBox .list-cell {
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+}
+
+.choiceBox .list-cell:hover {
+    -fx-background-color: #444;
+}
+
+.choiceBox .arrow {
+    -fx-background-color: #fff;
+    -fx-text-fill: white;
+    -fx-padding: 5;
+}
+
+.choiceBox:focused {
+    -fx-border-color: #555;
+}
+
+.verFicha{
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+}
+
+.entrar-btn{
+    -fx-background-color: #333;
+    -fx-text-fill: white;
 }
