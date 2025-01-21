@@ -32,19 +32,7 @@ public class CobrosController {
     ModeloEmpleados modeloEmpleados = new ModeloEmpleados();
     ModeloCobros modeloCobros = new ModeloCobros();
 
-    ArrayList<ComboBox<Servicios>> arrayServicios = new ArrayList<>();
-    ArrayList<ComboBox<Productos>> arrayProductos = new ArrayList<>();
 
-    ArrayList<ComboBox<Empleados>> arrayEmpleadosServicios = new ArrayList<>();
-    ArrayList<ComboBox<Empleados>> arrayEmpleadosProductos = new ArrayList<>();
-
-    ArrayList<TextField> arrayBizumServicios = new ArrayList<>();
-    ArrayList<TextField> arrayEfectivoServicios = new ArrayList<>();
-    ArrayList<TextField> arrayTarjetaServicios = new ArrayList<>();
-
-    ArrayList<TextField> arrayBizumProductos = new ArrayList<>();
-    ArrayList<TextField> arrayEfectivoProductos = new ArrayList<>();
-    ArrayList<TextField> arrayTarjetaProductos = new ArrayList<>();
 
     private <T> void setupSearchableComboBox(ComboBox<T> comboBox, ObservableList<T> items, StringConverter<T> converter) {
         comboBox.setEditable(true);
@@ -112,11 +100,26 @@ public class CobrosController {
     @FXML
     public void initialize() {
 
+        ArrayList<ComboBox<Servicios>> arrayServicios = new ArrayList<>();
+        ArrayList<ComboBox<Productos>> arrayProductos = new ArrayList<>();
+
+        ArrayList<ComboBox<Empleados>> arrayEmpleadosServicios = new ArrayList<>();
+        ArrayList<ComboBox<Empleados>> arrayEmpleadosProductos = new ArrayList<>();
+
+        ArrayList<TextField> arrayBizumServicios = new ArrayList<>();
+        ArrayList<TextField> arrayEfectivoServicios = new ArrayList<>();
+        ArrayList<TextField> arrayTarjetaServicios = new ArrayList<>();
+
+        ArrayList<TextField> arrayBizumProductos = new ArrayList<>();
+        ArrayList<TextField> arrayEfectivoProductos = new ArrayList<>();
+        ArrayList<TextField> arrayTarjetaProductos = new ArrayList<>();
+
 
         ArrayList<Productos> productos = modeloProductos.mostrarProductos();
         ArrayList<Servicios> servicios = modeloServicios.mostrarServicios();
         ArrayList<Empleados> empleadosServicios = modeloEmpleados.mostrarEmpleados();
         ArrayList<Empleados> empleadosProductos = modeloEmpleados.mostrarEmpleados();
+
 
         // Create ObservableLists
         ObservableList<Productos> obsProductos = FXCollections.observableArrayList(productos);
