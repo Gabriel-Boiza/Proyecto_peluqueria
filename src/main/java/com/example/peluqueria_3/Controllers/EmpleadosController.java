@@ -419,8 +419,8 @@ public class EmpleadosController {
                 yAxis.setTickUnit(10);
                 yAxis.setLowerBound(0);
                 yAxis.setUpperBound(100);
-                yAxis.setAutoRanging(false);  // Deshabilitar el auto-rango
-                yAxis.setForceZeroInRange(true);  // Forzar que el 0 esté en el rango
+                yAxis.setAutoRanging(false);
+                yAxis.setForceZeroInRange(true);
 
                 CategoryAxis xAxis = (CategoryAxis) chartPane.getXAxis();
                 xAxis.setLabel("Categorías");
