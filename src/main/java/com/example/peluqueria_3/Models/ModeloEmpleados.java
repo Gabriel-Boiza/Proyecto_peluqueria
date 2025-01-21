@@ -288,23 +288,49 @@ public class ModeloEmpleados extends DataBase{
         return sumas;
     }
 
-    public int contarCobros(String dni) {
-        int count = 0; // Inicializamos el contador
+    public int contarServicios(String dni) {
+        int count = 0;
         DataBase db = new DataBase();
-        String query = "SELECT COUNT(*) AS total FROM cobros WHERE DNI = ?";
+        String query = "SELECT COUNT(*) AS total FROM cobros WHERE fk_id_trabajador = ? and tipo  = ?";
 
         try {
             Connection conexion = db.getConnection();
             PreparedStatement stmt = conexion.prepareStatement(query);
 
             stmt.setString(1, dni);
+            stmt.setString(2, "servicio");
 
             ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) { // Si hay resultados
+            if (rs.next()) {
                 count = rs.getInt("total");
             }
-            conexion.close(); // Cerramos la conexión
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return count;
+    }
+
+    public int contarProductos(String dni) {
+        int count = 0;
+        DataBase db = new DataBase();
+        String query = "SELECT COUNT(*) AS total FROM cobros WHERE fk_id_trabajador = ? and tipo  = ?";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, dni);
+            stmt.setString(2, "producto");
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+            conexion.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -7,6 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -79,8 +83,10 @@ public class EmpleadosController {
 
     // Facturación Trabajador
     @FXML Label facturacionTrabajador;
-    @FXML TabPane tabPane;
+    @FXML BarChart chartPane;
     @FXML Label totalDinero;
+    @FXML Label totalProductos;
+    @FXML Label totalServicios;
 
     // Login Administradores
     @FXML ComboBox<String> listaAdministradores;
@@ -348,11 +354,6 @@ public class EmpleadosController {
             }
         }
 
-        if (facturacionTrabajador != null){
-            System.out.println(DatosGlobales.getEmpleadoActual().getUsuario());
-            facturacionTrabajador.setText(DatosGlobales.getEmpleadoActual().getUsuario());
-        }
-
         if (listaAdministradores != null){
             volveragenda.setOnAction(event->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
@@ -395,37 +396,49 @@ public class EmpleadosController {
             });
         }
 
-        if(tabPane != null){
+        if (facturacionTrabajador != null){
+            facturacionTrabajador.setText(DatosGlobales.getEmpleadoActual().getUsuario());
+
+            int totalProd = modelo.contarProductos(DatosGlobales.getEmpleadoActual().getId_empleado());
+            int totalServ = modelo.contarServicios(DatosGlobales.getEmpleadoActual().getId_empleado());
+
             if (totalDinero != null){
                 ArrayList<Float> valores =  modelo.obtenerSumasCobros(DatosGlobales.getEmpleadoActual().getId_empleado());
                 float sum = 0.00f;
                 for (Float valor : valores) {
+                    System.out.println(valor);
                     sum += valor;
                 }
                 totalDinero.setText(String.valueOf(sum) + "€");
             }
-            /*tabPane.getTabs().forEach(tab -> {
-                System.out.println("Tab: " + tab.getText());
-                if (tab.getContent() != null) {
-                    System.out.println("Contenido: " + tab.getContent());
-                } else {
-                    System.out.println("Contenido vacío");
-                }
-            });
-            tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-                if (newTab != null) {
-                    String mesSeleccionado = newTab.getText();
-                    System.out.println("Pestaña seleccionada: " + mesSeleccionado);
 
-                    grafico<String, Number> barChart = generarBarChart(mesSeleccionado);
+            if (chartPane != null){
+                CategoryAxis xAxis = new CategoryAxis();
+                NumberAxis yAxis = new NumberAxis();
 
-                    if (root.getChildren().size() > 1) {
-                        root.getChildren().remove(1);
-                    }
-                    root.getChildren().add(barChart);
-                }
-            });*/
+                xAxis.setLabel("Categorías");
+                yAxis.setLabel("Valores");
 
+                BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+                barChart.setTitle("Comparación de Totales");
+
+                XYChart.Series<String, Number> dataSeries = new XYChart.Series<>();
+                dataSeries.setName("Totales");
+
+                dataSeries.getData().add(new XYChart.Data<>("Total Productos", totalProd));
+                dataSeries.getData().add(new XYChart.Data<>("Total Servicios", totalServ));
+
+                barChart.getData().add(dataSeries);
+
+            }
+
+            if(totalProductos != null){
+                totalProductos.setText(String.valueOf(totalProd));
+            }
+
+            if(totalServicios != null){
+                totalServicios.setText(String.valueOf(totalServ));
+            }
         }
     }
 }
@@ -445,3 +458,12 @@ tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldT
             }
         });
  */
+
+/*tabPane.getTabs().forEach(tab -> {
+                System.out.println("Tab: " + tab.getText());
+                if (tab.getContent() != null) {
+                    System.out.println("Contenido: " + tab.getContent());
+                } else {
+                    System.out.println("Contenido vacío");
+                }
+            });*/
