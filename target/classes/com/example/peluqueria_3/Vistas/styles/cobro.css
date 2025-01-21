@@ -1,0 +1,51 @@
+.fila{
+    -fx-padding: 10;
+    -fx-alignment: center;
+    -fx-spacing: 10;
+}
+
+.labelText{
+    -fx-text-fill: #333;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+
+.combox {
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+    -fx-border-color: #444;
+    -fx-border-width: 1;
+    -fx-font-size: 14px;
+}
+
+.combox .list-cell {
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+}
+
+.combox .list-cell:hover {
+    -fx-background-color: #444;
+}
+
+.combox .arrow {
+    -fx-background-color: #333;
+    -fx-padding: 5;
+}
+
+.combox:focused {
+    -fx-border-color: #555;
+}
+
+.dinero {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #333;
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+}
+
+.dinero:focused {
+    -fx-border-color: #333;
+    -fx-border-width: 0 0 3 0;
+}
