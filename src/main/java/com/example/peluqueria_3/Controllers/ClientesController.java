@@ -206,12 +206,33 @@ public class ClientesController {
 
                 for(Cobros cobro: cobrosCliente){
                     HBox hbox = new HBox();
+                    hbox.getStyleClass().add("fila");
+
                     String bizum = String.valueOf(cobro.getBizum());
                     String efectivo = String.valueOf(cobro.getBizum());
                     String tarjeta = String.valueOf(cobro.getBizum());
 
-                    hbox.getChildren().addAll(new Label(cobro.getNombre_servicio()),
-                            new Label(cobro.getNombre_empleado()), new Label(bizum), new Label(efectivo), new Label(tarjeta) );
+                    Label nombreServicio = new Label(cobro.getNombre_servicio());
+                    nombreServicio.getStyleClass().add("nombreServicio");
+
+                    Label nombreEmpleado = new Label(cobro.getNombre_empleado());
+                    nombreEmpleado.getStyleClass().add("nombreEmpleado");
+
+                    Label bizumlbl = new Label(bizum);
+                    bizumlbl.getStyleClass().add("dinero");
+
+                    Label efectivolbl = new Label(efectivo);
+                    efectivolbl.getStyleClass().add("dinero");
+
+                    Label tarjetalbl = new Label(tarjeta);
+                    tarjetalbl.getStyleClass().add("dinero");
+
+                    hbox.getChildren().add(nombreServicio);
+                    hbox.getChildren().add(nombreEmpleado);
+
+                    hbox.getChildren().add(bizumlbl);
+                    hbox.getChildren().add(efectivolbl);
+                    hbox.getChildren().add(tarjetalbl);
 
                     sesiones.getChildren().add(hbox);
                 }
@@ -221,12 +242,33 @@ public class ClientesController {
 
                 for(Cobros cobro: cobrosClienteProductos){
                     HBox hbox = new HBox();
+                    hbox.getStyleClass().add("fila");
+
                     String bizum = String.valueOf(cobro.getBizum());
                     String efectivo = String.valueOf(cobro.getBizum());
                     String tarjeta = String.valueOf(cobro.getBizum());
 
-                    hbox.getChildren().addAll( new Label(cobro.getNombre_producto()),
-                            new Label(cobro.getNombre_empleado()), new Label(bizum), new Label(efectivo), new Label(tarjeta) );
+                    Label nombreproducto = new Label(cobro.getNombre_producto());
+                    nombreproducto.getStyleClass().add("nombreServicio");
+
+                    Label nombreEmpleado = new Label(cobro.getNombre_empleado());
+                    nombreEmpleado.getStyleClass().add("nombreEmpleado");
+
+                    Label bizumlbl = new Label(bizum);
+                    bizumlbl.getStyleClass().add("dinero");
+
+                    Label efectivolbl = new Label(efectivo);
+                    efectivolbl.getStyleClass().add("dinero");
+
+                    Label tarjetalbl = new Label(tarjeta);
+                    tarjetalbl.getStyleClass().add("dinero");
+
+                    hbox.getChildren().add(nombreproducto);
+                    hbox.getChildren().add(nombreEmpleado);
+
+                    hbox.getChildren().add(bizumlbl);
+                    hbox.getChildren().add(efectivolbl);
+                    hbox.getChildren().add(tarjetalbl);
 
                     sesiones.getChildren().add(hbox);
                 }
