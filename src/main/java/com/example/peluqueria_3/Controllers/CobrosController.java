@@ -257,7 +257,7 @@ public class CobrosController {
                 float efectivo = Float.parseFloat(arrayEfectivoServicios.get(cont).getText());
                 float tarjeta = Float.parseFloat(arrayTarjetaServicios.get(cont).getText());
 
-                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), servicio.getValue().getId_servicio(), id_empleado, 0, new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta);
+                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), servicio.getValue().getId_servicio(), id_empleado, 0, new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta, "servicio");
                 cont = cont +1;
             }
             System.out.println("PRODUCTOS ______________");
@@ -268,7 +268,7 @@ public class CobrosController {
                 float bizum = Float.parseFloat(arrayBizumProductos.get(cont).getText());
                 float efectivo = Float.parseFloat(arrayEfectivoProductos.get(cont).getText());
                 float tarjeta = Float.parseFloat(arrayTarjetaProductos.get(cont).getText());
-                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), 0, id_empleado, producto.getValue().getId_producto(), new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta);
+                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), 0, id_empleado, producto.getValue().getId_producto(), new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta, "producto");
                 cont = cont +1;
             }
         });

@@ -6,9 +6,9 @@ import java.sql.PreparedStatement;
 
 public class ModeloCobros extends DataBase{
 
-    public void insertarCobro(int id_cliente, int id_servicio, String id_empleado, int id_producto, Date fecha, float bizum, float efectivo, float tarjeta){
+    public void insertarCobro(int id_cliente, int id_servicio, String id_empleado, int id_producto, Date fecha, float bizum, float efectivo, float tarjeta, String tipo){
         DataBase db = new DataBase();
-        String query = "INSERT INTO cobros (fk_id_cliente, fk_id_servicio, fk_id_trabajador, fk_id_producto, fecha_cobro, bizum, tarjeta, efectivo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO cobros (fk_id_cliente, fk_id_servicio, fk_id_trabajador, fk_id_producto, fecha_cobro, bizum, tarjeta, efectivo, tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 
         try{
@@ -33,6 +33,7 @@ public class ModeloCobros extends DataBase{
             stmt.setFloat(6, bizum);
             stmt.setFloat(7, tarjeta);
             stmt.setFloat(8, efectivo);
+            stmt.setString(9, tipo);
 
             stmt.executeUpdate();
             conexion.close();
