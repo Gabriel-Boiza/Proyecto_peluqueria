@@ -419,8 +419,7 @@ public class EmpleadosController {
                 xAxis.setLabel("Categorías");
                 yAxis.setLabel("Valores");
 
-                BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
-                barChart.setTitle("Comparación de Totales");
+                chartPane.setTitle("Comparación de Totales");
 
                 XYChart.Series<String, Number> dataSeries = new XYChart.Series<>();
                 dataSeries.setName("Totales");
@@ -428,7 +427,7 @@ public class EmpleadosController {
                 dataSeries.getData().add(new XYChart.Data<>("Total Productos", totalProd));
                 dataSeries.getData().add(new XYChart.Data<>("Total Servicios", totalServ));
 
-                barChart.getData().add(dataSeries);
+                chartPane.getData().add(dataSeries);
 
             }
 
