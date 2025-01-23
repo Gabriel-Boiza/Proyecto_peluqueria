@@ -167,17 +167,28 @@ public class CobrosController {
 
         agregar_servicio.setOnAction(actionEvent -> {
             HBox fila_servicio = new HBox();
+            fila_servicio.setSpacing(15);
+            fila_servicio.getStyleClass().add("fila");
+
+            Label labelServicio = new Label("Servicio para: " + ClientesController.clientesSeleccionado.getNombre());
+            labelServicio.getStyleClass().add("labelText");
 
             ComboBox<Servicios> casilla_servicios = new ComboBox<>();
+            casilla_servicios.getStyleClass().add("combox");
             ComboBox<Empleados> casilla_empleados = new ComboBox<>();
+            casilla_empleados.getStyleClass().add("combox");
 
-            // Setup searchable ComboBoxes
             setupSearchableComboBox(casilla_servicios, obsServicios, serviciosConverter);
             setupSearchableComboBox(casilla_empleados, obsEmpleadosServicios, empleadosConverter);
 
             TextField textoBizum = new TextField();
+            textoBizum.getStyleClass().add("dinero");
+
             TextField textoTarjeta = new TextField();
+            textoTarjeta.getStyleClass().add("dinero");
+
             TextField textoEfectivo = new TextField();
+            textoEfectivo.getStyleClass().add("dinero");
 
             textoBizum.setText("0");
             textoTarjeta.setText("0");
@@ -198,7 +209,7 @@ public class CobrosController {
             arrayEfectivoServicios.add(textoEfectivo);
             arrayTarjetaServicios.add(textoTarjeta);
 
-            fila_servicio.getChildren().add(new Label("Servicio para: " + ClientesController.clientesSeleccionado.getNombre()));
+            fila_servicio.getChildren().add(labelServicio);
             fila_servicio.getChildren().add(casilla_servicios);
             fila_servicio.getChildren().add(casilla_empleados);
             fila_servicio.getChildren().addAll(textoEfectivo, textoBizum, textoTarjeta);
@@ -208,17 +219,27 @@ public class CobrosController {
 
         agregar_producto.setOnAction(actionEvent -> {
             HBox fila_producto = new HBox();
+            fila_producto.getStyleClass().add("fila");
+
+            Label labelProducto = new Label("Producto para: " + ClientesController.clientesSeleccionado.getNombre());
+            labelProducto.getStyleClass().add("labelText");
 
             ComboBox<Productos> casilla_productos = new ComboBox<>();
+            casilla_productos.getStyleClass().add("combox");
+
             ComboBox<Empleados> casilla_empleados = new ComboBox<>();
+            casilla_empleados.getStyleClass().add("combox");
 
             // Setup searchable ComboBoxes
             setupSearchableComboBox(casilla_productos, obsProductos, productosConverter);
             setupSearchableComboBox(casilla_empleados, obsEmpleadosProductos, empleadosConverter);
 
             TextField textoBizum = new TextField();
+            textoBizum.getStyleClass().add("dinero");
             TextField textoTarjeta = new TextField();
+            textoTarjeta.getStyleClass().add("dinero");
             TextField textoEfectivo = new TextField();
+            textoEfectivo.getStyleClass().add("dinero");
 
             textoBizum.setText("0");
             textoTarjeta.setText("0");
@@ -239,7 +260,7 @@ public class CobrosController {
             arrayEfectivoProductos.add(textoEfectivo);
             arrayTarjetaProductos.add(textoTarjeta);
 
-            fila_producto.getChildren().add(new Label("Producto para: " + ClientesController.clientesSeleccionado.getNombre()));
+            fila_producto.getChildren().add(labelProducto);
             fila_producto.getChildren().add(casilla_productos);
             fila_producto.getChildren().add(casilla_empleados);
             fila_producto.getChildren().addAll(textoEfectivo, textoBizum, textoTarjeta);

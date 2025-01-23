@@ -1,0 +1,30 @@
+.buttons{
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+}
+
+.fila{
+    -fx-padding: 10;
+    -fx-alignment: space-between;
+    -fx-spacing: 10;
+    -fx-border-color: #444;
+    -fx-border-width: 1 0 0 0;
+}
+
+.nombreServicio{
+    -fx-text-fill: #333;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.nombreEmpleado{
+    -fx-text-fill: #333;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.dinero{
+    -fx-text-fill: #333;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

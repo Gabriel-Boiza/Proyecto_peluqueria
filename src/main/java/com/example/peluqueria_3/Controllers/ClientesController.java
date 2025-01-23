@@ -19,45 +19,46 @@ public class ClientesController {
 
     //Elementos vista CRUD clientes
 
-    @FXML private TableView<Clientes> clientesTabla;
-    @FXML private TableColumn<Clientes, Integer> ID;
-    @FXML private TableColumn<Clientes, String> nombre;
-    @FXML private TableColumn<Clientes, String> apellido;
-    @FXML private TableColumn<Clientes, String> telefono;
-    @FXML private TableColumn<Clientes, String> correo;
-    @FXML private TableColumn<Clientes, String> observaciones;
-    @FXML private TableColumn<Clientes, Boolean> ley_datos;
+    @FXML TableView<Clientes> clientesTabla;
+    @FXML TableColumn<Clientes, Integer> ID;
+    @FXML TableColumn<Clientes, String> nombre;
+    @FXML TableColumn<Clientes, String> apellido;
+    @FXML TableColumn<Clientes, String> telefono;
+    @FXML TableColumn<Clientes, String> correo;
+    @FXML TableColumn<Clientes, String> observaciones;
+    @FXML TableColumn<Clientes, Boolean> ley_datos;
 
     private ObservableList<Clientes> clientesObervable;
 
-    @FXML private TextField campo_nombre;
-    @FXML private TextField campo_apellido;
-    @FXML private TextField campo_telefono;
-    @FXML private TextField campo_correo;
-    @FXML private TextField campo_observaciones;
-    @FXML private ChoiceBox campo_ley_datos;
+    @FXML TextField campo_nombre;
+    @FXML TextField campo_apellido;
+    @FXML TextField campo_telefono;
+    @FXML TextField campo_correo;
+    @FXML TextField campo_observaciones;
+    @FXML ChoiceBox campo_ley_datos;
 
-    @FXML private Button ficha_cliente;
-    @FXML private Button boton_volver;
-    @FXML private Button boton_crear;
-    @FXML private Button boton_limpiar;
-    @FXML private Button boton_modificar;
-    @FXML private Button boton_eliminar;
+    @FXML Button ficha_cliente;
+    @FXML Button boton_volver;
+    @FXML Button boton_crear;
+    @FXML Button boton_limpiar;
+    @FXML Button boton_modificar;
+    @FXML Button boton_eliminar;
 
-    @FXML private Button ver_servicios;
-    @FXML private Button ver_productos;
+    @FXML Button ver_servicios;
+    @FXML  Button ver_productos;
 
     // Boton nav
-    @FXML private Button agenda;
+    @FXML Button agenda;
 
     // Boton Salir
-    @FXML private Button salir;
+    @FXML Button salir;
 
     //Datos pagina ficha
-    @FXML private Label nombre_ficha;
-    @FXML private Button nueva_sesion;
-    @FXML private Button guardar;
-    @FXML private VBox sesiones;
+    @FXML Label nombre_ficha;
+    @FXML Button nueva_sesion;
+    @FXML Button guardar;
+    @FXML Button volverFichaCliente;
+    @FXML VBox sesiones;
 
     //dato general
     static Clientes clientesSeleccionado;
@@ -206,12 +207,33 @@ public class ClientesController {
 
                 for(Cobros cobro: cobrosCliente){
                     HBox hbox = new HBox();
+                    hbox.getStyleClass().add("fila");
+
                     String bizum = String.valueOf(cobro.getBizum());
                     String efectivo = String.valueOf(cobro.getBizum());
                     String tarjeta = String.valueOf(cobro.getBizum());
 
-                    hbox.getChildren().addAll(new Label(cobro.getNombre_servicio()),
-                            new Label(cobro.getNombre_empleado()), new Label(bizum), new Label(efectivo), new Label(tarjeta) );
+                    Label nombreServicio = new Label(cobro.getNombre_servicio());
+                    nombreServicio.getStyleClass().add("nombreServicio");
+
+                    Label nombreEmpleado = new Label(cobro.getNombre_empleado());
+                    nombreEmpleado.getStyleClass().add("nombreEmpleado");
+
+                    Label bizumlbl = new Label(bizum);
+                    bizumlbl.getStyleClass().add("dinero");
+
+                    Label efectivolbl = new Label(efectivo);
+                    efectivolbl.getStyleClass().add("dinero");
+
+                    Label tarjetalbl = new Label(tarjeta);
+                    tarjetalbl.getStyleClass().add("dinero");
+
+                    hbox.getChildren().add(nombreServicio);
+                    hbox.getChildren().add(nombreEmpleado);
+
+                    hbox.getChildren().add(bizumlbl);
+                    hbox.getChildren().add(efectivolbl);
+                    hbox.getChildren().add(tarjetalbl);
 
                     sesiones.getChildren().add(hbox);
                 }
@@ -221,20 +243,47 @@ public class ClientesController {
 
                 for(Cobros cobro: cobrosClienteProductos){
                     HBox hbox = new HBox();
+                    hbox.getStyleClass().add("fila");
+
                     String bizum = String.valueOf(cobro.getBizum());
                     String efectivo = String.valueOf(cobro.getBizum());
                     String tarjeta = String.valueOf(cobro.getBizum());
 
-                    hbox.getChildren().addAll( new Label(cobro.getNombre_producto()),
-                            new Label(cobro.getNombre_empleado()), new Label(bizum), new Label(efectivo), new Label(tarjeta) );
+                    Label nombreproducto = new Label(cobro.getNombre_producto());
+                    nombreproducto.getStyleClass().add("nombreServicio");
+
+                    Label nombreEmpleado = new Label(cobro.getNombre_empleado());
+                    nombreEmpleado.getStyleClass().add("nombreEmpleado");
+
+                    Label bizumlbl = new Label(bizum);
+                    bizumlbl.getStyleClass().add("dinero");
+
+                    Label efectivolbl = new Label(efectivo);
+                    efectivolbl.getStyleClass().add("dinero");
+
+                    Label tarjetalbl = new Label(tarjeta);
+                    tarjetalbl.getStyleClass().add("dinero");
+
+                    hbox.getChildren().add(nombreproducto);
+                    hbox.getChildren().add(nombreEmpleado);
+
+                    hbox.getChildren().add(bizumlbl);
+                    hbox.getChildren().add(efectivolbl);
+                    hbox.getChildren().add(tarjetalbl);
 
                     sesiones.getChildren().add(hbox);
                 }
             });
 
             nueva_sesion.setOnAction(event->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/cobro.fxml", "Agenda");
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/cobro.fxml", "Cobro");
             });
+
+            if (volverFichaCliente != null){
+                volverFichaCliente.setOnAction(event ->{
+                    LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/clientes.fxml", "Clientes");
+                });
+            }
         }
 
     }

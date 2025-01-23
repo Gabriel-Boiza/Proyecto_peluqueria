@@ -87,6 +87,7 @@ public class EmpleadosController {
     @FXML Label totalDinero;
     @FXML Label totalProductos;
     @FXML Label totalServicios;
+    @FXML Button volver_ficha_estadisticas;
 
     // Login Administradores
     @FXML ComboBox<String> listaAdministradores;
@@ -413,22 +414,27 @@ public class EmpleadosController {
             }
 
             if (chartPane != null){
-                CategoryAxis xAxis = new CategoryAxis();
-                NumberAxis yAxis = new NumberAxis();
-
-                xAxis.setLabel("Categorías");
+                NumberAxis yAxis = (NumberAxis) chartPane.getYAxis();
                 yAxis.setLabel("Valores");
+                yAxis.setTickUnit(10);
+                yAxis.setLowerBound(0);
+                yAxis.setUpperBound(100);
+                yAxis.setAutoRanging(false);
+                yAxis.setForceZeroInRange(true);
 
-                BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
-                barChart.setTitle("Comparación de Totales");
+                CategoryAxis xAxis = (CategoryAxis) chartPane.getXAxis();
+                xAxis.setLabel("Categorías");
+
+                chartPane.setTitle("Comparación de Totales");
 
                 XYChart.Series<String, Number> dataSeries = new XYChart.Series<>();
-                dataSeries.setName("Totales");
+                dataSeries.setName("Estadisticas");
 
                 dataSeries.getData().add(new XYChart.Data<>("Total Productos", totalProd));
                 dataSeries.getData().add(new XYChart.Data<>("Total Servicios", totalServ));
 
-                barChart.getData().add(dataSeries);
+                chartPane.getData().clear();
+                chartPane.getData().add(dataSeries);
 
             }
 
@@ -439,6 +445,10 @@ public class EmpleadosController {
             if(totalServicios != null){
                 totalServicios.setText(String.valueOf(totalServ));
             }
+
+            volver_ficha_estadisticas.setOnAction(actionEvent -> {
+                LoadStage loadStage = new LoadStage("/com/example/peluqueria_3/Vistas/loginTrabajador.fxml", "Agenda");
+            });
         }
     }
 }

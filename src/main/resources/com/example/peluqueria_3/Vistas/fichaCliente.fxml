@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.ClientesController">
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" stylesheets="@styles/fichaCliente.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.ClientesController">
    <children>
       <Label layoutX="52.0" layoutY="51.0" text="Ficha Cliente - ">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="nueva_sesion" layoutX="1100.0" layoutY="69.0" mnemonicParsing="false" text="Nueva Sesion" />
-      <Button fx:id="guardar" layoutX="1250.0" layoutY="69.0" mnemonicParsing="false" text="Guardar" />
       <ScrollPane layoutX="52.0" layoutY="109.0" prefHeight="465.0" prefWidth="1270.0">
          <content>
             <VBox fx:id="sesiones" prefHeight="465.0" prefWidth="1270.0" />
@@ -24,7 +27,14 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="ver_productos" layoutX="600.0" layoutY="69.0" mnemonicParsing="false" text="Ver productos" />
-      <Button fx:id="ver_servicios" layoutX="771.0" layoutY="69.0" mnemonicParsing="false" text="Ver servicios" />
+      <HBox layoutX="401.0" layoutY="41.0" prefHeight="40.0" prefWidth="921.0" spacing="50.0">
+         <children>
+            <Button fx:id="ver_productos" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" styleClass="buttons" text="Ver productos" />
+            <Button fx:id="ver_servicios" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" styleClass="buttons" text="Ver servicios" />
+            <Button fx:id="nueva_sesion" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" styleClass="buttons" text="Nueva Sesion" />
+            <Button fx:id="guardar" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" styleClass="buttons" text="Guardar" />
+            <Button fx:id="volverFichaCliente" layoutX="490.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" styleClass="buttons" text="Volver" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
