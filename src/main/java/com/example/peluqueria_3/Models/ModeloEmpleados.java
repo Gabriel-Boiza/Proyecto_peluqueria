@@ -259,19 +259,26 @@ public class ModeloEmpleados extends DataBase{
         }
     }
 
-    public ArrayList<Float> obtenerSumasCobros(String DNI) {
+    public ArrayList<Float> obtenerSumasCobros(String DNI, int mes, int anio) {
         ArrayList<Float> sumas = new ArrayList<>();
         DataBase db = new DataBase();
-        String query = "SELECT SUM(bizum) AS suma_bizum, SUM(tarjeta) AS suma_tarjeta, SUM(efectivo) AS suma_efectivo FROM cobros WHERE fk_id_trabajador = ?";
+
+        // Consulta SQL para filtrar por el número del mes
+        String query = "SELECT SUM(bizum) AS suma_bizum, SUM(tarjeta) AS suma_tarjeta, SUM(efectivo) AS suma_efectivo " +
+                "FROM cobros WHERE fk_id_trabajador = ? AND MONTH(fecha_cobro) = ? AND YEAR(fecha_cobro) = ?";
 
         try {
             Connection conexion = db.getConnection();
             PreparedStatement stmt = conexion.prepareStatement(query);
+
+
             stmt.setString(1, DNI);
+            stmt.setInt(2, mes);
+            stmt.setInt(3, anio);
 
             ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) { // Si hay un registro
+            if (rs.next()) {
                 Float sumaBizum = rs.getFloat("suma_bizum");
                 Float sumaTarjeta = rs.getFloat("suma_tarjeta");
                 Float sumaEfectivo = rs.getFloat("suma_efectivo");
@@ -288,10 +295,11 @@ public class ModeloEmpleados extends DataBase{
         return sumas;
     }
 
-    public int contarServicios(String dni) {
+
+    public int contarServicios(String dni, int mes, int anio) {
         int count = 0;
         DataBase db = new DataBase();
-        String query = "SELECT COUNT(*) AS total FROM cobros WHERE fk_id_trabajador = ? and tipo  = ?";
+        String query = "SELECT COUNT(*) AS total FROM cobros WHERE fk_id_trabajador = ? AND tipo  = ? AND MONTH(fecha_cobro) = ? AND YEAR(fecha_cobro) = ?";
 
         try {
             Connection conexion = db.getConnection();
@@ -299,6 +307,8 @@ public class ModeloEmpleados extends DataBase{
 
             stmt.setString(1, dni);
             stmt.setString(2, "servicio");
+            stmt.setInt(3, mes);
+            stmt.setInt(4, anio);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -313,10 +323,10 @@ public class ModeloEmpleados extends DataBase{
         return count;
     }
 
-    public int contarProductos(String dni) {
+    public int contarProductos(String dni, int mes, int anio) {
         int count = 0;
         DataBase db = new DataBase();
-        String query = "SELECT COUNT(*) AS total FROM cobros WHERE fk_id_trabajador = ? and tipo  = ?";
+        String query = "SELECT COUNT(*) AS total FROM cobros WHERE fk_id_trabajador = ? AND tipo  = ? AND MONTH(fecha_cobro) = ? AND YEAR(fecha_cobro) = ?";
 
         try {
             Connection conexion = db.getConnection();
@@ -324,6 +334,8 @@ public class ModeloEmpleados extends DataBase{
 
             stmt.setString(1, dni);
             stmt.setString(2, "producto");
+            stmt.setInt(3, mes);
+            stmt.setInt(4, anio);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -336,6 +348,31 @@ public class ModeloEmpleados extends DataBase{
         }
 
         return count;
+    }
+
+    public ArrayList<Integer> obtenerAnios() {
+        ArrayList<Integer> aniosList = new ArrayList<>();
+        DataBase db = new DataBase();
+
+        // Consulta SQL para obtener años distintos
+        String query = "SELECT DISTINCT YEAR(fecha_cobro) AS anio FROM cobros ORDER BY anio";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                aniosList.add(rs.getInt("anio"));
+            }
+
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return aniosList;
     }
 
 
