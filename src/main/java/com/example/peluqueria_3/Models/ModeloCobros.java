@@ -66,4 +66,50 @@ public class ModeloCobros extends DataBase{
         return stock;
     }
 
+    public float detectarPrecioProducto(int id_producto){
+        float precio = 0;
+        DataBase db = new DataBase();
+        String query = "SELECT * FROM productos p WHERE p.id_producto = ?";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setInt(1, id_producto);
+
+            ResultSet rs = stmt.executeQuery();   // Devuelve las filas de la query
+
+            while (rs.next()) {  // Mientras existan registros
+                precio = rs.getFloat("precio");
+            }
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return precio;
+    }
+
+    public float detectarPrecioServicio(int id_servicio){
+        float precio = 0;
+        DataBase db = new DataBase();
+        String query = "SELECT * FROM servicios s WHERE s.id_servicio = ?";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setInt(1, id_servicio);
+
+            ResultSet rs = stmt.executeQuery();   // Devuelve las filas de la query
+
+            while (rs.next()) {  // Mientras existan registros
+                precio = rs.getFloat("precio");
+            }
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return precio;
+    }
+
 }

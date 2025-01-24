@@ -218,6 +218,13 @@ public class CobrosController {
             textoTarjeta.setText("0");
             textoEfectivo.setText("0");
 
+            casilla_servicios.setOnAction(event -> {
+                if (casilla_servicios.getValue() != null) {
+                    textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(casilla_servicios.getValue().getId_servicio())));
+                    System.out.println(String.valueOf(modeloCobros.detectarPrecioServicio(casilla_servicios.getValue().getId_servicio())));
+                }
+            });
+
             if (!servicios.isEmpty()) {
                 casilla_servicios.setValue(servicios.getFirst());
             }
@@ -279,8 +286,16 @@ public class CobrosController {
                 if (casilla_productos.getValue() != null) {
                     stock = modeloCobros.detectarStock(casilla_productos.getValue().getId_producto());
                     spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
+
+                    textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
                 }
             });
+
+            spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                // Update price label with new value
+                textoEfectivo.setText(String.valueOf(newValue * modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+            });
+
             arrayCantidad.add(spinner);
 
             if (!productos.isEmpty()) {
