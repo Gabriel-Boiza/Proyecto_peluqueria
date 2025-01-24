@@ -1,5 +1,6 @@
 package com.example.peluqueria_3.Models;
 
+import com.example.peluqueria_3.Controllers.DatosGlobales;
 import com.example.peluqueria_3.Controllers.EmpleadosController;
 
 import java.sql.Connection;
@@ -9,6 +10,38 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 public class ModeloEmpleados extends DataBase{
+
+    public String obtenerEmpleado(String usuario){
+        DataBase db = new DataBase();
+        String query  = "SELECT DNI FROM trabajadores WHERE usuario = ?";
+        String dniUsuario = "";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+            stmt.setString(1, usuario);
+
+            // Ejecutar la consulta
+            ResultSet rs = stmt.executeQuery();
+
+            // Procesar el resultado
+            if (rs.next()) {
+                dniUsuario = rs.getString("DNI");
+            }
+
+            // Cerrar recursos
+            rs.close();
+            stmt.close();
+            conexion.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("error obtener empleado");
+        }
+
+        return dniUsuario;
+    }
+
 
     public boolean empleadoUsuarioExiste(String usuario){
         DataBase db = new DataBase();
@@ -29,6 +62,7 @@ public class ModeloEmpleados extends DataBase{
 
         }catch (Exception e){
             System.out.println(e.getMessage());
+            System.out.println("error empleado existe");
         }
         return usuarioEmpleadoExiste;
     }
@@ -263,7 +297,7 @@ public class ModeloEmpleados extends DataBase{
         ArrayList<Float> sumas = new ArrayList<>();
         DataBase db = new DataBase();
 
-        // Consulta SQL para filtrar por el número del mes
+
         String query = "SELECT SUM(bizum) AS suma_bizum, SUM(tarjeta) AS suma_tarjeta, SUM(efectivo) AS suma_efectivo " +
                 "FROM cobros WHERE fk_id_trabajador = ? AND MONTH(fecha_cobro) = ? AND YEAR(fecha_cobro) = ?";
 
@@ -318,6 +352,7 @@ public class ModeloEmpleados extends DataBase{
             conexion.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            System.out.println("contar productos");
         }
 
         return count;
@@ -345,6 +380,7 @@ public class ModeloEmpleados extends DataBase{
             conexion.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            System.out.println("contar productos");
         }
 
         return count;
@@ -370,6 +406,7 @@ public class ModeloEmpleados extends DataBase{
             conexion.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            System.out.println("error obtener años");
         }
 
         return aniosList;

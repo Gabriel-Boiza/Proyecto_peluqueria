@@ -104,6 +104,11 @@ public class EmpleadosController {
     // Administración
     @FXML Label panelAdmin;
     @FXML Button adminTrabajadores;
+    @FXML Button adminServicios;
+    @FXML Button adminProductos;
+    @FXML Button adminFacturacion;
+
+    @FXML ComboBox<String> empleados;
 
 
     Empleados empleadoSeleccionado;
@@ -261,11 +266,11 @@ public class EmpleadosController {
         }
     }
 
-    public void  setFacturacionTrabajador(int mes, int anio){
+    public void  setFacturacionTrabajador(String dni, int mes, int anio){
         facturacionTrabajador.setText(DatosGlobales.getEmpleadoActual().getUsuario());
 
-        int totalProd = modelo.contarProductos(DatosGlobales.getEmpleadoActual().getId_empleado(), mes, anio);
-        int totalServ = modelo.contarServicios(DatosGlobales.getEmpleadoActual().getId_empleado(), mes, anio);
+        int totalProd = modelo.contarProductos(dni, mes, anio);
+        int totalServ = modelo.contarServicios(dni, mes, anio);
 
         NumberAxis yAxis = (NumberAxis) chartPane.getYAxis();
         yAxis.setLabel("Valores");
@@ -391,7 +396,7 @@ public class EmpleadosController {
                 listaUsuarios.setValue("Selecciona un Trabajador");
 
                 for (Empleados empleado : empleados) {
-                    if(!empleado.getUsuario().equals("Administrador") && empleado.getEstado().equals("Activo")){
+                    if(!empleado.getUsuario().equals("Administrador") && empleado.getEstado().equals("Activo") && empleado.getRol().equals("empleado")){
                         listaUsuarios.getItems().add(empleado.getUsuario());
                     }
 
@@ -425,13 +430,26 @@ public class EmpleadosController {
         }
 
         if (panelAdmin != null){
+
             adminTrabajadores.setOnAction(event ->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/empleados.fxml", "Trabajadores");
+            });
+
+            adminProductos.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/productos.fxml", "Productos");
+            });
+
+            adminServicios.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/servicios.fxml", "Servicios");
+            });
+
+            adminFacturacion.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaTrabajador.fxml", "Facturación");
             });
         }
 
         if (meses != null){
-
+            String primerDni = "";
             Map<String, Integer> mesesMap = new LinkedHashMap<>();
             mesesMap.put("Enero", 1);
             mesesMap.put("Febrero", 2);
@@ -476,14 +494,42 @@ public class EmpleadosController {
                 ano.setValue(String.valueOf(anios.get(0)));
             }
 
-            setFacturacionTrabajador(mesActualNumero, anoActual);
+            if (empleados != null){
+                if(DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
+                    empleados.setVisible(true);
+
+                    ModeloEmpleados modelo = new ModeloEmpleados();
+                    ArrayList<Empleados> empleadosArray = modelo.mostrarEmpleados();
+                    empleados.setValue("Selecciona un Trabajador");
+
+                    for (Empleados empleado : empleadosArray) {
+                        if(!empleado.getUsuario().equals("Administrador") && empleado.getEstado().equals("Activo")){
+                            empleados.getItems().add(empleado.getUsuario());
+                        }
+
+                    }
+                    primerDni = empleados.getValue();
+                }else{
+                    empleados.setVisible(false);
+                }
+            }
+
+
+            setFacturacionTrabajador(primerDni, mesActualNumero, anoActual);
 
             meses.valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null && ano.getValue() != null) {
+                    String dni;
+                    if (DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
+                        dni = modelo.obtenerEmpleado(empleados.getValue());
+                    }else{
+                        dni = DatosGlobales.getEmpleadoActual().getId_empleado();
+                    }
+
                     int mesSeleccionado = mesesMap.get(newValue);
                     int anioSeleccionado = Integer.valueOf(ano.getValue());
 
-                    setFacturacionTrabajador(mesSeleccionado, anioSeleccionado);
+                    setFacturacionTrabajador(dni, mesSeleccionado, anioSeleccionado);
                     System.out.println("Mes seleccionado: " + newValue + " - Número: " + mesSeleccionado);
                     System.out.println("Año seleccionado: " + anioSeleccionado);
                 }
@@ -491,10 +537,37 @@ public class EmpleadosController {
 
             ano.valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null && meses.getValue() != null) {
+                    String dni;
+                    if (DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
+                        dni = modelo.obtenerEmpleado(empleados.getValue());
+                    }else{
+                        dni = DatosGlobales.getEmpleadoActual().getId_empleado();
+                    }
+
                     int mesSeleccionado = mesesMap.get(meses.getValue());
                     int anioSeleccionado = Integer.valueOf(newValue);
 
-                    setFacturacionTrabajador(mesSeleccionado, anioSeleccionado);
+                    setFacturacionTrabajador(dni, mesSeleccionado, anioSeleccionado);
+                    System.out.println("Mes seleccionado: " + meses.getValue() + " - Número: " + mesSeleccionado);
+                    System.out.println("Año seleccionado: " + anioSeleccionado);
+                }
+            });
+
+            empleados.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null && empleados.getValue() != null) {
+
+                    String dni;
+                    if (DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
+                        ModeloEmpleados modelo = new ModeloEmpleados();
+                        dni = modelo.obtenerEmpleado(empleados.getValue());
+                    }else{
+                        dni = DatosGlobales.getEmpleadoActual().getId_empleado();
+                    }
+
+                    int mesSeleccionado = mesesMap.get(meses.getValue());
+                    int anioSeleccionado = Integer.valueOf(ano.getValue());
+
+                    setFacturacionTrabajador(dni, mesSeleccionado, anioSeleccionado);
                     System.out.println("Mes seleccionado: " + meses.getValue() + " - Número: " + mesSeleccionado);
                     System.out.println("Año seleccionado: " + anioSeleccionado);
                 }
