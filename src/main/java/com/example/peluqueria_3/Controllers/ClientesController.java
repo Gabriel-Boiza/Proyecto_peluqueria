@@ -189,7 +189,14 @@ public class ClientesController {
 
             if (ficha_cliente != null){
                 ficha_cliente.setOnAction(actionEvent -> {
-                    LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
+                    if(clientesSeleccionado != null){
+                        LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
+                    }
+                    else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Selecciona un cliente");
+                        alert.showAndWait();
+                    }
                 });
             }
         }
@@ -198,6 +205,7 @@ public class ClientesController {
         //
         if(nombre_ficha != null){
             System.out.println(clientesSeleccionado);
+
             ArrayList<Cobros> cobrosCliente = modelo.datosFichaClienteServicios(clientesSeleccionado.getId_cliente());
             ArrayList<Cobros> cobrosClienteProductos = modelo.datosFichaClienteProductos(clientesSeleccionado.getId_cliente());
 
