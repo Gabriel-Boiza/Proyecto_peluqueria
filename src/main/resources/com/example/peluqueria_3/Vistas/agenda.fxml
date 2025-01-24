@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="main" prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/agenda.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.AgendaController">
+<Pane fx:id="main" prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/agenda.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.AgendaController">
    <DatePicker fx:id="date" layoutX="980.0" layoutY="15.0" prefHeight="40.0" prefWidth="227.0">
       <cursor>
          <Cursor fx:constant="HAND" />
@@ -44,7 +44,7 @@
          </ImageView>
       </children>
    </HBox>
-   <HBox alignment="CENTER" layoutX="443.0" layoutY="15.0" prefHeight="40.0" prefWidth="527.0" spacing="15.0">
+   <HBox alignment="CENTER" layoutX="419.0" layoutY="15.0" prefHeight="40.0" prefWidth="527.0" spacing="50.0">
       <children>
          <Button id="btnClientes" fx:id="btnAdmin" layoutX="209.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Administración" />
          <Button id="btnClientes" fx:id="btnClientes" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Clientes" />

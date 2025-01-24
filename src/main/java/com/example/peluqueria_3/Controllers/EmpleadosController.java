@@ -19,7 +19,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.text.html.ImageView;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class EmpleadosController {
 
@@ -82,6 +86,9 @@ public class EmpleadosController {
     @FXML Button entrarTrabajador;
 
     // Facturación Trabajador
+    @FXML ComboBox<String> meses;
+    @FXML ComboBox<String> ano;
+
     @FXML Label facturacionTrabajador;
     @FXML BarChart chartPane;
     @FXML Label totalDinero;
@@ -254,6 +261,46 @@ public class EmpleadosController {
         }
     }
 
+    public void  setFacturacionTrabajador(int mes, int anio){
+        facturacionTrabajador.setText(DatosGlobales.getEmpleadoActual().getUsuario());
+
+        int totalProd = modelo.contarProductos(DatosGlobales.getEmpleadoActual().getId_empleado(), mes, anio);
+        int totalServ = modelo.contarServicios(DatosGlobales.getEmpleadoActual().getId_empleado(), mes, anio);
+
+        NumberAxis yAxis = (NumberAxis) chartPane.getYAxis();
+        yAxis.setLabel("Valores");
+        yAxis.setTickUnit(10);
+        yAxis.setLowerBound(0);
+        yAxis.setUpperBound(totalServ + totalProd);
+        yAxis.setAutoRanging(false);
+        yAxis.setForceZeroInRange(true);
+
+        CategoryAxis xAxis = (CategoryAxis) chartPane.getXAxis();
+        xAxis.setLabel("Categorías");
+
+        chartPane.setTitle("Comparación de Totales");
+
+        XYChart.Series<String, Number> dataSeries = new XYChart.Series<>();
+        dataSeries.setName("Estadisticas");
+
+        dataSeries.getData().add(new XYChart.Data<>("Total Productos", totalProd));
+        dataSeries.getData().add(new XYChart.Data<>("Total Servicios", totalServ));
+
+        chartPane.getData().clear();
+        chartPane.getData().add(dataSeries);
+
+        totalProductos.setText(String.valueOf(totalProd));
+        totalServicios.setText(String.valueOf(totalServ));
+
+        ArrayList<Float> valores =  modelo.obtenerSumasCobros(DatosGlobales.getEmpleadoActual().getId_empleado(), mes, anio);
+        float sum = 0.00f;
+        for (Float valor : valores) {
+            System.out.println(valor);
+            sum += valor;
+        }
+        totalDinero.setText(String.valueOf(sum) + "€");
+    }
+
     @FXML
     public void initialize(){
         //Inicializa la tabla
@@ -372,20 +419,6 @@ public class EmpleadosController {
 
                 }
 
-                /*tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-                    if (newTab != null) {
-                        String mesSeleccionado = newTab.getText();
-                        System.out.println("Pestaña seleccionada: " + mesSeleccionado);
-
-                        BarChart<String, Number> barChart = generarBarChart(mesSeleccionado);
-
-                        if (root.getChildren().size() > 1) {
-                            root.getChildren().remove(1);
-                        }
-                        root.getChildren().add(barChart);
-                    }
-                });*/
-
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -397,54 +430,75 @@ public class EmpleadosController {
             });
         }
 
-        if (facturacionTrabajador != null){
-            facturacionTrabajador.setText(DatosGlobales.getEmpleadoActual().getUsuario());
+        if (meses != null){
 
-            int totalProd = modelo.contarProductos(DatosGlobales.getEmpleadoActual().getId_empleado());
-            int totalServ = modelo.contarServicios(DatosGlobales.getEmpleadoActual().getId_empleado());
+            Map<String, Integer> mesesMap = new LinkedHashMap<>();
+            mesesMap.put("Enero", 1);
+            mesesMap.put("Febrero", 2);
+            mesesMap.put("Marzo", 3);
+            mesesMap.put("Abril", 4);
+            mesesMap.put("Mayo", 5);
+            mesesMap.put("Junio", 6);
+            mesesMap.put("Julio", 7);
+            mesesMap.put("Agosto", 8);
+            mesesMap.put("Septiembre", 9);
+            mesesMap.put("Octubre", 10);
+            mesesMap.put("Noviembre", 11);
+            mesesMap.put("Diciembre", 12);
 
-            if (totalDinero != null){
-                ArrayList<Float> valores =  modelo.obtenerSumasCobros(DatosGlobales.getEmpleadoActual().getId_empleado());
-                float sum = 0.00f;
-                for (Float valor : valores) {
-                    System.out.println(valor);
-                    sum += valor;
+            for (String mes : mesesMap.keySet()) {
+                meses.getItems().add(mes);
+            }
+
+            LocalDate hoy = LocalDate.now();
+            int mesActualNumero = hoy.getMonthValue();
+            int anoActual = hoy.getYear();
+            String mesActualNombre = null;
+
+            for (Map.Entry<String, Integer> entry : mesesMap.entrySet()) {
+                if (entry.getValue() == mesActualNumero) {
+                    mesActualNombre = entry.getKey();
                 }
-                totalDinero.setText(String.valueOf(sum) + "€");
             }
 
-            if (chartPane != null){
-                NumberAxis yAxis = (NumberAxis) chartPane.getYAxis();
-                yAxis.setLabel("Valores");
-                yAxis.setTickUnit(10);
-                yAxis.setLowerBound(0);
-                yAxis.setUpperBound(100);
-                yAxis.setAutoRanging(false);  // Deshabilitar el auto-rango
-                yAxis.setForceZeroInRange(true);  // Forzar que el 0 esté en el rango
-
-                CategoryAxis xAxis = (CategoryAxis) chartPane.getXAxis();
-                xAxis.setLabel("Categorías");
-
-                chartPane.setTitle("Comparación de Totales");
-
-                XYChart.Series<String, Number> dataSeries = new XYChart.Series<>();
-                dataSeries.setName("Estadisticas");
-
-                dataSeries.getData().add(new XYChart.Data<>("Total Productos", totalProd));
-                dataSeries.getData().add(new XYChart.Data<>("Total Servicios", totalServ));
-
-                chartPane.getData().clear();
-                chartPane.getData().add(dataSeries);
-
+            if (mesActualNombre != null) {
+                meses.setValue(mesActualNombre);
             }
 
-            if(totalProductos != null){
-                totalProductos.setText(String.valueOf(totalProd));
+            ArrayList<Integer> anios = modelo.obtenerAnios();
+
+
+            for (Integer anio : anios) {
+                ano.getItems().add(String.valueOf(anio));
             }
 
-            if(totalServicios != null){
-                totalServicios.setText(String.valueOf(totalServ));
+            if (!anios.isEmpty()) {
+                ano.setValue(String.valueOf(anios.get(0)));
             }
+
+            setFacturacionTrabajador(mesActualNumero, anoActual);
+
+            meses.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null && ano.getValue() != null) {
+                    int mesSeleccionado = mesesMap.get(newValue);
+                    int anioSeleccionado = Integer.valueOf(ano.getValue());
+
+                    setFacturacionTrabajador(mesSeleccionado, anioSeleccionado);
+                    System.out.println("Mes seleccionado: " + newValue + " - Número: " + mesSeleccionado);
+                    System.out.println("Año seleccionado: " + anioSeleccionado);
+                }
+            });
+
+            ano.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null && meses.getValue() != null) {
+                    int mesSeleccionado = mesesMap.get(meses.getValue());
+                    int anioSeleccionado = Integer.valueOf(newValue);
+
+                    setFacturacionTrabajador(mesSeleccionado, anioSeleccionado);
+                    System.out.println("Mes seleccionado: " + meses.getValue() + " - Número: " + mesSeleccionado);
+                    System.out.println("Año seleccionado: " + anioSeleccionado);
+                }
+            });
 
             volver_ficha_estadisticas.setOnAction(actionEvent -> {
                 LoadStage loadStage = new LoadStage("/com/example/peluqueria_3/Vistas/loginTrabajador.fxml", "Agenda");
@@ -452,28 +506,3 @@ public class EmpleadosController {
         }
     }
 }
-
-/*
-tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-            if (newTab != null) {
-                String mesSeleccionado = newTab.getText();
-                System.out.println("Pestaña seleccionada: " + mesSeleccionado);
-
-                BarChart<String, Number> barChart = generarBarChart(mesSeleccionado);
-
-                if (root.getChildren().size() > 1) {
-                    root.getChildren().remove(1);
-                }
-                root.getChildren().add(barChart);
-            }
-        });
- */
-
-/*tabPane.getTabs().forEach(tab -> {
-                System.out.println("Tab: " + tab.getText());
-                if (tab.getContent() != null) {
-                    System.out.println("Contenido: " + tab.getContent());
-                } else {
-                    System.out.println("Contenido vacío");
-                }
-            });*/
