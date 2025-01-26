@@ -272,11 +272,14 @@ public class EmpleadosController {
         int totalProd = modelo.contarProductos(dni, mes, anio);
         int totalServ = modelo.contarServicios(dni, mes, anio);
 
+        int valorMax = totalServ + totalProd;
+
+
         NumberAxis yAxis = (NumberAxis) chartPane.getYAxis();
         yAxis.setLabel("Valores");
         yAxis.setTickUnit(10);
         yAxis.setLowerBound(0);
-        yAxis.setUpperBound(totalServ + totalProd);
+        yAxis.setUpperBound(valorMax * 10);
         yAxis.setAutoRanging(false);
         yAxis.setForceZeroInRange(true);
 
@@ -449,7 +452,7 @@ public class EmpleadosController {
         }
 
         if (meses != null){
-            String primerDni = "";
+            String primerDni = DatosGlobales.getEmpleadoActual().getId_empleado();
             Map<String, Integer> mesesMap = new LinkedHashMap<>();
             mesesMap.put("Enero", 1);
             mesesMap.put("Febrero", 2);

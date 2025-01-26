@@ -59,6 +59,7 @@ public class ClientesController {
     @FXML Button guardar;
     @FXML Button volverFichaCliente;
     @FXML VBox sesiones;
+    @FXML Label usuario_ficha;
 
     //dato general
     static Clientes clientesSeleccionado;
@@ -202,10 +203,9 @@ public class ClientesController {
         }
 
 
-        //
-        if(nombre_ficha != null){
-            System.out.println(clientesSeleccionado);
 
+        if(nombre_ficha != null){
+            usuario_ficha.setText("Ficha de " + clientesSeleccionado.getNombre());
             ArrayList<Cobros> cobrosCliente = modelo.datosFichaClienteServicios(clientesSeleccionado.getId_cliente());
             ArrayList<Cobros> cobrosClienteProductos = modelo.datosFichaClienteProductos(clientesSeleccionado.getId_cliente());
 
@@ -218,8 +218,8 @@ public class ClientesController {
                     hbox.getStyleClass().add("fila");
 
                     String bizum = String.valueOf(cobro.getBizum());
-                    String efectivo = String.valueOf(cobro.getBizum());
-                    String tarjeta = String.valueOf(cobro.getBizum());
+                    String efectivo = String.valueOf(cobro.getEfectivo());
+                    String tarjeta = String.valueOf(cobro.getTarjeta());
 
                     Label nombreServicio = new Label(cobro.getNombre_servicio());
                     nombreServicio.getStyleClass().add("nombreServicio");
@@ -253,9 +253,11 @@ public class ClientesController {
                     HBox hbox = new HBox();
                     hbox.getStyleClass().add("fila");
 
+                    System.out.println(cobro);
+
                     String bizum = String.valueOf(cobro.getBizum());
-                    String efectivo = String.valueOf(cobro.getBizum());
-                    String tarjeta = String.valueOf(cobro.getBizum());
+                    String efectivo = String.valueOf(cobro.getEfectivo());
+                    String tarjeta = String.valueOf(cobro.getTarjeta());
 
                     Label nombreproducto = new Label(cobro.getNombre_producto());
                     nombreproducto.getStyleClass().add("nombreServicio");
