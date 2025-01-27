@@ -79,7 +79,7 @@ public class ModeloEmpleados extends DataBase{
             stmt.setString(1, user);
             stmt.setString(2, contrasenya);
 
-            ResultSet rs = stmt.executeQuery();   //devuelve las filas de la query
+            ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 String id = rs.getString("DNI");

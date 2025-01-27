@@ -73,12 +73,6 @@ public class EmpleadosController {
     @FXML private Button boton_modificar;
     @FXML private Button boton_eliminar;
 
-    // Botones Nav
-    @FXML private Button agenda;
-
-    // Boton salir
-    @FXML private Button salir;
-
     // Login Trabajadores
     @FXML Button volveragenda;
     @FXML ComboBox<String> listaUsuarios;
@@ -107,6 +101,7 @@ public class EmpleadosController {
     @FXML Button adminServicios;
     @FXML Button adminProductos;
     @FXML Button adminFacturacion;
+    @FXML Button  volver_panel_admin;
 
     @FXML ComboBox<String> empleados;
 
@@ -124,6 +119,11 @@ public class EmpleadosController {
             if (empleadoRegistrado != null) {
                 DatosGlobales.setEmpleadoActual(empleadoRegistrado);
                 LoadStage loadStage = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            }else{
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("Error");
+                alerta.setHeaderText(" Error al iniciar sesion");
+                alerta.showAndWait();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -382,14 +382,7 @@ public class EmpleadosController {
             });
 
             boton_volver.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
-            });
-            agenda.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
-            });
-
-            salir.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/administracion.fxml", "Agenda");
             });
         }
 
@@ -453,6 +446,10 @@ public class EmpleadosController {
 
             adminFacturacion.setOnAction(event->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaTrabajador.fxml", "Facturación");
+            });
+
+            volver_panel_admin.setOnAction(event -> {
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
             });
         }
 

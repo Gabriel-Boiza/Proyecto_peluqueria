@@ -47,12 +47,6 @@ public class ClientesController {
     @FXML Button ver_servicios;
     @FXML  Button ver_productos;
 
-    // Boton nav
-    @FXML Button agenda;
-
-    // Boton Salir
-    @FXML Button salir;
-
     //Datos pagina ficha
     @FXML Label nombre_ficha;
     @FXML Button nueva_sesion;
@@ -177,15 +171,7 @@ public class ClientesController {
             });
 
             boton_volver.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
-            });
-
-            agenda.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
-            });
-
-            salir.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/administracion.fxml", "Agenda");
             });
 
             if (ficha_cliente != null){
