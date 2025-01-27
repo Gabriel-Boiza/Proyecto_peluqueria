@@ -199,6 +199,25 @@ public class ClientesController {
             ver_servicios.setOnAction(actionEvent -> {
                 sesiones.getChildren().clear();
 
+                HBox cabecera = new HBox();
+                cabecera.getStyleClass().add("fila");
+                Label servicio = new Label("Servicio");
+                servicio.getStyleClass().add("nombreServicio");
+                Label empleado = new Label("Empleado");
+                empleado.getStyleClass().add("nombreEmpleado");
+
+                Label bizumlabel = new Label("Bizum");
+                bizumlabel.getStyleClass().add("dinero");
+                Label efectivolabel = new Label("Efectivo");
+                efectivolabel.getStyleClass().add("dinero");
+
+                Label tarjetalabel = new Label("Tarjeta");
+                tarjetalabel.getStyleClass().add("dinero");
+
+                cabecera.getChildren().addAll(servicio, empleado, bizumlabel, efectivolabel, tarjetalabel);
+
+                sesiones.getChildren().add(cabecera);
+
                 for(Cobros cobro: cobrosCliente){
                     HBox hbox = new HBox();
                     hbox.getStyleClass().add("fila");
@@ -234,6 +253,25 @@ public class ClientesController {
             });
             ver_productos.setOnAction(actionEvent -> {
                 sesiones.getChildren().clear();
+
+                HBox cabecera = new HBox();
+                cabecera.getStyleClass().add("fila");
+                Label servicio = new Label("Servicio");
+                servicio.getStyleClass().add("nombreServicio");
+                Label empleado = new Label("Empleado");
+                empleado.getStyleClass().add("nombreEmpleado");
+
+                Label bizumlabel = new Label("Bizum");
+                bizumlabel.getStyleClass().add("dinero");
+                Label efectivolabel = new Label("Efectivo");
+                efectivolabel.getStyleClass().add("dinero");
+
+                Label tarjetalabel = new Label("Tarjeta");
+                tarjetalabel.getStyleClass().add("dinero");
+
+                cabecera.getChildren().addAll(servicio, empleado, bizumlabel, efectivolabel, tarjetalabel);
+
+                sesiones.getChildren().add(cabecera);
 
                 for(Cobros cobro: cobrosClienteProductos){
                     HBox hbox = new HBox();
