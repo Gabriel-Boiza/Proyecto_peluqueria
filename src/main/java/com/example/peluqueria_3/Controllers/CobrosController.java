@@ -103,6 +103,8 @@ public class CobrosController {
     @FXML
     public void initialize() {
 
+
+
         ArrayList<ComboBox<Servicios>> arrayServicios = new ArrayList<>();
         ArrayList<ComboBox<Productos>> arrayProductos = new ArrayList<>();
 
@@ -216,7 +218,7 @@ public class CobrosController {
 
             textoBizum.setText("0");
             textoTarjeta.setText("0");
-            textoEfectivo.setText("0");
+
 
             casilla_servicios.setOnAction(event -> {
                 if (casilla_servicios.getValue() != null) {
@@ -239,6 +241,8 @@ public class CobrosController {
             arrayBizumServicios.add(textoBizum);
             arrayEfectivoServicios.add(textoEfectivo);
             arrayTarjetaServicios.add(textoTarjeta);
+
+            textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(arrayServicios.getFirst().getValue().getId_servicio())));
 
             fila_servicio.getChildren().add(labelServicio);
             fila_servicio.getChildren().add(casilla_servicios);
@@ -274,7 +278,7 @@ public class CobrosController {
 
             textoBizum.setText("0");
             textoTarjeta.setText("0");
-            textoEfectivo.setText("0");
+
 
             Spinner<Integer> spinner = new Spinner<>();
 
@@ -312,6 +316,8 @@ public class CobrosController {
             arrayBizumProductos.add(textoBizum);
             arrayEfectivoProductos.add(textoEfectivo);
             arrayTarjetaProductos.add(textoTarjeta);
+
+            textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(arrayProductos.getFirst().getValue().getId_producto())));
 
             fila_producto.getChildren().add(labelProducto);
             fila_producto.getChildren().add(casilla_productos);
