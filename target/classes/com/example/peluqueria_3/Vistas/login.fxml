@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.EmpleadosController">
     <children>
         <ImageView fitHeight="542.0" fitWidth="683.0" layoutX="711.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -23,7 +23,7 @@
             <children>
                 <VBox layoutX="96.0" layoutY="233.0" prefHeight="437.0" prefWidth="492.0" style="-fx-padding: 30px;">
                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido!">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido!" textAlignment="CENTER" wrappingWidth="431.09375">
                             <font>
                                 <Font name="DejaVu Sans Bold" size="64.0" />
                             </font>
@@ -46,10 +46,10 @@
                                 </HBox>
                                 <PasswordField fx:id="input_contrasenya" prefHeight="30.0" prefWidth="239.0">
                                     <cursor>
-                                        <Cursor fx:constant="TEXT"/>
+                                        <Cursor fx:constant="TEXT" />
                                     </cursor>
                                 </PasswordField>
-                                <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Entrar" fx:id="BotonLogin" onAction="#ValidarUser"/>
+                                <Button fx:id="BotonLogin" mnemonicParsing="false" onAction="#ValidarUser" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #333; -fx-text-fill: white;" text="Entrar" />
                             </children>
                         </VBox>
                     </children>

@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: DBD0CA;" stylesheets="@styles/fichaCliente.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.peluqueria_3.Controllers.ClientesController">
    <children>
-      <Label layoutX="52.0" layoutY="51.0" text="Ficha Cliente - ">
+      <Label fx:id="usuario_ficha" layoutX="52.0" layoutY="51.0" text="Ficha Cliente - ">
          <font>
             <Font size="24.0" />
          </font>

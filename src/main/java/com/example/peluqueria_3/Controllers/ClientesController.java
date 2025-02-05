@@ -47,18 +47,13 @@ public class ClientesController {
     @FXML Button ver_servicios;
     @FXML  Button ver_productos;
 
-    // Boton nav
-    @FXML Button agenda;
-
-    // Boton Salir
-    @FXML Button salir;
-
     //Datos pagina ficha
     @FXML Label nombre_ficha;
     @FXML Button nueva_sesion;
     @FXML Button guardar;
     @FXML Button volverFichaCliente;
     @FXML VBox sesiones;
+    @FXML Label usuario_ficha;
 
     //dato general
     static Clientes clientesSeleccionado;
@@ -179,25 +174,24 @@ public class ClientesController {
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
             });
 
-            agenda.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
-            });
-
-            salir.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
-            });
-
             if (ficha_cliente != null){
                 ficha_cliente.setOnAction(actionEvent -> {
-                    LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
+                    if(clientesSeleccionado != null){
+                        LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
+                    }
+                    else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Selecciona un cliente");
+                        alert.showAndWait();
+                    }
                 });
             }
         }
 
 
-        //
+
         if(nombre_ficha != null){
-            System.out.println(clientesSeleccionado);
+            usuario_ficha.setText("Ficha de " + clientesSeleccionado.getNombre());
             ArrayList<Cobros> cobrosCliente = modelo.datosFichaClienteServicios(clientesSeleccionado.getId_cliente());
             ArrayList<Cobros> cobrosClienteProductos = modelo.datosFichaClienteProductos(clientesSeleccionado.getId_cliente());
 
@@ -205,13 +199,32 @@ public class ClientesController {
             ver_servicios.setOnAction(actionEvent -> {
                 sesiones.getChildren().clear();
 
+                HBox cabecera = new HBox();
+                cabecera.getStyleClass().add("fila");
+                Label servicio = new Label("Servicio");
+                servicio.getStyleClass().add("nombreServicio");
+                Label empleado = new Label("Empleado");
+                empleado.getStyleClass().add("nombreEmpleado");
+
+                Label bizumlabel = new Label("Bizum");
+                bizumlabel.getStyleClass().add("dinero");
+                Label efectivolabel = new Label("Efectivo");
+                efectivolabel.getStyleClass().add("dinero");
+
+                Label tarjetalabel = new Label("Tarjeta");
+                tarjetalabel.getStyleClass().add("dinero");
+
+                cabecera.getChildren().addAll(servicio, empleado, bizumlabel, efectivolabel, tarjetalabel);
+
+                sesiones.getChildren().add(cabecera);
+
                 for(Cobros cobro: cobrosCliente){
                     HBox hbox = new HBox();
                     hbox.getStyleClass().add("fila");
 
                     String bizum = String.valueOf(cobro.getBizum());
-                    String efectivo = String.valueOf(cobro.getBizum());
-                    String tarjeta = String.valueOf(cobro.getBizum());
+                    String efectivo = String.valueOf(cobro.getEfectivo());
+                    String tarjeta = String.valueOf(cobro.getTarjeta());
 
                     Label nombreServicio = new Label(cobro.getNombre_servicio());
                     nombreServicio.getStyleClass().add("nombreServicio");
@@ -241,13 +254,34 @@ public class ClientesController {
             ver_productos.setOnAction(actionEvent -> {
                 sesiones.getChildren().clear();
 
+                HBox cabecera = new HBox();
+                cabecera.getStyleClass().add("fila");
+                Label servicio = new Label("Servicio");
+                servicio.getStyleClass().add("nombreServicio");
+                Label empleado = new Label("Empleado");
+                empleado.getStyleClass().add("nombreEmpleado");
+
+                Label bizumlabel = new Label("Bizum");
+                bizumlabel.getStyleClass().add("dinero");
+                Label efectivolabel = new Label("Efectivo");
+                efectivolabel.getStyleClass().add("dinero");
+
+                Label tarjetalabel = new Label("Tarjeta");
+                tarjetalabel.getStyleClass().add("dinero");
+
+                cabecera.getChildren().addAll(servicio, empleado, bizumlabel, efectivolabel, tarjetalabel);
+
+                sesiones.getChildren().add(cabecera);
+
                 for(Cobros cobro: cobrosClienteProductos){
                     HBox hbox = new HBox();
                     hbox.getStyleClass().add("fila");
 
+                    System.out.println(cobro);
+
                     String bizum = String.valueOf(cobro.getBizum());
-                    String efectivo = String.valueOf(cobro.getBizum());
-                    String tarjeta = String.valueOf(cobro.getBizum());
+                    String efectivo = String.valueOf(cobro.getEfectivo());
+                    String tarjeta = String.valueOf(cobro.getTarjeta());
 
                     Label nombreproducto = new Label(cobro.getNombre_producto());
                     nombreproducto.getStyleClass().add("nombreServicio");

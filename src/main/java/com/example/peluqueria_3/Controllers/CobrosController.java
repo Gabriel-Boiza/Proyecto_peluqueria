@@ -19,6 +19,7 @@ public class CobrosController {
     @FXML Button agregar_servicio;
     @FXML Button agregar_producto;
     @FXML Button pagar;
+    @FXML Button limpiar;
 
     @FXML Label bizum;
     @FXML Label tarjeta;
@@ -32,19 +33,9 @@ public class CobrosController {
     ModeloEmpleados modeloEmpleados = new ModeloEmpleados();
     ModeloCobros modeloCobros = new ModeloCobros();
 
-    ArrayList<ComboBox<Servicios>> arrayServicios = new ArrayList<>();
-    ArrayList<ComboBox<Productos>> arrayProductos = new ArrayList<>();
+    int stock;
 
-    ArrayList<ComboBox<Empleados>> arrayEmpleadosServicios = new ArrayList<>();
-    ArrayList<ComboBox<Empleados>> arrayEmpleadosProductos = new ArrayList<>();
 
-    ArrayList<TextField> arrayBizumServicios = new ArrayList<>();
-    ArrayList<TextField> arrayEfectivoServicios = new ArrayList<>();
-    ArrayList<TextField> arrayTarjetaServicios = new ArrayList<>();
-
-    ArrayList<TextField> arrayBizumProductos = new ArrayList<>();
-    ArrayList<TextField> arrayEfectivoProductos = new ArrayList<>();
-    ArrayList<TextField> arrayTarjetaProductos = new ArrayList<>();
 
     private <T> void setupSearchableComboBox(ComboBox<T> comboBox, ObservableList<T> items, StringConverter<T> converter) {
         comboBox.setEditable(true);
@@ -113,10 +104,28 @@ public class CobrosController {
     public void initialize() {
 
 
+
+        ArrayList<ComboBox<Servicios>> arrayServicios = new ArrayList<>();
+        ArrayList<ComboBox<Productos>> arrayProductos = new ArrayList<>();
+
+        ArrayList<ComboBox<Empleados>> arrayEmpleadosServicios = new ArrayList<>();
+        ArrayList<ComboBox<Empleados>> arrayEmpleadosProductos = new ArrayList<>();
+
+        ArrayList<TextField> arrayBizumServicios = new ArrayList<>();
+        ArrayList<TextField> arrayEfectivoServicios = new ArrayList<>();
+        ArrayList<TextField> arrayTarjetaServicios = new ArrayList<>();
+
+        ArrayList<TextField> arrayBizumProductos = new ArrayList<>();
+        ArrayList<TextField> arrayEfectivoProductos = new ArrayList<>();
+        ArrayList<TextField> arrayTarjetaProductos = new ArrayList<>();
+
+        ArrayList<Spinner<Integer>> arrayCantidad = new ArrayList<>();
+
         ArrayList<Productos> productos = modeloProductos.mostrarProductos();
         ArrayList<Servicios> servicios = modeloServicios.mostrarServicios();
         ArrayList<Empleados> empleadosServicios = modeloEmpleados.mostrarEmpleados();
         ArrayList<Empleados> empleadosProductos = modeloEmpleados.mostrarEmpleados();
+
 
         // Create ObservableLists
         ObservableList<Productos> obsProductos = FXCollections.observableArrayList(productos);
@@ -165,6 +174,23 @@ public class CobrosController {
             LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
         });
 
+        limpiar.setOnAction(actionEvent -> {
+            arrayServicios.clear();
+            arrayProductos.clear();
+            arrayEmpleadosServicios.clear();
+            arrayEmpleadosProductos.clear();
+            arrayBizumServicios.clear();
+            arrayEfectivoServicios.clear();
+            arrayTarjetaServicios.clear();
+            arrayBizumProductos.clear();
+            arrayEfectivoProductos.clear();
+            arrayTarjetaProductos.clear();
+            arrayCantidad.clear();
+
+            // Clear VBox
+            panel.getChildren().clear();
+        });
+
         agregar_servicio.setOnAction(actionEvent -> {
             HBox fila_servicio = new HBox();
             fila_servicio.setSpacing(15);
@@ -192,14 +218,21 @@ public class CobrosController {
 
             textoBizum.setText("0");
             textoTarjeta.setText("0");
-            textoEfectivo.setText("0");
+
+
+            casilla_servicios.setOnAction(event -> {
+                if (casilla_servicios.getValue() != null) {
+                    textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(casilla_servicios.getValue().getId_servicio())));
+                    System.out.println(String.valueOf(modeloCobros.detectarPrecioServicio(casilla_servicios.getValue().getId_servicio())));
+                }
+            });
 
             if (!servicios.isEmpty()) {
-                casilla_servicios.setValue(servicios.get(0));
+                casilla_servicios.setValue(servicios.getFirst());
             }
 
             if (!empleadosServicios.isEmpty()) {
-                casilla_empleados.setValue(empleadosServicios.get(0));
+                casilla_empleados.setValue(empleadosServicios.getFirst());
             }
 
             arrayServicios.add(casilla_servicios);
@@ -208,6 +241,8 @@ public class CobrosController {
             arrayBizumServicios.add(textoBizum);
             arrayEfectivoServicios.add(textoEfectivo);
             arrayTarjetaServicios.add(textoTarjeta);
+
+            textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(arrayServicios.getFirst().getValue().getId_servicio())));
 
             fila_servicio.getChildren().add(labelServicio);
             fila_servicio.getChildren().add(casilla_servicios);
@@ -243,7 +278,29 @@ public class CobrosController {
 
             textoBizum.setText("0");
             textoTarjeta.setText("0");
-            textoEfectivo.setText("0");
+
+
+            Spinner<Integer> spinner = new Spinner<>();
+
+            stock = modeloCobros.detectarStock(casilla_productos.getItems().getFirst().getId_producto());
+            spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
+            spinner.setMaxWidth(60);
+
+            casilla_productos.setOnAction(event ->{
+                if (casilla_productos.getValue() != null) {
+                    stock = modeloCobros.detectarStock(casilla_productos.getValue().getId_producto());
+                    spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
+
+                    textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+                }
+            });
+
+            spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+                // Update price label with new value
+                textoEfectivo.setText(String.valueOf(newValue * modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+            });
+
+            arrayCantidad.add(spinner);
 
             if (!productos.isEmpty()) {
                 casilla_productos.setValue(productos.getFirst());
@@ -260,10 +317,13 @@ public class CobrosController {
             arrayEfectivoProductos.add(textoEfectivo);
             arrayTarjetaProductos.add(textoTarjeta);
 
+            textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(arrayProductos.getFirst().getValue().getId_producto())));
+
             fila_producto.getChildren().add(labelProducto);
             fila_producto.getChildren().add(casilla_productos);
             fila_producto.getChildren().add(casilla_empleados);
             fila_producto.getChildren().addAll(textoEfectivo, textoBizum, textoTarjeta);
+            fila_producto.getChildren().add(spinner);
 
             panel.getChildren().add(fila_producto);
         });
@@ -278,21 +338,46 @@ public class CobrosController {
                 float efectivo = Float.parseFloat(arrayEfectivoServicios.get(cont).getText());
                 float tarjeta = Float.parseFloat(arrayTarjetaServicios.get(cont).getText());
 
-                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), servicio.getValue().getId_servicio(), id_empleado, 0, new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta, "servicio");
+                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), servicio.getValue().getId_servicio(), id_empleado, 0, new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta, "servicio", 1);
                 cont = cont +1;
             }
             System.out.println("PRODUCTOS ______________");
             cont = 0;
             for(ComboBox<Productos> producto : arrayProductos){
                 String id_empleado = arrayEmpleadosProductos.get(cont).getValue().getId_empleado();
+                int cantidad = arrayCantidad.get(cont).getValue();
+                System.out.println(cantidad);
                 System.out.println(id_empleado + " : " + producto.getValue().getId_producto() + " precio: " + arrayTarjetaProductos.get(cont).getText());
                 float bizum = Float.parseFloat(arrayBizumProductos.get(cont).getText());
                 float efectivo = Float.parseFloat(arrayEfectivoProductos.get(cont).getText());
                 float tarjeta = Float.parseFloat(arrayTarjetaProductos.get(cont).getText());
-                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), 0, id_empleado, producto.getValue().getId_producto(), new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta, "producto");
+                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), 0, id_empleado, producto.getValue().getId_producto(), new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta, "producto",cantidad);
                 cont = cont +1;
             }
+
+            pagoCompleto();
+            arrayServicios.clear();
+            arrayProductos.clear();
+            arrayEmpleadosServicios.clear();
+            arrayEmpleadosProductos.clear();
+            arrayBizumServicios.clear();
+            arrayEfectivoServicios.clear();
+            arrayTarjetaServicios.clear();
+            arrayBizumProductos.clear();
+            arrayEfectivoProductos.clear();
+            arrayTarjetaProductos.clear();
+            arrayCantidad.clear();
+
+            // Clear VBox
+            panel.getChildren().clear();
+
         });
+    }
+
+    public void pagoCompleto(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("El pago se hizo correctamente");
+        alert.showAndWait();
     }
 
 }

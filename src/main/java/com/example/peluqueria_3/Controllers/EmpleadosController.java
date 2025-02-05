@@ -73,12 +73,6 @@ public class EmpleadosController {
     @FXML private Button boton_modificar;
     @FXML private Button boton_eliminar;
 
-    // Botones Nav
-    @FXML private Button agenda;
-
-    // Boton salir
-    @FXML private Button salir;
-
     // Login Trabajadores
     @FXML Button volveragenda;
     @FXML ComboBox<String> listaUsuarios;
@@ -104,6 +98,12 @@ public class EmpleadosController {
     // Administración
     @FXML Label panelAdmin;
     @FXML Button adminTrabajadores;
+    @FXML Button adminServicios;
+    @FXML Button adminProductos;
+    @FXML Button adminFacturacion;
+    @FXML Button  volver_panel_admin;
+
+    @FXML ComboBox<String> empleados;
 
 
     Empleados empleadoSeleccionado;
@@ -119,6 +119,11 @@ public class EmpleadosController {
             if (empleadoRegistrado != null) {
                 DatosGlobales.setEmpleadoActual(empleadoRegistrado);
                 LoadStage loadStage = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
+            }else{
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("Error");
+                alerta.setHeaderText(" Error al iniciar sesion");
+                alerta.showAndWait();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -261,17 +266,20 @@ public class EmpleadosController {
         }
     }
 
-    public void  setFacturacionTrabajador(int mes, int anio){
+    public void  setFacturacionTrabajador(String dni, int mes, int anio){
         facturacionTrabajador.setText(DatosGlobales.getEmpleadoActual().getUsuario());
 
-        int totalProd = modelo.contarProductos(DatosGlobales.getEmpleadoActual().getId_empleado(), mes, anio);
-        int totalServ = modelo.contarServicios(DatosGlobales.getEmpleadoActual().getId_empleado(), mes, anio);
+        int totalProd = modelo.contarProductos(dni, mes, anio);
+        int totalServ = modelo.contarServicios(dni, mes, anio);
+
+        int valorMax = totalServ + totalProd;
+
 
         NumberAxis yAxis = (NumberAxis) chartPane.getYAxis();
         yAxis.setLabel("Valores");
         yAxis.setTickUnit(10);
         yAxis.setLowerBound(0);
-        yAxis.setUpperBound(totalServ + totalProd);
+        yAxis.setUpperBound(valorMax * 10);
         yAxis.setAutoRanging(false);
         yAxis.setForceZeroInRange(true);
 
@@ -322,19 +330,24 @@ public class EmpleadosController {
             boton_crear.setOnAction(event -> {
                 if (empleadoSeleccionado == null){
                     try{
-                        if(!modelo.empleadoExiste(campo_id.getText())){
-                            Float cventas = Float.parseFloat(campo_cventas.getText().substring(0, campo_cventas.getText().length() - 1));
-                            Float cservicios = Float.parseFloat(campo_cservicios.getText().substring(0, campo_cservicios.getText().length() - 1));
-                            Float lcservicios = Float.parseFloat(campo_l_cservicios.getText().substring(0, campo_l_cservicios.getText().length() - 1));
-                            modelo.crearEmpleado(campo_id.getText(), campo_usuario.getText(), campo_nombre.getText(), campo_apellido.getText(), campo_correo.getText(), campo_contrasenya.getText(), campo_telefono.getText(), campo_direccion.getText(), cventas, cservicios, lcservicios, campo_rol.getValue().toString(), campo_estado.getValue().toString());
-                            mostrarUsuarios();
-                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert.setContentText("Usuario registrado correctamente");
-                            alert.showAndWait();
-                        }
-                        else{
+                        if (campo_contrasenya.getText().length() >= 8) {
+                            if (!modelo.empleadoExiste(campo_id.getText())) {
+                                Float cventas = Float.parseFloat(campo_cventas.getText().substring(0, campo_cventas.getText().length() - 1));
+                                Float cservicios = Float.parseFloat(campo_cservicios.getText().substring(0, campo_cservicios.getText().length() - 1));
+                                Float lcservicios = Float.parseFloat(campo_l_cservicios.getText().substring(0, campo_l_cservicios.getText().length() - 1));
+                                modelo.crearEmpleado(campo_id.getText(), campo_usuario.getText(), campo_nombre.getText(), campo_apellido.getText(), campo_correo.getText(), campo_contrasenya.getText(), campo_telefono.getText(), campo_direccion.getText(), cventas, cservicios, lcservicios, campo_rol.getValue().toString(), campo_estado.getValue().toString());
+                                mostrarUsuarios();
+                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                alert.setContentText("Usuario registrado correctamente");
+                                alert.showAndWait();
+                            } else {
+                                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                                alerta.setContentText("Usuario ya existente");
+                                alerta.showAndWait();
+                            }
+                        }else{
                             Alert alerta = new Alert(Alert.AlertType.ERROR);
-                            alerta.setContentText("Usuario ya existente");
+                            alerta.setContentText("La contraseña debe tener almenos 8 caracteres");
                             alerta.showAndWait();
                         }
                     }
@@ -369,14 +382,7 @@ public class EmpleadosController {
             });
 
             boton_volver.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
-            });
-            agenda.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
-            });
-
-            salir.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/administracion.fxml", "Agenda");
             });
         }
 
@@ -391,7 +397,7 @@ public class EmpleadosController {
                 listaUsuarios.setValue("Selecciona un Trabajador");
 
                 for (Empleados empleado : empleados) {
-                    if(!empleado.getUsuario().equals("Administrador") && empleado.getEstado().equals("Activo")){
+                    if(!empleado.getUsuario().equals("Administrador") && empleado.getEstado().equals("Activo") && empleado.getRol().equals("empleado")){
                         listaUsuarios.getItems().add(empleado.getUsuario());
                     }
 
@@ -425,13 +431,30 @@ public class EmpleadosController {
         }
 
         if (panelAdmin != null){
+
             adminTrabajadores.setOnAction(event ->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/empleados.fxml", "Trabajadores");
+            });
+
+            adminProductos.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/productos.fxml", "Productos");
+            });
+
+            adminServicios.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/servicios.fxml", "Servicios");
+            });
+
+            adminFacturacion.setOnAction(event->{
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaTrabajador.fxml", "Facturación");
+            });
+
+            volver_panel_admin.setOnAction(event -> {
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/agenda.fxml", "Agenda");
             });
         }
 
         if (meses != null){
-
+            String primerDni = DatosGlobales.getEmpleadoActual().getId_empleado();
             Map<String, Integer> mesesMap = new LinkedHashMap<>();
             mesesMap.put("Enero", 1);
             mesesMap.put("Febrero", 2);
@@ -476,14 +499,42 @@ public class EmpleadosController {
                 ano.setValue(String.valueOf(anios.get(0)));
             }
 
-            setFacturacionTrabajador(mesActualNumero, anoActual);
+            if (empleados != null){
+                if(DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
+                    empleados.setVisible(true);
+
+                    ModeloEmpleados modelo = new ModeloEmpleados();
+                    ArrayList<Empleados> empleadosArray = modelo.mostrarEmpleados();
+                    empleados.setValue("Selecciona un Trabajador");
+
+                    for (Empleados empleado : empleadosArray) {
+                        if(!empleado.getUsuario().equals("Administrador") && empleado.getEstado().equals("Activo")){
+                            empleados.getItems().add(empleado.getUsuario());
+                        }
+
+                    }
+                    primerDni = empleados.getValue();
+                }else{
+                    empleados.setVisible(false);
+                }
+            }
+
+
+            setFacturacionTrabajador(primerDni, mesActualNumero, anoActual);
 
             meses.valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null && ano.getValue() != null) {
+                    String dni;
+                    if (DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
+                        dni = modelo.obtenerEmpleado(empleados.getValue());
+                    }else{
+                        dni = DatosGlobales.getEmpleadoActual().getId_empleado();
+                    }
+
                     int mesSeleccionado = mesesMap.get(newValue);
                     int anioSeleccionado = Integer.valueOf(ano.getValue());
 
-                    setFacturacionTrabajador(mesSeleccionado, anioSeleccionado);
+                    setFacturacionTrabajador(dni, mesSeleccionado, anioSeleccionado);
                     System.out.println("Mes seleccionado: " + newValue + " - Número: " + mesSeleccionado);
                     System.out.println("Año seleccionado: " + anioSeleccionado);
                 }
@@ -491,10 +542,37 @@ public class EmpleadosController {
 
             ano.valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null && meses.getValue() != null) {
+                    String dni;
+                    if (DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
+                        dni = modelo.obtenerEmpleado(empleados.getValue());
+                    }else{
+                        dni = DatosGlobales.getEmpleadoActual().getId_empleado();
+                    }
+
                     int mesSeleccionado = mesesMap.get(meses.getValue());
                     int anioSeleccionado = Integer.valueOf(newValue);
 
-                    setFacturacionTrabajador(mesSeleccionado, anioSeleccionado);
+                    setFacturacionTrabajador(dni, mesSeleccionado, anioSeleccionado);
+                    System.out.println("Mes seleccionado: " + meses.getValue() + " - Número: " + mesSeleccionado);
+                    System.out.println("Año seleccionado: " + anioSeleccionado);
+                }
+            });
+
+            empleados.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null && empleados.getValue() != null) {
+
+                    String dni;
+                    if (DatosGlobales.getEmpleadoActual().getRol().equals("administrador")){
+                        ModeloEmpleados modelo = new ModeloEmpleados();
+                        dni = modelo.obtenerEmpleado(empleados.getValue());
+                    }else{
+                        dni = DatosGlobales.getEmpleadoActual().getId_empleado();
+                    }
+
+                    int mesSeleccionado = mesesMap.get(meses.getValue());
+                    int anioSeleccionado = Integer.valueOf(ano.getValue());
+
+                    setFacturacionTrabajador(dni, mesSeleccionado, anioSeleccionado);
                     System.out.println("Mes seleccionado: " + meses.getValue() + " - Número: " + mesSeleccionado);
                     System.out.println("Año seleccionado: " + anioSeleccionado);
                 }

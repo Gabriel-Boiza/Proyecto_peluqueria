@@ -40,12 +40,6 @@ public class ProductosController {
     @FXML private Button boton_modificar;
     @FXML private Button boton_eliminar;
 
-    // Boton nav
-    @FXML private Button agenda;
-
-    // Boton salir
-    @FXML private Button salir;
-
     Productos productosSeleccionado;
 
 
@@ -148,15 +142,7 @@ public class ProductosController {
             });
 
             boton_volver.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
-            });
-
-            agenda.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/personal.fxml", "Agenda");
-            });
-
-            salir.setOnAction(event ->{
-                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/login.fxml", "Agenda");
+                LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/administracion.fxml", "Administracion");
             });
         }
 
