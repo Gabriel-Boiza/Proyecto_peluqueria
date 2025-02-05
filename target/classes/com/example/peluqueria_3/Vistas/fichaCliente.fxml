@@ -21,7 +21,7 @@
             <VBox fx:id="sesiones" prefHeight="465.0" prefWidth="1270.0" />
          </content>
       </ScrollPane>
-      <TextArea layoutX="52.0" layoutY="600.0" prefHeight="144.0" prefWidth="1270.0" />
+      <TextArea fx:id="observacionesCliente" layoutX="52.0" layoutY="600.0" prefHeight="144.0" prefWidth="1270.0" />
       <Label fx:id="nombre_ficha" layoutX="245.0" layoutY="54.0">
          <font>
             <Font size="24.0" />
