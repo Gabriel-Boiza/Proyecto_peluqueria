@@ -25,9 +25,11 @@ public class Cobros {
     private float tarjeta;
     private float efectivo;
 
+    public String observaciones;
+
     //Constructor para mostrar datos
 
-    public Cobros(String nombre_cliente, String nombre_servicio, String nombre_producto, String nombre_empleado, Date fecha_cobro, float bizum, float tarjeta, float efectivo) {
+    public Cobros(String nombre_cliente, String nombre_servicio, String nombre_producto, String nombre_empleado, Date fecha_cobro, float bizum, float tarjeta, float efectivo, String observaciones) {
         this.nombre_cliente = nombre_cliente;
         this.nombre_servicio = nombre_servicio;
         this.nombre_producto = nombre_producto;
@@ -36,6 +38,7 @@ public class Cobros {
         this.bizum = bizum;
         this.tarjeta = tarjeta;
         this.efectivo = efectivo;
+        this.observaciones = observaciones;
     }
 
     //Constructor para insertar datos

@@ -357,6 +357,11 @@ public class EmpleadosController {
                         alert.showAndWait();
                     }
                 }
+                else{
+                    Alert alertaNulo = new Alert(Alert.AlertType.WARNING);
+                    alertaNulo.setContentText("Debe limpiar el contenido para crear un nuevo empleado de 0");
+                    alertaNulo.showAndWait();
+                }
 
             });
             boton_limpiar.setOnAction(event -> {

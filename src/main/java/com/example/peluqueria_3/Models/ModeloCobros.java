@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class ModeloCobros extends DataBase{
 
-    public void insertarCobro(int id_cliente, int id_servicio, String id_empleado, int id_producto, Date fecha, float bizum, float efectivo, float tarjeta, String tipo, int cantidad){
+    public void insertarCobro(int id_cliente, int id_servicio, String id_empleado, int id_producto, Date fecha, float bizum, float efectivo, float tarjeta, String tipo, int cantidad, String observaciones){
         DataBase db = new DataBase();
-        String query = "INSERT INTO cobros (fk_id_cliente, fk_id_servicio, fk_id_trabajador, fk_id_producto, fecha_cobro, bizum, tarjeta, efectivo, tipo, cantidad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO cobros (fk_id_cliente, fk_id_servicio, fk_id_trabajador, fk_id_producto, fecha_cobro, bizum, tarjeta, efectivo, tipo, cantidad, observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String queryStock = "UPDATE productos set stock = stock - ? WHERE id_producto = ?";
 
         try{
@@ -35,6 +35,7 @@ public class ModeloCobros extends DataBase{
             stmt.setFloat(8, efectivo);
             stmt.setString(9, tipo);
             stmt.setInt(10, cantidad);
+            stmt.setString(11, observaciones);
 
             stmtStock.setInt(1, cantidad);
             stmtStock.setInt(2, id_producto);

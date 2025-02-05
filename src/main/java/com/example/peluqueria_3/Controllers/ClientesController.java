@@ -54,6 +54,7 @@ public class ClientesController {
     @FXML Button volverFichaCliente;
     @FXML VBox sesiones;
     @FXML Label usuario_ficha;
+    @FXML TextArea observacionesCliente;
 
     //dato general
     static Clientes clientesSeleccionado;
@@ -191,10 +192,12 @@ public class ClientesController {
 
 
         if(nombre_ficha != null){
+
             usuario_ficha.setText("Ficha de " + clientesSeleccionado.getNombre());
             ArrayList<Cobros> cobrosCliente = modelo.datosFichaClienteServicios(clientesSeleccionado.getId_cliente());
             ArrayList<Cobros> cobrosClienteProductos = modelo.datosFichaClienteProductos(clientesSeleccionado.getId_cliente());
 
+            observacionesCliente.setText(clientesSeleccionado.getObservaciones());
 
             ver_servicios.setOnAction(actionEvent -> {
                 sesiones.getChildren().clear();
@@ -241,12 +244,16 @@ public class ClientesController {
                     Label tarjetalbl = new Label(tarjeta);
                     tarjetalbl.getStyleClass().add("dinero");
 
+                    Label labelObs = new Label(cobro.getObservaciones());
+                    labelObs.getStyleClass().add("nombreServicio");
+
                     hbox.getChildren().add(nombreServicio);
                     hbox.getChildren().add(nombreEmpleado);
 
                     hbox.getChildren().add(bizumlbl);
                     hbox.getChildren().add(efectivolbl);
                     hbox.getChildren().add(tarjetalbl);
+                    hbox.getChildren().add(labelObs);
 
                     sesiones.getChildren().add(hbox);
                 }
@@ -298,12 +305,16 @@ public class ClientesController {
                     Label tarjetalbl = new Label(tarjeta);
                     tarjetalbl.getStyleClass().add("dinero");
 
+                    Label labelObs = new Label(cobro.getObservaciones());
+                    labelObs.getStyleClass().add("nombreServicio");
+
                     hbox.getChildren().add(nombreproducto);
                     hbox.getChildren().add(nombreEmpleado);
 
                     hbox.getChildren().add(bizumlbl);
                     hbox.getChildren().add(efectivolbl);
                     hbox.getChildren().add(tarjetalbl);
+                    hbox.getChildren().add(labelObs);
 
                     sesiones.getChildren().add(hbox);
                 }
@@ -311,6 +322,13 @@ public class ClientesController {
 
             nueva_sesion.setOnAction(event->{
                 LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/cobro.fxml", "Cobro");
+            });
+
+            observacionesCliente.focusedProperty().addListener((observable, oldValue, newValue)  -> {
+                if (!newValue) { // Si newValue es false, significa que perdió el foco
+                    System.out.println("Texto actual: " + observacionesCliente.getText());
+                    modelo.insertObservaciones(clientesSeleccionado.getId_cliente(), observacionesCliente.getText());
+                }
             });
 
             if (volverFichaCliente != null){

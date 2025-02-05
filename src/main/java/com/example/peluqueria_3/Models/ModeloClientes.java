@@ -160,8 +160,9 @@ public class ModeloClientes extends DataBase{
                 float bizum = rs.getFloat("co.bizum");
                 float efectivo = rs.getFloat("co.efectivo");
                 float tarjeta = rs.getFloat("co.tarjeta");
+                String observaciones = rs.getString("co.observaciones");
 
-                Cobros cobro = new Cobros(nombre, servicio, "sin valor", trabajador, fecha, bizum, tarjeta, efectivo);
+                Cobros cobro = new Cobros(nombre, servicio, "sin valor", trabajador, fecha, bizum, tarjeta, efectivo, observaciones);
                 arrayCobros.add(cobro);
             }
             conexion.close();
@@ -199,7 +200,9 @@ public class ModeloClientes extends DataBase{
                 float efectivo = rs.getFloat("co.efectivo");
                 float tarjeta = rs.getFloat("co.tarjeta");
 
-                Cobros cobro = new Cobros(nombre, "sin valor", producto , trabajador, fecha, bizum, tarjeta, efectivo);
+                String observaciones = rs.getString("co.observaciones");
+
+                Cobros cobro = new Cobros(nombre, "sin valor", producto , trabajador, fecha, bizum, tarjeta, efectivo, observaciones);
                 arrayCobros.add(cobro);
             }
             conexion.close();
@@ -207,6 +210,26 @@ public class ModeloClientes extends DataBase{
             System.out.println(e.getMessage());
         }
         return arrayCobros;
+    }
+
+    public void insertObservaciones(int id_cliente, String observacion){
+
+        DataBase db = new DataBase();
+        String query = "UPDATE clientes SET observaciones = ? WHERE id_cliente = ?";
+
+        try {
+            Connection conexion = db.getConnection();
+            PreparedStatement stmt = conexion.prepareStatement(query);
+
+            stmt.setString(1, observacion);
+            stmt.setInt(2, id_cliente);
+
+            stmt.executeUpdate();
+
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
