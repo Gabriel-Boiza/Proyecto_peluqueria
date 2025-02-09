@@ -15,45 +15,88 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CobrosController {
+    // FXML elements
     @FXML Button volver;
     @FXML Button agregar_servicio;
     @FXML Button agregar_producto;
     @FXML Button pagar;
     @FXML Button limpiar;
-
     @FXML Label bizum;
     @FXML Label tarjeta;
     @FXML Label efectivo;
     @FXML Label total;
-
     @FXML VBox panel;
+    @FXML TextArea observaciones;
 
+    // Models
     ModeloProductos modeloProductos = new ModeloProductos();
     ModeloServicios modeloServicios = new ModeloServicios();
     ModeloEmpleados modeloEmpleados = new ModeloEmpleados();
     ModeloCobros modeloCobros = new ModeloCobros();
 
+    // Arrays for form management
+    private ArrayList<TextField> arrayBizumServicios = new ArrayList<>();
+    private ArrayList<TextField> arrayEfectivoServicios = new ArrayList<>();
+    private ArrayList<TextField> arrayTarjetaServicios = new ArrayList<>();
+    private ArrayList<TextField> arrayBizumProductos = new ArrayList<>();
+    private ArrayList<TextField> arrayEfectivoProductos = new ArrayList<>();
+    private ArrayList<TextField> arrayTarjetaProductos = new ArrayList<>();
+    private ArrayList<ComboBox<Servicios>> arrayServicios = new ArrayList<>();
+    private ArrayList<ComboBox<Productos>> arrayProductos = new ArrayList<>();
+    private ArrayList<ComboBox<Empleados>> arrayEmpleadosServicios = new ArrayList<>();
+    private ArrayList<ComboBox<Empleados>> arrayEmpleadosProductos = new ArrayList<>();
+    private ArrayList<Spinner<Integer>> arrayCantidad = new ArrayList<>();
+
     int stock;
 
-    @FXML TextArea observaciones;
+    // Essential functions first
+    private void actualizarTotales() {
+        float totalBizum = 0;
+        float totalEfectivo = 0;
+        float totalTarjeta = 0;
 
+        // Sumar totales de servicios
+        for (int i = 0; i < arrayBizumServicios.size(); i++) {
+            totalBizum += Float.parseFloat(arrayBizumServicios.get(i).getText());
+            totalEfectivo += Float.parseFloat(arrayEfectivoServicios.get(i).getText());
+            totalTarjeta += Float.parseFloat(arrayTarjetaServicios.get(i).getText());
+        }
+
+        // Sumar totales de productos
+        for (int i = 0; i < arrayBizumProductos.size(); i++) {
+            totalBizum += Float.parseFloat(arrayBizumProductos.get(i).getText());
+            totalEfectivo += Float.parseFloat(arrayEfectivoProductos.get(i).getText());
+            totalTarjeta += Float.parseFloat(arrayTarjetaProductos.get(i).getText());
+        }
+
+        bizum.setText(String.format("%.2f€", totalBizum));
+        efectivo.setText(String.format("%.2f€", totalEfectivo));
+        tarjeta.setText(String.format("%.2f€", totalTarjeta));
+        total.setText(String.format("%.2f€", totalBizum + totalEfectivo + totalTarjeta));
+    }
+
+    private void configurarTextField(TextField textField) {
+        textField.setText("0");
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*\\.?\\d*")) {
+                textField.setText(oldValue);
+            } else {
+                actualizarTotales();
+            }
+        });
+    }
 
     private <T> void setupSearchableComboBox(ComboBox<T> comboBox, ObservableList<T> items, StringConverter<T> converter) {
         comboBox.setEditable(true);
         comboBox.setItems(items);
         comboBox.setConverter(converter);
 
-        // Create a filtered list that will contain all items matching the search text
         FilteredList<T> filteredItems = new FilteredList<>(items, p -> true);
-
-        // Variable para mantener el último valor válido
         final T[] lastValidValue = (T[]) new Object[1];
 
-        // Add a listener to the combobox editor to filter items based on input
         comboBox.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             T selected = comboBox.getSelectionModel().getSelectedItem();
 
-            // Guardar el valor seleccionado si es válido
             if (selected != null) {
                 lastValidValue[0] = selected;
             }
@@ -73,28 +116,16 @@ public class CobrosController {
             }
         });
 
-        // Manejar la pérdida de foco
         comboBox.getEditor().focusedProperty().addListener((obs, wasFocused, isFocused) -> {
-            if (!isFocused) {  // Cuando pierde el foco
+            if (!isFocused) {
                 T selectedItem = comboBox.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
-                    // Si hay un item seleccionado, actualizar el texto
                     comboBox.getEditor().setText(converter.toString(selectedItem));
                     lastValidValue[0] = selectedItem;
                 } else if (lastValidValue[0] != null) {
-                    // Si no hay selección pero tenemos un valor válido anterior, restaurarlo
                     comboBox.setValue(lastValidValue[0]);
                     comboBox.getEditor().setText(converter.toString(lastValidValue[0]));
                 }
-            }
-        });
-
-        // Manejar la selección de items
-        comboBox.setOnAction(event -> {
-            T selectedItem = comboBox.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-                lastValidValue[0] = selectedItem;
-                comboBox.getEditor().setText(converter.toString(selectedItem));
             }
         });
 
@@ -103,38 +134,22 @@ public class CobrosController {
 
     @FXML
     public void initialize() {
-
-
-
-        ArrayList<ComboBox<Servicios>> arrayServicios = new ArrayList<>();
-        ArrayList<ComboBox<Productos>> arrayProductos = new ArrayList<>();
-
-        ArrayList<ComboBox<Empleados>> arrayEmpleadosServicios = new ArrayList<>();
-        ArrayList<ComboBox<Empleados>> arrayEmpleadosProductos = new ArrayList<>();
-
-        ArrayList<TextField> arrayBizumServicios = new ArrayList<>();
-        ArrayList<TextField> arrayEfectivoServicios = new ArrayList<>();
-        ArrayList<TextField> arrayTarjetaServicios = new ArrayList<>();
-
-        ArrayList<TextField> arrayBizumProductos = new ArrayList<>();
-        ArrayList<TextField> arrayEfectivoProductos = new ArrayList<>();
-        ArrayList<TextField> arrayTarjetaProductos = new ArrayList<>();
-
-        ArrayList<Spinner<Integer>> arrayCantidad = new ArrayList<>();
+        // Initialize labels
+        bizum.setText("0.00€");
+        efectivo.setText("0.00€");
+        tarjeta.setText("0.00€");
+        total.setText("0.00€");
 
         ArrayList<Productos> productos = modeloProductos.mostrarProductos();
         ArrayList<Servicios> servicios = modeloServicios.mostrarServicios();
         ArrayList<Empleados> empleadosServicios = modeloEmpleados.mostrarEmpleados();
         ArrayList<Empleados> empleadosProductos = modeloEmpleados.mostrarEmpleados();
 
-
-        // Create ObservableLists
         ObservableList<Productos> obsProductos = FXCollections.observableArrayList(productos);
         ObservableList<Servicios> obsServicios = FXCollections.observableArrayList(servicios);
         ObservableList<Empleados> obsEmpleadosServicios = FXCollections.observableArrayList(empleadosServicios);
         ObservableList<Empleados> obsEmpleadosProductos = FXCollections.observableArrayList(empleadosProductos);
 
-        // Create converters for each type
         StringConverter<Productos> productosConverter = new StringConverter<>() {
             @Override
             public String toString(Productos producto) {
@@ -143,7 +158,7 @@ public class CobrosController {
 
             @Override
             public Productos fromString(String string) {
-                return null; // No necesitamos convertir de String a Producto
+                return null;
             }
         };
 
@@ -187,9 +202,8 @@ public class CobrosController {
             arrayEfectivoProductos.clear();
             arrayTarjetaProductos.clear();
             arrayCantidad.clear();
-
-            // Clear VBox
             panel.getChildren().clear();
+            actualizarTotales();
         });
 
         agregar_servicio.setOnAction(actionEvent -> {
@@ -209,22 +223,33 @@ public class CobrosController {
             setupSearchableComboBox(casilla_empleados, obsEmpleadosServicios, empleadosConverter);
 
             TextField textoBizum = new TextField();
-            textoBizum.getStyleClass().add("dinero");
-
             TextField textoTarjeta = new TextField();
-            textoTarjeta.getStyleClass().add("dinero");
-
             TextField textoEfectivo = new TextField();
+
+            textoBizum.getStyleClass().add("dinero");
+            textoTarjeta.getStyleClass().add("dinero");
             textoEfectivo.getStyleClass().add("dinero");
 
-            textoBizum.setText("0");
-            textoTarjeta.setText("0");
+            configurarTextField(textoBizum);
+            configurarTextField(textoTarjeta);
+            configurarTextField(textoEfectivo);
 
+            Button deleteButton = new Button("X");
+            deleteButton.getStyleClass().add("delete-button");
+            deleteButton.setOnAction(e -> {
+                panel.getChildren().remove(fila_servicio);
+                arrayServicios.remove(casilla_servicios);
+                arrayEmpleadosServicios.remove(casilla_empleados);
+                arrayBizumServicios.remove(textoBizum);
+                arrayEfectivoServicios.remove(textoEfectivo);
+                arrayTarjetaServicios.remove(textoTarjeta);
+                actualizarTotales();
+            });
 
             casilla_servicios.setOnAction(event -> {
                 if (casilla_servicios.getValue() != null) {
                     textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(casilla_servicios.getValue().getId_servicio())));
-                    System.out.println(String.valueOf(modeloCobros.detectarPrecioServicio(casilla_servicios.getValue().getId_servicio())));
+                    actualizarTotales();
                 }
             });
 
@@ -238,19 +263,17 @@ public class CobrosController {
 
             arrayServicios.add(casilla_servicios);
             arrayEmpleadosServicios.add(casilla_empleados);
-
             arrayBizumServicios.add(textoBizum);
             arrayEfectivoServicios.add(textoEfectivo);
             arrayTarjetaServicios.add(textoTarjeta);
 
-            textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(arrayServicios.getFirst().getValue().getId_servicio())));
+            textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(casilla_servicios.getValue().getId_servicio())));
 
-            fila_servicio.getChildren().add(labelServicio);
-            fila_servicio.getChildren().add(casilla_servicios);
-            fila_servicio.getChildren().add(casilla_empleados);
-            fila_servicio.getChildren().addAll(textoEfectivo, textoBizum, textoTarjeta);
+            fila_servicio.getChildren().addAll(labelServicio, casilla_servicios, casilla_empleados,
+                    textoEfectivo, textoBizum, textoTarjeta, deleteButton);
 
             panel.getChildren().add(fila_servicio);
+            actualizarTotales();
         });
 
         agregar_producto.setOnAction(actionEvent -> {
@@ -262,42 +285,52 @@ public class CobrosController {
 
             ComboBox<Productos> casilla_productos = new ComboBox<>();
             casilla_productos.getStyleClass().add("combox");
-
             ComboBox<Empleados> casilla_empleados = new ComboBox<>();
             casilla_empleados.getStyleClass().add("combox");
 
-            // Setup searchable ComboBoxes
             setupSearchableComboBox(casilla_productos, obsProductos, productosConverter);
             setupSearchableComboBox(casilla_empleados, obsEmpleadosProductos, empleadosConverter);
 
             TextField textoBizum = new TextField();
-            textoBizum.getStyleClass().add("dinero");
             TextField textoTarjeta = new TextField();
-            textoTarjeta.getStyleClass().add("dinero");
             TextField textoEfectivo = new TextField();
+
+            textoBizum.getStyleClass().add("dinero");
+            textoTarjeta.getStyleClass().add("dinero");
             textoEfectivo.getStyleClass().add("dinero");
 
-            textoBizum.setText("0");
-            textoTarjeta.setText("0");
-
+            configurarTextField(textoBizum);
+            configurarTextField(textoTarjeta);
+            configurarTextField(textoEfectivo);
 
             Spinner<Integer> spinner = new Spinner<>();
-
             stock = modeloCobros.detectarStock(casilla_productos.getItems().getFirst().getId_producto());
             spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
             spinner.setMaxWidth(60);
 
-            casilla_productos.setOnAction(event ->{
+            Button deleteButton = new Button("X");
+            deleteButton.getStyleClass().add("delete-button");
+            deleteButton.setOnAction(e -> {
+                panel.getChildren().remove(fila_producto);
+                arrayProductos.remove(casilla_productos);
+                arrayEmpleadosProductos.remove(casilla_empleados);
+                arrayBizumProductos.remove(textoBizum);
+                arrayEfectivoProductos.remove(textoEfectivo);
+                arrayTarjetaProductos.remove(textoTarjeta);
+                arrayCantidad.remove(spinner);
+                actualizarTotales();
+            });
+
+            casilla_productos.setOnAction(event -> {
                 if (casilla_productos.getValue() != null) {
                     stock = modeloCobros.detectarStock(casilla_productos.getValue().getId_producto());
                     spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
-
                     textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+                    actualizarTotales();
                 }
             });
 
             spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-                // Update price label with new value
                 textoEfectivo.setText(String.valueOf(newValue * modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
             });
 
@@ -313,31 +346,30 @@ public class CobrosController {
 
             arrayProductos.add(casilla_productos);
             arrayEmpleadosProductos.add(casilla_empleados);
-
             arrayBizumProductos.add(textoBizum);
             arrayEfectivoProductos.add(textoEfectivo);
             arrayTarjetaProductos.add(textoTarjeta);
 
-            textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioServicio(arrayProductos.getFirst().getValue().getId_producto())));
+            textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
 
             fila_producto.getChildren().add(labelProducto);
             fila_producto.getChildren().add(casilla_productos);
             fila_producto.getChildren().add(casilla_empleados);
             fila_producto.getChildren().addAll(textoEfectivo, textoBizum, textoTarjeta);
             fila_producto.getChildren().add(spinner);
+            fila_producto.getChildren().add(deleteButton);
 
             panel.getChildren().add(fila_producto);
         });
 
         pagar.setOnAction(actionEvent -> {
-            System.out.println("SERVICIOS ______________");
             int cont = 0;
             for(ComboBox<Servicios> servicio : arrayServicios){
                 String id_empleado = arrayEmpleadosServicios.get(cont).getValue().getId_empleado();
-                System.out.println(id_empleado + " : " + servicio.getValue().getId_servicio() + " precio: " + arrayTarjetaServicios.get(cont).getText());
                 float bizum = Float.parseFloat(arrayBizumServicios.get(cont).getText());
                 float efectivo = Float.parseFloat(arrayEfectivoServicios.get(cont).getText());
                 float tarjeta = Float.parseFloat(arrayTarjetaServicios.get(cont).getText());
+
 
                 modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), servicio.getValue().getId_servicio(), id_empleado, 0, new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta, "servicio", 1, observaciones.getText());
                 cont = cont +1;
