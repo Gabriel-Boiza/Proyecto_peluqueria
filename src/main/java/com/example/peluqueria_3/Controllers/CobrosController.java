@@ -28,6 +28,9 @@ public class CobrosController {
     @FXML VBox panel;
     @FXML TextArea observaciones;
 
+    @FXML TextField codigoBarras;
+    @FXML Button buscarPorCodigoBarras;
+
     // Models
     ModeloProductos modeloProductos = new ModeloProductos();
     ModeloServicios modeloServicios = new ModeloServicios();
@@ -188,6 +191,27 @@ public class CobrosController {
 
         volver.setOnAction(actionEvent -> {
             LoadStage load = new LoadStage("/com/example/peluqueria_3/Vistas/fichaCliente.fxml", "Ficha Cliente");
+        });
+
+        buscarPorCodigoBarras.setOnAction(actionEvent -> {
+            String codigoBarrasText = codigoBarras.getText().trim();
+            if (codigoBarrasText.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("Por favor, ingrese un código de barras");
+                alert.showAndWait();
+                return;
+            }
+
+            Productos productoEncontrado = modeloProductos.buscarPorCodigoBarras(codigoBarrasText);
+
+            if (productoEncontrado == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText("No se encontró ningún producto con ese código de barras");
+                alert.showAndWait();
+                return;
+            }
+
+            buscarPorCodigoBarrasHandler();
         });
 
         limpiar.setOnAction(actionEvent -> {
@@ -407,10 +431,164 @@ public class CobrosController {
         });
     }
 
+
+
+    @FXML
+    public void buscarPorCodigoBarrasHandler() {
+        String codigoBarrasText = codigoBarras.getText().trim();
+        if (codigoBarrasText.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Por favor, ingrese un código de barras");
+            alert.showAndWait();
+            return;
+        }
+
+        // Asumiendo que necesitamos crear un método en ModeloProductos para buscar por código de barras
+        Productos productoEncontrado = modeloProductos.buscarPorCodigoBarras(codigoBarrasText);
+
+        if (productoEncontrado == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("No se encontró ningún producto con ese código de barras");
+            alert.showAndWait();
+            return;
+        }
+
+        // Crear nueva fila de producto (similar a agregar_producto)
+        HBox fila_producto = new HBox();
+        fila_producto.getStyleClass().add("fila");
+
+        Label labelProducto = new Label("Producto para: " + ClientesController.clientesSeleccionado.getNombre());
+        labelProducto.getStyleClass().add("labelText");
+
+        ComboBox<Productos> casilla_productos = new ComboBox<>();
+        casilla_productos.getStyleClass().add("combox");
+        ComboBox<Empleados> casilla_empleados = new ComboBox<>();
+        casilla_empleados.getStyleClass().add("combox");
+
+        // Configurar ComboBoxes con los mismos convertidores
+        ArrayList<Empleados> empleadosProductos = modeloEmpleados.mostrarEmpleados();
+        ObservableList<Empleados> obsEmpleadosProductos = FXCollections.observableArrayList(empleadosProductos);
+        ArrayList<Productos> productos = modeloProductos.mostrarProductos();
+        ObservableList<Productos> obsProductos = FXCollections.observableArrayList(productos);
+
+        StringConverter<Productos> productosConverter = new StringConverter<>() {
+            @Override
+            public String toString(Productos producto) {
+                return producto != null ? producto.getNombre() : "";
+            }
+
+            @Override
+            public Productos fromString(String string) {
+                return null;
+            }
+        };
+
+        StringConverter<Empleados> empleadosConverter = new StringConverter<>() {
+            @Override
+            public String toString(Empleados empleado) {
+                return empleado != null ? empleado.getNombre() : "";
+            }
+
+            @Override
+            public Empleados fromString(String string) {
+                return null;
+            }
+        };
+
+        setupSearchableComboBox(casilla_productos, obsProductos, productosConverter);
+        setupSearchableComboBox(casilla_empleados, obsEmpleadosProductos, empleadosConverter);
+
+        // Configurar campos de texto para pagos
+        TextField textoBizum = new TextField();
+        TextField textoTarjeta = new TextField();
+        TextField textoEfectivo = new TextField();
+
+        textoBizum.getStyleClass().add("dinero");
+        textoTarjeta.getStyleClass().add("dinero");
+        textoEfectivo.getStyleClass().add("dinero");
+
+        configurarTextField(textoBizum);
+        configurarTextField(textoTarjeta);
+        configurarTextField(textoEfectivo);
+
+        // Configurar Spinner para cantidad
+        Spinner<Integer> spinner = new Spinner<>();
+        stock = modeloCobros.detectarStock(productoEncontrado.getId_producto());
+        spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
+        spinner.setMaxWidth(60);
+
+        // Botón eliminar
+        Button deleteButton = new Button("X");
+        deleteButton.getStyleClass().add("delete-button");
+        deleteButton.setOnAction(e -> {
+            panel.getChildren().remove(fila_producto);
+            arrayProductos.remove(casilla_productos);
+            arrayEmpleadosProductos.remove(casilla_empleados);
+            arrayBizumProductos.remove(textoBizum);
+            arrayEfectivoProductos.remove(textoEfectivo);
+            arrayTarjetaProductos.remove(textoTarjeta);
+            arrayCantidad.remove(spinner);
+            actualizarTotales();
+        });
+
+        // Configurar listeners
+        casilla_productos.setOnAction(event -> {
+            if (casilla_productos.getValue() != null) {
+                stock = modeloCobros.detectarStock(casilla_productos.getValue().getId_producto());
+                spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
+                textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+                actualizarTotales();
+            }
+        });
+
+        spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+            textoEfectivo.setText(String.valueOf(newValue * modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+            actualizarTotales();
+        });
+
+        // Establecer el producto encontrado como valor seleccionado
+        casilla_productos.setValue(productoEncontrado);
+
+        // Establecer empleado por defecto
+        if (!empleadosProductos.isEmpty()) {
+            casilla_empleados.setValue(empleadosProductos.getFirst());
+        }
+
+        // Agregar a los arrays de control
+        arrayProductos.add(casilla_productos);
+        arrayEmpleadosProductos.add(casilla_empleados);
+        arrayBizumProductos.add(textoBizum);
+        arrayEfectivoProductos.add(textoEfectivo);
+        arrayTarjetaProductos.add(textoTarjeta);
+        arrayCantidad.add(spinner);
+
+        // Establecer precio inicial
+        textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioProducto(productoEncontrado.getId_producto())));
+
+        // Agregar elementos a la fila
+        fila_producto.getChildren().addAll(
+                labelProducto,
+                casilla_productos,
+                casilla_empleados,
+                textoEfectivo,
+                textoBizum,
+                textoTarjeta,
+                spinner,
+                deleteButton
+        );
+
+        // Agregar la fila al panel
+        panel.getChildren().add(fila_producto);
+
+        // Limpiar el campo de código de barras
+        codigoBarras.clear();
+    }
+
     public void pagoCompleto(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("El pago se hizo correctamente");
         alert.showAndWait();
     }
+
 
 }

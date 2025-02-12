@@ -154,4 +154,40 @@ public class ModeloProductos extends DataBase{
         return producto;
     }
 
+    public Productos buscarPorCodigoBarras(String codigoBarras) {
+        DataBase db = new DataBase();
+        Productos producto = null;
+
+        try {
+            Connection conexion = db.getConnection();
+
+            String sql = "SELECT * FROM productos WHERE codigo_barras = ?";
+            PreparedStatement pst = conexion.prepareStatement(sql);
+            pst.setString(1, codigoBarras);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                producto = new Productos(
+                        rs.getInt("id_producto"),
+                        rs.getString("nombre"),
+                        rs.getString("marca"),
+                        rs.getString("descripcion"),
+                        rs.getFloat("precio"),
+                        rs.getInt("stock"),
+                        rs.getString("codigo_barras")
+                );
+            }
+
+            rs.close();
+            pst.close();
+            conexion.close();
+
+        } catch (Exception e) {
+            System.err.println("Error al buscar producto por código de barras: " + e.getMessage());
+        }
+
+        return producto;
+    }
+
 }

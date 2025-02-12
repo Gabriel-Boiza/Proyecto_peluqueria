@@ -11,6 +11,9 @@
             <Font size="24.0" />
          </font>
       </Label>
+
+      <TextField fx:id="codigoBarras" layoutX="200.0" layoutY="43.0" prefHeight="40.0" prefWidth="250.0" promptText="Código de barras..." style="-fx-font-size: 14px;" />
+      <Button fx:id="buscarPorCodigoBarras" layoutX="460.0" layoutY="43.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" style="-fx-background-color: #333; -fx-text-fill: white;" text="Buscar Producto" />
       <Button fx:id="agregar_servicio" layoutX="748.0" layoutY="43.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #333; -fx-text-fill: white;" text="Añadir Servicio" />
       <Button fx:id="volver" layoutX="1209.0" layoutY="43.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color: #333; -fx-text-fill: white;" text="Volver" />
       <Button fx:id="agregar_producto" layoutX="987.0" layoutY="43.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #333; -fx-text-fill: white;" text="Añadir Producto" />
