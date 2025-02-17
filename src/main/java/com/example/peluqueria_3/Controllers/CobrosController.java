@@ -328,9 +328,26 @@ public class CobrosController {
             configurarTextField(textoEfectivo);
 
             Spinner<Integer> spinner = new Spinner<>();
-            stock = modeloCobros.detectarStock(casilla_productos.getItems().getFirst().getId_producto());
-            spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
             spinner.setMaxWidth(60);
+
+            // Primero asignamos valores a los ComboBox
+            if (!productos.isEmpty()) {
+                casilla_productos.setValue(productos.getFirst());
+
+                // Una vez que tenemos el producto, configuramos el spinner
+                stock = modeloCobros.detectarStock(casilla_productos.getValue().getId_producto());
+                if (stock > 0) {
+                    spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
+                } else {
+                    // Manejar el caso cuando el stock es 0 o negativo
+                    spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 0, 0));
+                }
+                textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+            }
+
+            if (!empleadosProductos.isEmpty()) {
+                casilla_empleados.setValue(empleadosProductos.getFirst());
+            }
 
             Button deleteButton = new Button("X");
             deleteButton.getStyleClass().add("delete-button");
@@ -345,90 +362,49 @@ public class CobrosController {
                 actualizarTotales();
             });
 
+            // Configurar los listeners después de tener valores válidos
             casilla_productos.setOnAction(event -> {
                 if (casilla_productos.getValue() != null) {
                     stock = modeloCobros.detectarStock(casilla_productos.getValue().getId_producto());
                     spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, stock, 1));
-                    textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+                    float precio = modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto());
+                    textoEfectivo.setText(String.valueOf(precio * spinner.getValue()));
                     actualizarTotales();
                 }
             });
 
             spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-                textoEfectivo.setText(String.valueOf(newValue * modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+                if (casilla_productos.getValue() != null) {
+                    float precio = modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto());
+                    textoEfectivo.setText(String.valueOf(newValue * precio));
+                    actualizarTotales();
+                }
             });
 
-            arrayCantidad.add(spinner);
-
-            if (!productos.isEmpty()) {
-                casilla_productos.setValue(productos.getFirst());
-            }
-
-            if (!empleadosProductos.isEmpty()) {
-                casilla_empleados.setValue(empleadosProductos.getFirst());
-            }
-
+            // Agregar a los arrays de control
             arrayProductos.add(casilla_productos);
             arrayEmpleadosProductos.add(casilla_empleados);
             arrayBizumProductos.add(textoBizum);
             arrayEfectivoProductos.add(textoEfectivo);
             arrayTarjetaProductos.add(textoTarjeta);
+            arrayCantidad.add(spinner);
 
-            textoEfectivo.setText(String.valueOf(modeloCobros.detectarPrecioProducto(casilla_productos.getValue().getId_producto())));
+            // Construir la fila
+            fila_producto.getChildren().addAll(
+                    labelProducto,
+                    casilla_productos,
+                    casilla_empleados,
+                    textoEfectivo,
+                    textoBizum,
+                    textoTarjeta,
+                    spinner,
+                    deleteButton
+            );
 
-            fila_producto.getChildren().add(labelProducto);
-            fila_producto.getChildren().add(casilla_productos);
-            fila_producto.getChildren().add(casilla_empleados);
-            fila_producto.getChildren().addAll(textoEfectivo, textoBizum, textoTarjeta);
-            fila_producto.getChildren().add(spinner);
-            fila_producto.getChildren().add(deleteButton);
-
+            // Agregar la fila al panel
             panel.getChildren().add(fila_producto);
         });
 
-        pagar.setOnAction(actionEvent -> {
-            int cont = 0;
-            for(ComboBox<Servicios> servicio : arrayServicios){
-                String id_empleado = arrayEmpleadosServicios.get(cont).getValue().getId_empleado();
-                float bizum = Float.parseFloat(arrayBizumServicios.get(cont).getText());
-                float efectivo = Float.parseFloat(arrayEfectivoServicios.get(cont).getText());
-                float tarjeta = Float.parseFloat(arrayTarjetaServicios.get(cont).getText());
-
-
-                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), servicio.getValue().getId_servicio(), id_empleado, 0, new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta, "servicio", 1, observaciones.getText());
-                cont = cont +1;
-            }
-            System.out.println("PRODUCTOS ______________");
-            cont = 0;
-            for(ComboBox<Productos> producto : arrayProductos){
-                String id_empleado = arrayEmpleadosProductos.get(cont).getValue().getId_empleado();
-                int cantidad = arrayCantidad.get(cont).getValue();
-                System.out.println(cantidad);
-                System.out.println(id_empleado + " : " + producto.getValue().getId_producto() + " precio: " + arrayTarjetaProductos.get(cont).getText());
-                float bizum = Float.parseFloat(arrayBizumProductos.get(cont).getText());
-                float efectivo = Float.parseFloat(arrayEfectivoProductos.get(cont).getText());
-                float tarjeta = Float.parseFloat(arrayTarjetaProductos.get(cont).getText());
-                modeloCobros.insertarCobro(ClientesController.clientesSeleccionado.getId_cliente(), 0, id_empleado, producto.getValue().getId_producto(), new Date(System.currentTimeMillis()), bizum, efectivo, tarjeta, "producto",cantidad, observaciones.getText());
-                cont = cont +1;
-            }
-
-            pagoCompleto();
-            arrayServicios.clear();
-            arrayProductos.clear();
-            arrayEmpleadosServicios.clear();
-            arrayEmpleadosProductos.clear();
-            arrayBizumServicios.clear();
-            arrayEfectivoServicios.clear();
-            arrayTarjetaServicios.clear();
-            arrayBizumProductos.clear();
-            arrayEfectivoProductos.clear();
-            arrayTarjetaProductos.clear();
-            arrayCantidad.clear();
-
-            // Clear VBox
-            panel.getChildren().clear();
-
-        });
     }
 
 
